@@ -43,7 +43,6 @@ export const unBlockUser = async (req: Request, res: Response) => {
 export const getTutors = async (req: Request, res: Response) => {
     try{
         const allTutors = await Instructor.find();
-        console.log("jjjjj",allTutors,"llll")
         res.json(
             allTutors
         )
@@ -80,5 +79,20 @@ export const unBlockTutor = async (req: Request, res: Response) => {
         )
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const checkIsBlocked=async(req: Request, res: Response)=>{
+    try {
+        const {email}:{email:string} =req.body
+        const user = await Student.findOne({email});
+        console.log("blocked user",user);
+        if(user?.isBlocked){
+            res.json({
+                isBlocked:true
+            })
+        }
+    } catch (error) {
+        console.log(error)
     }
 }

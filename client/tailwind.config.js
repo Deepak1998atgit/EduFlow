@@ -9,6 +9,12 @@ export default {
       backgroundColor: {
         customPink: '#ea1f63',
       },
+      colors: {
+        primary: "#00FFAA",
+        secondary: "#00FF60",
+        texlight: "#a7a7a7",
+        bgPrimary: "#020010",
+      }
     },
     screens: {
       'sm': '576px',

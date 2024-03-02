@@ -5,6 +5,5 @@ export interface StudentInterface {
     mobile: number;
     password: string;
     isBlocked:boolean;
-    
 }
   

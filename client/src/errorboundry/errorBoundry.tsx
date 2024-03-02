@@ -1,38 +1,44 @@
-import { Component,ErrorInfo,ReactNode} from 'react';
-import {ErrorBoundaryProps, ErrorBoundaryState} from '../types/errorBoundryTypes';
+import React, { Component, ReactNode } from 'react';
 
+interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false, error: null, errorInfo: null };
+    this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { hasError: true, error, errorInfo: null };
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // Update state to indicate error and store the error
+    this.setState({ hasError: true, error: error });
+    // You can also log the error to an error reporting service
+    console.error(error, errorInfo);
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // Log the error to the console
-    console.error('Error caught:', error);
-    console.error('Error info:', errorInfo);
-    this.setState({ error, errorInfo });
-  }
-
-  render(): ReactNode {
-    if (this.state.hasError) {                               
+  render() {
+    if (this.state.hasError) {
+      // Render error message when an error occurs
       return (
         <div>
           <h1>Something went wrong.</h1>
-          <p>Error: {this.state.error && this.state.error.toString()}</p>
+          <p>{this.state.error?.toString()}</p>
         </div>
       );
     }
 
-    return this.props.children || null;                                         // Return null if no children are provided
+    // Render children if there's no error
+    return this.props.children;
   }
 }
 
 export default ErrorBoundary;
+
 
 

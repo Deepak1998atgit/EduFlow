@@ -1,3 +1,19 @@
+@import url(https://fonts.googleapis.com/css?family=Croissant+One:regular);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  height: 100vh;
+  font-family: "Croissant One", cursive;
+  align-items: center;
+  justify-content: start;
+}
+
+body,
+html {
+  scroll-behavior: smooth;
+}

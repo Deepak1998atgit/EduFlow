@@ -1,32 +1,42 @@
 
 import { Outlet } from "react-router";
+import React, { useEffect } from 'react';
+import { useUser } from "./hooks/useContext";
+import { UserProviderForUserIsBlock } from "./hooks/useContext";
 
 
 
-export const Student=()=>{
- return (
-   <>
-   <Outlet/>
-   </>
+
+export const Student = () => {
+
+  return (
+    <>
+        <Outlet />
+      
+    </>
   )
 }
 
 
-export const Instructor=()=>{
+export const Instructor = () => {
   return (
     <>
-    <Outlet/>
+     
+        <Outlet />
+     
     </>
-   )
+  )
 }
 
 
-export const Admin=()=>{
+export const Admin = () => {
   return (
     <>
-    <Outlet/>
+    
+    <Outlet />
+ 
     </>
-   )
+  )
 }
 
 

@@ -15,7 +15,7 @@ axiosInstance.interceptors.response.use(
       if (error.response) {
         const { data, status } = error.response;
         if (status === 400) {
-          throw new CustomApiError("Bad request", data);
+          throw new CustomApiError("Bad request", data)
         } else if (status === 401) {
           throw new CustomApiError("Unauthorized", data);
         } else if (status === 404) {
@@ -27,12 +27,11 @@ axiosInstance.interceptors.response.use(
         }
       }
        else if (error.request) {
-        throw new CustomApiError(`No response received`,error.request)
+       throw new CustomApiError(`No response received`,error.request)
       }
        else {
         console.log("Error:", error.message);
       }
-  
       return Promise.reject(error);
     }
   );

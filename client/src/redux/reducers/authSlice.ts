@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { useEffect } from "react";
 import { RootState } from "../store";
 import decodeJwtToken from "../../utils/decodeJwt";
-console.log('hhhhhhhhhhhhhhhhhhhhhhhaccessToken')
-const accessToken = localStorage.getItem("accessToken");
+console.log('hhhhhhhhhhhhhhhhhhhhhhhaccessToken hiiiiiiiiii')
+const accessToken  = localStorage?.getItem("accessToken");
 console.log(accessToken, 'accessToken')
 const decodedToken = decodeJwtToken(accessToken ?? "");
 console.log(decodedToken, "jjjshssstokenssh")
@@ -14,6 +15,8 @@ const initialState = {
     accessToken: accessToken,
   },
   isLoggedIn: accessToken ? true : false,
+
+
   userType: decodedToken?.payload?.role
 };
 

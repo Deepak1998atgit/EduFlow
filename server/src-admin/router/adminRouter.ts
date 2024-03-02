@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { getUsers,blockUser,unBlockUser,getTutors,blockTutor,unBlockTutor} from '../controller/adminController';
+import { getUsers,blockUser,unBlockUser,getTutors,blockTutor,unBlockTutor,checkIsBlocked} from '../controller/adminController';
 
 const adminRouter = () => {
     const router = express.Router();
@@ -9,6 +9,7 @@ const adminRouter = () => {
     router.get('/getTutors',getTutors);
     router.post('/blockTutor',blockTutor);
     router.post('/unBlockTutor',unBlockTutor);
+    router.post('/isUserBlocked',checkIsBlocked);
     return router;
 }
 

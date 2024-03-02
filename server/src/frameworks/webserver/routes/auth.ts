@@ -10,6 +10,8 @@ import { adminDbRepository } from "../../../app/repositories/adminDbRepository";
 import { adminRepoMongoDb } from "../../../frameworks/database/mongodb/repositories/adminRepoMongoDb";
 import {googleAuthService} from "../../../frameworks/services/googleAuthService"
 import { googleAuthServiceInterface } from "../../../app/services/googleAuthServicesInterface";
+import {nodeMailService} from "../../../frameworks/services/nodeMailservice"
+import { nodemailerServiceInterface } from "../../../app/services/nodeMailerService";
 
 
 const authRouter = () => {
@@ -25,15 +27,22 @@ const authRouter = () => {
         adminRepoMongoDb,
         googleAuthServiceInterface,
         googleAuthService,
+        nodemailerServiceInterface,
+        nodeMailService
+
 
     );
-    console.log(controller, 'controller');
+    
 
 
     //STUDENT
     router.post("/student-register", controller.registerStudent);
     router.post("/student-login", controller.loginStudent);
-    router.post("/login-with-google", controller.loginWithGoogle)
+    router.post("/login-with-google", controller.loginWithGoogle);
+    router.post("/forgot-password/send-otp", controller.sendotp);
+    router.post("/forgot-password/verify-Otp", controller.verifyOtp);
+    router.post("/forgot-password/change-password", controller.changePasswordAfterForgot);
+    
 
     //INSTRUCTOR
     router.post("/instructor/instructor-register", controller.registerInstructor);

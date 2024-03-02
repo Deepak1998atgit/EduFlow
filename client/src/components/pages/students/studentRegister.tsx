@@ -113,8 +113,6 @@ const studentRegister = () => {
                                 <div className="w-full flex items-end">
 
                                 </div>
-                                <p className="text-sm text-[#1B2E35] font-medium whitespace-nowrap cursor-pointer underline undeline-offset-2">Forgot password?</p>
-
                             </div>
 
                             <div className="w-full flex flex-col my-4">

@@ -2,7 +2,14 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { JwtPayload } from 'jsonwebtoken';
 import configKeys from '../../../config';
+import Twilio from '../../utils/twilio';
 
+
+const twilio = new Twilio(
+  configKeys.TWILIO_ACCOUNT_SID,
+  configKeys.TWILIO_AUTH_TOKEN,
+  configKeys.TWILIO_SERVICE_SID
+);
 
 export const authService = () => {
 
@@ -27,10 +34,46 @@ export const authService = () => {
   };
 
 
+  const generateRandomPassword=()=>{
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let password = '';
+    const passwordLength=8;
+    for (let i = 0; i < passwordLength; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      password += charset.charAt(randomIndex);
+    }
+    return password;
+  }
+
+
+  const generateOTP = async (phoneNumber: string) => {
+    console.log(phoneNumber,"uu")
+    const otpStatus = await twilio
+      .sendVerificationCode(phoneNumber)
+      .then((verfication: any) => verfication?.status)
+      .catch((error: Error) => console.log(error))
+    return {otpStatus, phoneNumber};
+  };
+
+
+  const verifyOTP = async (phoneNumber: string, otp: string) => {
+    const verfication = await twilio
+      .verifyCode(phoneNumber, otp)
+      .then((verificationCheck: any) => {
+        return verificationCheck?.status   
+      })
+      .catch((error: Error) => console.log(error));
+    return verfication
+  };
+
+
   return {
     hashPassword,
     comparePassword,
-    generateToken
+    generateToken,
+    generateRandomPassword,
+    generateOTP,
+    verifyOTP 
   };
 };
 

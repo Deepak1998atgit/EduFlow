@@ -7,7 +7,6 @@ class CustomApiError extends Error {
       this.data = customData;
       Object.setPrototypeOf(this, CustomApiError.prototype);
     }
-  
     getCustomData(): any {
       return this.data;
     }

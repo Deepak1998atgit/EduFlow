@@ -12,6 +12,11 @@ const Loader = lazy(
 );
 
 
+const LazyStudentForgotPassword = lazy(
+  () => import("../components/pages/students/studentForgotPassword")
+);
+
+
 const LazyStudentRegister = lazy(
   () => import("../components/pages/students/studentRegister")
 );
@@ -35,6 +40,11 @@ const LazyInstructorLogin = lazy(
 
 const LazyInstructorHome = lazy(
   () => import("../components/pages/instructors/instructor-dashboard")
+);
+
+
+const LazyInstructorWelcome = lazy(
+  () => import("../components/pages/instructors/instructor-welcome")
 );
 
 
@@ -89,6 +99,15 @@ export const router = createBrowserRouter([
           </Suspense>)
       },
       {
+        path: "/forgot-password",
+        element: (
+          <Suspense fallback={
+            <Loader />
+          }>
+            <LazyStudentForgotPassword />
+          </Suspense>)
+      },
+      {
         path: "/",
         element: <Instructor />,
         children: [
@@ -117,7 +136,10 @@ export const router = createBrowserRouter([
                 <LazyInstructorHome />
               </Suspense>)
           },
-          { path: "historical-dividend", element: <>his</> },
+          { path: "/instructor-welcome", element:(
+            <Suspense fallback={<Loader />}>
+              <LazyInstructorWelcome />
+            </Suspense>) },
         ],
       },
       {

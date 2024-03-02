@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export default function studentFooter() {
     return (
@@ -9,7 +10,7 @@ export default function studentFooter() {
                  <p className='mt-4'>Create an online video course, reach students across the globe, and earn money</p>
                 </div>
                 <div className='flex-2'>
-                <button className='w-36  h-9 bg-blue-500  text-white border-blue-500 rounded-none'>Teach on EduFlow</button>
+                <NavLink to='/instructor-welcome' className='w-36  text-white border-blue-500 rounded-none'>Teach on EduFlow</NavLink >
                 </div>
             </div>
             <div className=" bottom-0 h-45 flex left-0 w-full bg-gray-800 text-white border-b border-solid border-gray-300 p-4">

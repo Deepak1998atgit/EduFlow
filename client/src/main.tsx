@@ -9,6 +9,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import CONFIG_KEYS from "./config";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+// import ErrorBoundary from './errorboundry/errorBoundry';
 
 
 
@@ -21,6 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <RouterProvider router={router} />
           <ToastContainer />
       </Provider>
-    </GoogleOAuthProvider>
+      </GoogleOAuthProvider>
   </React.StrictMode>,
 )

@@ -7,12 +7,10 @@ import {
 
 
 export const login = async (endpoint: string, data: StudentLoginData) => {
-  console.log(data, "jjjjj")
   const response = await authInstanceAxios.post(
     `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`,
     data
   );
-  console.log(data, "jjjjj")
   return response;
 };
 
@@ -24,7 +22,6 @@ export const register = async (
     `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`,
     studentData
   );
-  console.log(studentData, "jjjjj")
   return response;
 };
 
@@ -58,3 +55,54 @@ export const googleLoginInstructor = async (
   
   return response.data
 };
+
+
+export const sendOtpStudent = async (
+  endpoint: string,
+  mobile: string
+) => {
+  const data = {
+    mobile,
+  };
+  const response = await authInstanceAxios.post(
+    `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`,
+    data
+  );
+  return response.data
+};
+
+
+export const verifyOtpStudent = async (
+  endpoint: string,
+  otp: string,
+  mobile:string
+) => {
+  const data = {
+    mobile,
+    otp,
+  };
+  const response = await authInstanceAxios.post(
+    `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`,
+    data
+  );
+  return response.data
+};
+
+
+export const changePasswordAfterForgotU = async (
+  endpoint: string,
+  password: string,
+  mobile: string
+) => {
+  const data = {
+    password,
+    mobile,
+  };
+  const response = await authInstanceAxios.post(
+    `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`,
+    data
+  );
+  return response.data
+};
+
+

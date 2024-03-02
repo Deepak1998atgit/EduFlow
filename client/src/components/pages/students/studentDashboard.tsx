@@ -14,8 +14,8 @@ const StudentDashboard: React.FC = () => {
     <>
       <StudentNavbar />
       <StudentHero/>
-      <StudentCoursecard/>  
-      <StudentFooter/>
+      {/* <StudentCoursecard/>  
+      <StudentFooter/> */}
     </>
   )
 }

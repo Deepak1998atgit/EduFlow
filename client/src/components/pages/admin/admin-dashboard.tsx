@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import AdminNav from '../../partials/adminNav';
 import AdminSideBar from '../../pages/admin/admin-sidebar';
 import Students from "./admin-user";
-import Instructors from './admin-tutor'
-
+import Instructors from './admin-tutor';
+import AdminHome from "./admin-home";
 
 
 const AdminDashboard: React.FC = () => {
-  const [selectedButtonValue, setSelectedButtonValue] = useState('users');
+  const [selectedButtonValue, setSelectedButtonValue] = useState('dashboard');
   const handleSidebarClick = (buttonValue :string) => {
-   // Set the selected button value
     setSelectedButtonValue(buttonValue);
   };
   return (
@@ -17,6 +16,7 @@ const AdminDashboard: React.FC = () => {
       <AdminNav />
       <div className="flex">
         <AdminSideBar onSidebarClick={handleSidebarClick}  />
+        {selectedButtonValue === 'dashboard' && <AdminHome/>}
         {selectedButtonValue === 'users' && <Students/>}
         {selectedButtonValue === 'tutors' && <Instructors/>}  
       </div>

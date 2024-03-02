@@ -45,13 +45,11 @@ const InstructorRegistrationPage: React.FC = () => {
         validationSchema={instructorRegistrationValidationSchema}
         onSubmit={handleSubmit}
       >
-
         <div className="w-full flex flex-col max-w-[400px]">
           <Form>
             <div className="w-full flex flex-col mb-2 ">
               <h3 className="text-3xl text-[#1a2f34] font-semibold mb-2">Sign UP</h3>
             </div>
-div
             <div className="w-full flex  flex-col ">
             <Field
                 name="name"
@@ -133,7 +131,7 @@ div
               <div className="w-full flex items-end">
 
               </div>
-              <p className="text-sm text-[#1B2E35] font-medium whitespace-nowrap cursor-pointer underline undeline-offset-2">Forgot password?</p>
+              
 
             </div>
 

@@ -11,7 +11,7 @@ export const GoogleSignIn: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const handleSignInWithGoogle = async (credential: string) => {
-        console.log("google auth resff")
+        console.log("google auth respose sign in")
         await googleLogin(credential)
             // .then((response: any) => {
             //     const {accessToken}: { accessToken: string } = response
@@ -25,11 +25,13 @@ export const GoogleSignIn: React.FC = () => {
             //       position: toast.POSITION.BOTTOM_RIGHT });
             //   });
             .then(async (response: any) => {
-                console.log(response,"kkkkkkres");
+                console.log(response,"google auth res");
                 const {
                     accessToken
                 }: { accessToken: string } = response
-                await dispatch(setToken({ accessToken, userType: "student" }));
+                console.log("lllllllllllllllllllllllllll");
+                console.log(accessToken,"access token from the google res")
+                await dispatch(await setToken({ accessToken, userType: "student" }));
                 toast.success(response?.message, {
                     position: toast.POSITION.TOP_RIGHT,
                 });

@@ -5,12 +5,14 @@ interface User {
   email: string;
   password: string;
   name: string;
+  mobile:string;
   isBlocked: boolean;
 }
 
 export default function adminUser() {
   const [change, setChange] = useState(false);
   const [user, setUser] = useState<User[]>([]);
+  console.log(user,"user");
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/admin/getUsers')
@@ -47,13 +49,13 @@ export default function adminUser() {
   };
   return (
     <>
-      <div className="flex-1 ml-40 mr-20 p-10">
+      <div className="flex-1 ml-10 mr-20 p-10">
         <div className=" overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
-                  Student
+                  Students
                 </th>
                 <th scope="col" className="px-6 py-3">
 
@@ -62,7 +64,7 @@ export default function adminUser() {
                   Email
                 </th>
                 <th scope="col" className="px-6 py-3">
-
+                  Phone
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Action
@@ -83,7 +85,7 @@ export default function adminUser() {
                       {user?.email}
                     </td>
                     <td className="px-6 py-4">
-
+                    {user?.mobile}
                     </td>
                     <td className="px-6 py-4">
                       {

@@ -1,94 +1,44 @@
-import { useNavigate } from 'react-router-dom';
-import React, { useState, useEffect } from "react";
-const InstructorDashboard: React.FC = () => {
-  const [instructor, setInstructor] = useState({});
-  const navigate = useNavigate();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  useEffect(() => {
-    const tutorDetail: any = localStorage.getItem('accessToken');
-    const parsedTutor = JSON.parse(tutorDetail)
-    setInstructor(parsedTutor)
-    console.log(instructor, "kkkkkk")
-  }, [])
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-  const handleLogOut = () => {
-    try {
-      localStorage.removeItem('accessToken');
-      navigate('/instructor-login');
-    } catch (error) {
-
-    }
+import React, { useState } from 'react';
+import InstructorHome from './instructor-home';
+import InstructorFooter from './instructor-footer';
+import { FaUserGraduate } from "react-icons/fa6";
+import { RiCommunityFill } from "react-icons/ri";
+import { FcStatistics } from "react-icons/fc";
+import { ImBooks } from "react-icons/im";
+import InstructorNavbar from './instructor-navbar';
+const InstructorDashboard: React.FC = ({ }) => {
+  const [activeButton, setActiveButton] = useState('performance');
+  const handleButtonClick = (buttonValue: string) => {
+    setActiveButton(buttonValue);
   }
-  console.log(instructor?.student?.prifile, "dhhhdh")
   return (
-
     <>
-      <nav className="bg-[#5be5a8] p-4">
-        <div className="container mx-auto flex justify-between items-center">
-
-          <div>
-            <img src="https://svgsilh.com/svg/1319606.svg?color=indigo&shade=500" alt="Logo" className="h-8 " />
-          </div>
-
-          {/* Navigation Links (Desktop) */}
-          <div className="hidden md:flex space-x-4">
-            <a href="#" className="text-white"></a>
-            <a href="#" className="text-white"></a>
-            <a href="#" className="text-white"></a>
-            <a href="#" className="text-white"></a>
-            <a href="#" className="text-white"></a>
-            <button onClick={handleLogOut} className="bg-white rounded-full w-full">LogOut</button>
-            <div>
-              {instructor ? (<img src={instructor?.student?.prifile} alt="Logo" className='rounded-full' />) : null}
+      <div className="grid grid-cols-6 gap-0">
+        <div className="bg-[#31473A] col-span-1">
+          <div className="h-screen ">
+            <div className=" h-screen">
+              <ul>
+                <li className=""><button onClick={() => handleButtonClick('performance')} className={`bg-${activeButton === 'performance' ? 'white' : 'green'} text-${activeButton === 'performance' ? 'black' : 'white'} text-left text-lg border border-transparent flex items-center mt-20 outline-none focus:border-transparent pl-4 h-32 w-full  hover:bg-gray-700 `} ><FcStatistics className="mr-2" />Performance</button></li>
+                <li className=""><button onClick={() => handleButtonClick('students')} className={`bg-${activeButton === 'students' ? 'white' : 'green'} text-left text-lg border border-transparent flex items-center outline-none focus:border-transparent pl-4 h-32 w-full  hover:bg-gray-700 text-${activeButton === 'students' ? 'black' : 'white'}`} ><FaUserGraduate className="mr-2" />Students</button></li>
+                <li className=""><button onClick={() => handleButtonClick('courses')} className={`bg-${activeButton === 'courses' ? 'white' : 'green'} text-left text-lg border border-transparent flex items-center outline-none focus:border-transparent pl-4 h-32  hover:bg-gray-700 w-full text-${activeButton === 'courses' ? 'black' : 'white'}`} ><ImBooks className="mr-2" />Courses</button></li>
+                <li className=""><button onClick={() => handleButtonClick('communications')} className={`bg-${activeButton === 'communications' ? 'white' : 'green'} text-left text-lg border border-transparent flex items-center outline-none focus:border-transparent pl-4 h-32 hover:bg-gray-700 w-full text-${activeButton === 'communications' ? 'black' : 'white'}`} ><RiCommunityFill className="mr-2" />Communications</button></li>
+              </ul>
             </div>
-          </div>
-
-          {/* Responsive Menu (Mobile) */}
-          <div className="md:hidden">
-            <button onClick={toggleMobileMenu} className="text-white focus:outline-none">
-              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-              </svg>
-            </button>
           </div>
         </div>
-
-        {/* Responsive Menu (Mobile) */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-blue-500 p-4 text-right">
-            <a href="#" className="block text-white mb-2">Home</a>
-            <a href="#" className="block text-white mb-2">About</a>
-            <a href="#" className="block text-white mb-2">Services</a>
-            <a href="#" className="block text-white mb-2">Contact</a>
-            <a href="#" className="block text-white">Blog</a>
-          </div>
-        )}
-      </nav>
-      <div>
-        <section className="dark:bg-gray-800 dark:text-gray-100">
-          <div className="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
-            <div className="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
-              <img src="https://images.unsplash.com/flagged/photo-1564445477052-8a3787406bbf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHR1dG9yfGVufDB8fDB8fHww" alt="" className="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128" />
-            </div>
-            <div className="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
-              <h1 className="text-5xl font-bold leadi sm:text-6xl">Smart
-                <span className="dark:text-violet-400"> learning</span>
-              </h1>
-              <p className="mt-6 mb-8 text-lg sm:mb-12">Elevate your tutoring experience with our user-friendly app.
-               
-              </p>
-              <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-                <a rel="noopener noreferrer" href="#" className="px-8 py-3 text-lg font-semibold rounded dark:bg-violet-400 dark:text-gray-900"></a>
-                <a rel="noopener noreferrer" href="#" className="px-8 py-3 text-lg font-semibold border rounded dark:border-gray-100"></a>
-              </div>
+        <div className="col-span-5">
+          <div className="bg-gray-300 ">
+            <InstructorNavbar />
+            <div className="float-left">
+              <InstructorHome activeButton={activeButton} />
             </div>
           </div>
-        </section>
+        </div>
       </div>
+      <InstructorFooter/>
     </>
   );
-};;
+};
 export default InstructorDashboard;
+

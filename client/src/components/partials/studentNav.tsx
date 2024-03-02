@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
-import { string } from 'yup';
+import { FaShoppingCart, FaHeart } from 'react-icons/fa';
+import { useNavigate,NavLink} from 'react-router-dom';
+import decodeJwtToken from "../../utils/decodeJwt";
+import { AnimatePresence, motion } from "framer-motion";
+
+
+interface Student {
+    Id: string;
+    email: string;
+    name: string;
+    prifile: string; 
+  }
 
 const studentNavbar = () => {
+    const [isHovered,setIsHovered]=useState(false)
     const navigate = useNavigate();
-    const [student, setStudent] = useState([]);
+    const [student, setStudent] = useState<Student>();
     useEffect(() => {
-        const studentDetail: any = localStorage.getItem('accessToken');
-        console.log(studentDetail,"kkkk")
-        const parsedStudent = JSON.parse(studentDetail)
-
-        setStudent(parsedStudent)
-        console.log(student, "kkkkkk")
-    }, [])
-    console.log(student?.student?.prifile, "kkkkkk")
+       const accessToken = localStorage?.getItem("accessToken");
+       if(accessToken){
+        const decodedToken : any = decodeJwtToken(accessToken ?? "");
+        setStudent(decodedToken.payload); 
+        
+       }
+            
+    }, []) 
     const handleLogOut = () => {
         try {
             localStorage.removeItem('accessToken');
@@ -23,7 +33,8 @@ const studentNavbar = () => {
             console.log(error);
         }
     }
-    console.log(student?.student?.prifile, "kkkkddkkfff")
+    console.log(student,"llll")
+    
     return (
         <>
             <nav className="bg-[#e2e3e5] bg-opacity-50 fixed top-0 w-full z-50 h-20">
@@ -50,32 +61,40 @@ const studentNavbar = () => {
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
 
-                                    <a href="#" className=" text-[#040404] text-lg  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Home</a>
-                                    <a href="#" className="text-[#040404] text-lg hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Tutor</a>
-                                    <a href="#" className="text-[#040404] text-lg hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Course</a>
-                                    <a href="#" className="text-[#040404] text-lg hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Contact Us</a>
+                                    <a href="#" className=" text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Home</a>
+                                    <a href="#" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Categories</a>
+                                    {student? (<>
+                                    <a href="#" className="text-[#040404] hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Instructor</a>
+                                        <a href="#" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">My learning</a></>
+                                    
+                                    ):null}
+                                    {student ? null : <NavLink to="/instructor-welcome" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Teach on Eduflow</NavLink> }
+                                    
                                 </div>
                             </div>
                         </div>
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
                             {student ? false : (<button type="button" className="relative rounded-full w-28 h-10  bg-[#040404] p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                 <NavLink className='' to="/login">Login</NavLink>
                             </button>)}
-                            {student?.student?.name}
+                            {student ? (<> <FaHeart className=' mt-1' size={30} />
+                                <FaShoppingCart className='ml-3 mt-1 mr-3' size={30} />{student?.name}</>) : null}
                             <div className="relative ml-3">
                                 <div>
+
                                     <button type="button" className="relative w-full flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                         <span className="absolute -inset-1.5"></span>
                                         <span className="sr-only">Open user menu</span>
-                                        {student ? (<img className="h-8 w-8 rounded-full" src={student?.student?.prifile} />) : null}
+                                        {student ? (<img className="h-9 w-9 rounded-full object-cover object-center" src={student?.prifile} />) : null}
                                     </button>
                                 </div>
 
                             </div>
-                            {student ? (<button onClick={handleLogOut} type="button" className="mx-3 relative rounded-full w-1/2 h-10  bg-[#040404] p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                LogOut
-                            </button>) : false}
-
+                            {student ? (<>
+                                <button onClick={handleLogOut} type="button" className="mx-3 relative rounded-full w-1/2 h-10  bg-[#040404] p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                    LogOut
+                                </button></>) : false}
                         </div>
 
                     </div>

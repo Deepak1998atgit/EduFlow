@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState}from 'react'
 import { NavLink } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { instructorLoginValidationSchema } from "../../../validations/auth/InstructorLoginValidation";
@@ -7,13 +7,16 @@ import { loginInstructor } from "../../../api/endpoints/auth/instructor-auth";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import {GoogleSignInByInstructor} from '../../common/googleAuth'
-
-
-
-
-
 const InstructorLoginPage: React.FC = () => {
+    const [isLogged,setIsLogged] =useState(false)
     const navigate = useNavigate();
+    useEffect(() => {
+        const accessToken = localStorage?.getItem("accessToken");
+        if (accessToken) {
+          setIsLogged(true);
+          navigate('/instructor-home');
+        }
+      }, [isLogged,navigate]);
     const handleSubmit = async (
         instructorInfo: InstructorLoginInfo
     ) => {
@@ -35,7 +38,7 @@ const InstructorLoginPage: React.FC = () => {
     };
 
     return (
-        <div className="w-full h-screen flex item-start">
+        <div className="w-full h-screen  flex item-start overflow-hidden">
             <div className="relative w-1/2 h-full flex flex-col">
                 <img src="https://img.freepik.com/free-vector/learning-concept-illustration_114360-3454.jpg?w=740&t=st=1699603068~exp=1699603668~hmac=705a6c88bcc020ab331b529b1cd303c6c8e2a6d95d877cbc20cc33ff2eaec322" className="w-full h-full object-cover" />
             </div>
@@ -83,7 +86,7 @@ const InstructorLoginPage: React.FC = () => {
                                 <div className="w-full flex items-end">
 
                                 </div>
-                                <p className="text-sm text-[#1B2E35] font-medium whitespace-nowrap cursor-pointer underline undeline-offset-2">Forgot password?</p>
+                            
 
                             </div>
 
