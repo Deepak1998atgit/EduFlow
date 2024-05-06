@@ -5,17 +5,13 @@ import StudentCoursecard from './studentCourseCard';
 import StudentFooter from './studentFooter';
 
 const StudentDashboard: React.FC = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
   return (
     <>
       <StudentNavbar />
       <StudentHero/>
-      {/* <StudentCoursecard/>  
-      <StudentFooter/> */}
+      <StudentCoursecard/>  
+      <StudentFooter/> 
     </>
   )
 }

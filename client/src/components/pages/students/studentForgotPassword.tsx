@@ -107,15 +107,16 @@ const StudentForgotPassword = () => {
   
   return (
     <>
-      <div className="max-w-screen h-screen overflow-x-hidden">
-        <div className="mx-28 w-screen h-screen overflow-x-hidden  flex flex-col lg:flex-row  item-start">
-          <div className="w-1/2 h-full flex flex-col">
+      <div className="w-full h-screen overflow-x-hidden">
+        <div className="w-full h-screen overflow-x-hidden   grid grid-cols-1 md:grid-cols-6 gap-9">
+          <div className=" h-full col-span-3">
             <img
               src="https://img.freepik.com/free-vector/digital-presentation-concept-illustration_114360-8175.jpg?w=740&t=st=1699346079~exp=1699346679~hmac=76a5032728c90aaf18f6461d14366fba8c710b5e167d99f66c88eb2c42da1f38"
-              className=" w-full object-cover hidden sm:block"
+              className=" object-cover"
             />
           </div>
-          <div className="w-full md:w-1/2   h-full bg-[#fefffe]  items-center ml-24 justify-between">
+          <div className="col-span-3 h-full bg-[#fefffe] flex justify-center items-center">
+            <div className="">
             <Formik
               initialValues={{ mobile: "" }}
               validationSchema={studentMobilesenOnOtp}
@@ -230,6 +231,7 @@ const StudentForgotPassword = () => {
                 </div>
               </Form>
             </Formik>
+            </div>
           </div>
         </div>
       </div>

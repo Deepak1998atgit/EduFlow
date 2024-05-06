@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FaShoppingCart, FaHeart } from 'react-icons/fa';
-import { useNavigate,NavLink} from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import decodeJwtToken from "../../utils/decodeJwt";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -9,22 +9,22 @@ interface Student {
     Id: string;
     email: string;
     name: string;
-    prifile: string; 
-  }
+    prifile: string;
+}
 
 const studentNavbar = () => {
-    const [isHovered,setIsHovered]=useState(false)
+    const [isHovered, setIsHovered] = useState(false)
     const navigate = useNavigate();
     const [student, setStudent] = useState<Student>();
     useEffect(() => {
-       const accessToken = localStorage?.getItem("accessToken");
-       if(accessToken){
-        const decodedToken : any = decodeJwtToken(accessToken ?? "");
-        setStudent(decodedToken.payload); 
-        
-       }
-            
-    }, []) 
+        const accessToken = localStorage?.getItem("accessToken");
+        if (accessToken) {
+            const decodedToken: any = decodeJwtToken(accessToken ?? "");
+            setStudent(decodedToken.payload);
+
+        }
+
+    }, [])
     const handleLogOut = () => {
         try {
             localStorage.removeItem('accessToken');
@@ -33,24 +33,44 @@ const studentNavbar = () => {
             console.log(error);
         }
     }
-    console.log(student,"llll")
-    
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <>
             <nav className="bg-[#e2e3e5] bg-opacity-50 fixed top-0 w-full z-50 h-20">
                 <div className="mx-auto max-w-7xl px-7 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center justify-between">
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                            <button type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                                <span className="absolute -inset-0.5"></span>
-                                <span className="sr-only">Open main menu</span>
-
-                                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            <button
+                                type="button"
+                                className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                aria-controls="mobile-menu"
+                                aria-expanded={isOpen ? 'true' : 'false'}
+                                onClick={toggleMenu}
+                            >
+                                <svg
+                                    className={isOpen ? 'hidden h-6 w-6' : 'block h-6 w-6'}
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    aria-hidden="true"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                                 </svg>
-
-                                <svg className="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                <svg
+                                    className={isOpen ? 'block h-6 w-6' : 'hidden h-6 w-6'}
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    stroke="currentColor"
+                                    aria-hidden="true"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
@@ -63,13 +83,13 @@ const studentNavbar = () => {
 
                                     <a href="#" className=" text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Home</a>
                                     <a href="#" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Categories</a>
-                                    {student? (<>
-                                    <a href="#" className="text-[#040404] hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Instructor</a>
+                                    {student ? (<>
+                                        <a href="#" className="text-[#040404] hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Instructor</a>
                                         <a href="#" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">My learning</a></>
-                                    
-                                    ):null}
-                                    {student ? null : <NavLink to="/instructor-welcome" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Teach on Eduflow</NavLink> }
-                                    
+
+                                    ) : null}
+                                    {student ? null : <NavLink to="/instructor-welcome" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Teach on Eduflow</NavLink>}
+
                                 </div>
                             </div>
                         </div>
@@ -99,7 +119,7 @@ const studentNavbar = () => {
 
                     </div>
                 </div>
-                <div className="sm:hidden" id="mobile-menu">
+                <div className={isOpen ? 'sm:hidden' : 'hidden'} id="mobile-menu">
                     <div className="space-y-1 px-2 pb-3 pt-2">
                         <a href="#" className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
                         <a href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
