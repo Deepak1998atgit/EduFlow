@@ -48,6 +48,11 @@ const LazyInstructorWelcome = lazy(
 );
 
 
+// const LazyAddCourse = lazy(
+//   () => import("../components/pages/add-corse/add-course-form")
+// );
+
+
 //ADMIN
 const LazyAdminLogin= lazy(
   () => import("../components/pages/admin/admin-login")

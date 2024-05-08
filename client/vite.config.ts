@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-
+import path from 'path';
 
 
 export default defineConfig({
@@ -10,5 +10,10 @@ export default defineConfig({
     host: 'localhost',
     port: 3000
   },
- 
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  }
 })
+
