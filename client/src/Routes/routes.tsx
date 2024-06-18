@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import { Student, Instructor, Admin } from '../App'
+import { Student, Instructor, Admin } from '../App';
+import ErrorElement from "../components/common/error-element";
+import AddCategory from "../components/pages/categories/add-category";
 
 
 //STUDENTS
@@ -48,25 +50,27 @@ const LazyInstructorWelcome = lazy(
 );
 
 
-// const LazyAddCourse = lazy(
-//   () => import("../components/pages/add-corse/add-course-form")
-// );
+const LazyAddCourse = lazy(
+  () => import("../components/pages/add-corse/add-course-form")
+);
 
 
 //ADMIN
-const LazyAdminLogin= lazy(
+const LazyAdminLogin = lazy(
   () => import("../components/pages/admin/admin-login")
 );
 
 
-const LazyAdminDashBoard= lazy(
+const LazyAdminDashBoard = lazy(
   () => import("../components/pages/admin/admin-dashboard")
 );
 
 
-const LazyAdminTutorView= lazy(
+const LazyAdminTutorView = lazy(
   () => import("../components/pages/admin/admin-tutor")
 );
+
+
 
 
 
@@ -141,10 +145,20 @@ export const router = createBrowserRouter([
                 <LazyInstructorHome />
               </Suspense>)
           },
-          { path: "/instructor-welcome", element:(
-            <Suspense fallback={<Loader />}>
-              <LazyInstructorWelcome />
-            </Suspense>) },
+          {
+            path: "/instructor-welcome", element: (
+              <Suspense fallback={<Loader />}>
+                <LazyInstructorWelcome />
+              </Suspense>)
+          },
+          {
+            path: "add-course",
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazyAddCourse />
+              </Suspense>
+            ),
+          }
         ],
       },
       {
@@ -166,7 +180,7 @@ export const router = createBrowserRouter([
               <Suspense fallback={
                 <Loader />
               }>
-                <LazyAdminDashBoard/>
+                <LazyAdminDashBoard />
               </Suspense>)
           },
           {
@@ -175,7 +189,7 @@ export const router = createBrowserRouter([
               <Suspense fallback={
                 <Loader />
               }>
-                <LazyAdminTutorView/>
+                <LazyAdminTutorView />
               </Suspense>)
           },
           {
@@ -190,4 +204,45 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/instructors",
+    element: <Instructor />,
+    children: [
+      {
+        path: "add-course",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <LazyAddCourse />
+          </Suspense>
+        ),
+      }
+    ],
+  },
+  {
+    path: "admin",
+    element: <Admin />,
+    errorElement: <ErrorElement />,
+    children: [
+      {
+        path: "", // Matched when accessing /admin
+        element: (
+          <Suspense fallback={<div>loading...</div>}>
+            <div>admin</div>
+          </Suspense>
+        ),
+      },
+      {
+        path: "categories", // Matched when accessing /admin/categories
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <div>cater</div>
+          </Suspense>
+        ),
+      },
+      {
+        path: "categories/add-category", // Relative path
+        element: <AddCategory/>,
+      },
+    ],
+  }
 ]);

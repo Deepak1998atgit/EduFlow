@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import { AddCourseValidationSchema } from "@/validations/course/AddCourse";
 import { Switch } from "@material-tailwind/react";
-import { addCourse } from "../../../api/endpoints/course/course";
+import { addCourse } from "../../../api/endpoints/course/AddCourse";
 import { toast } from "react-toastify";
 import { getAllCategories } from "../../../api/endpoints/category";
 import { ApiResponseCategory } from "../../../api/types/apiResponses/api-response-category";
@@ -53,9 +53,9 @@ const CombinedForm: React.FC = () => {
       introduction && formData.append("files",introduction)
       Object.keys(values).forEach((key) => formData.append(key, values[key]));
       const response = await addCourse(formData);
-      toast.success(response.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
+      // toast.success(response.data.message, {
+      //   position: toast.POSITION.BOTTOM_RIGHT,
+      // });
       resetForm();
       setGuidelines(null)
       setThumbnail(null)
@@ -215,6 +215,7 @@ const CombinedForm: React.FC = () => {
                       id='auto-update'
                       onClick={handlePaid}
                       label='Paid'
+                      crossOrigin='anonymous'
                     />
                   </div>
 

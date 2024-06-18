@@ -6,6 +6,7 @@ export const addCourseService = async (
   endpoint: string,
   courseInfo: FormData
 ) => {
+  console.log(courseInfo,"course")
   const response = await api.post(
     `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`,
     courseInfo
