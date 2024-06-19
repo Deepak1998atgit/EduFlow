@@ -47,15 +47,17 @@ const CombinedForm: React.FC = () => {
     { resetForm }: FormikHelpers<CourseFormValues>
   ) => {
     try {
+      console.log("form data","form data")
       const formData = new FormData();
       guidelines && formData.append("files", guidelines);
       thumbnail && formData.append("files", thumbnail);
       introduction && formData.append("files",introduction)
       Object.keys(values).forEach((key) => formData.append(key, values[key]));
+      console.log("form data",thumbnail,"ok",guidelines,"ok",introduction,"form data")
       const response = await addCourse(formData);
-      // toast.success(response.data.message, {
-      //   position: toast.POSITION.BOTTOM_RIGHT,
-      // });
+      toast.success(response.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       resetForm();
       setGuidelines(null)
       setThumbnail(null)

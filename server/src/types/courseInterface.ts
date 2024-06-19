@@ -25,3 +25,12 @@ export interface AddCourseInfoInterface {
     rating: number;
     isVerified: boolean;
 }
+
+
+
+export interface CourseInterface extends AddCourseInfoInterface {
+    coursesEnrolled:Array<string>,
+    thumbnailUrl:string,
+    introductionUrl:string,
+    guidelinesUrl:string;
+}

@@ -5,6 +5,7 @@ import {
 
 
 export const addCourse = (courseInfo: FormData) => {
+  console.log("courseinfo",courseInfo)
   return addCourseService(END_POINTS.ADD_COURSE, courseInfo);
 };
 
