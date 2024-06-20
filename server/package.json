@@ -23,6 +23,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1",
+    "streamifier": "^0.1.1",
     "twilio": "^4.19.0"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.9.5",
     "@types/nodemailer": "^6.4.14",
+    "@types/streamifier": "^0.1.2",
     "@types/twilio": "^3.19.3",
     "nodemailer": "^6.9.7",
     "ts-node": "^10.9.1",

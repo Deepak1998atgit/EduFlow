@@ -7,14 +7,19 @@ import {
   AddCourseInfoInterface,
 } from '../../types/courseInterface';
 import { CustomRequest } from '../../types/customRequest';
+import { CloudServiceInterface } from '../../app/services/cloudServiceInterface';
+import { CloudServiceImpl } from '../../frameworks/services/cloudinaryService';
 
 
 
 const courseController = (
   courseDbRepository: CourseDbRepositoryInterface,
   courseDbRepositoryImpl: CourseRepositoryMongoDbInterface,
+  cloudServiceInterface: CloudServiceInterface,
+  cloudServiceImpl: CloudServiceImpl,
 ) => {
   const dbRepositoryCourse = courseDbRepository(courseDbRepositoryImpl());
+  const cloudService = cloudServiceInterface(cloudServiceImpl());
  
 
   const addCourse = asyncHandler(
@@ -26,6 +31,7 @@ const courseController = (
       const response = await addCourses(
         course,
         files,
+        cloudService,
         dbRepositoryCourse
       );
       console.log(response)
@@ -43,6 +49,7 @@ const courseController = (
   return {
     addCourse,
   };
+  
 };
 
 export default courseController;
