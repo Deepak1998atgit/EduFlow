@@ -1,10 +1,31 @@
 export interface InstructorInterface {
-    _id: string;
-    name:string;
+    firstName:string;
+    lastName:string;
+    profilePic:{
+        name:string;
+        key?:string;
+        url?:string;
+    };
     email: string;
     mobile:number;
-    qualification:string;
+    qualifications:string;
+    subjects:string;
+    experience:string;
+    skills:string;
+    about:string;
     password: string;
-    isBlocked:boolean;
+    certificates:Certificate[]
 }
+export interface Certificate {
+    name:string;
+    url?:string;
+    key:string
+}
+export interface SavedInstructorInterface extends InstructorInterface {
+    _id:string;
+    isVerified:boolean;
+    dateJoined:Date;
+    coursesCreated:Array<String>
+    profileUrl:string;
 
+}

@@ -33,11 +33,11 @@ const initialValues = {
   price: "",
 };
 
-const CombinedForm: React.FC = () => {
+const CombinedCourseAddForm: React.FC = () => {
   const [paid, setPaid] = useState(false);
   const [thumbnail, setThumbnail] = useState<File | null>(null);
   const [guidelines, setGuidelines] = useState<File | null>(null);
-  const [introduction,setIntroduction] = useState<File | null>(null)
+  const [introduction, setIntroduction] = useState<File | null>(null)
   const [categories, setCategories] = useState<ApiResponseCategory[] | null>(
     null
   );
@@ -47,13 +47,13 @@ const CombinedForm: React.FC = () => {
     { resetForm }: FormikHelpers<CourseFormValues>
   ) => {
     try {
-      console.log("form data","form data")
+      console.log("form data", "form data")
       const formData = new FormData();
       guidelines && formData.append("files", guidelines);
       thumbnail && formData.append("files", thumbnail);
-      introduction && formData.append("files",introduction)
+      introduction && formData.append("files", introduction)
       Object.keys(values).forEach((key) => formData.append(key, values[key]));
-      console.log("form data",thumbnail,"ok",guidelines,"ok",introduction,"form data")
+      console.log("form data", thumbnail, "ok", guidelines, "ok", introduction, "form data")
       const response = await addCourse(formData);
       toast.success(response.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -87,10 +87,7 @@ const CombinedForm: React.FC = () => {
   };
 
   return (
-    <div className='mb-20'>
-      <div className='ml-12 pl-20'>
-        <h1 className='font-bold text-xl text-gray-800'>Create Course</h1>
-      </div>
+    <div className='mb-10'>
       <Formik
         initialValues={initialValues}
         validationSchema={AddCourseValidationSchema}
@@ -98,7 +95,7 @@ const CombinedForm: React.FC = () => {
       >
         <Form>
           <div className='bg-white ml-32  rounded-lg border-2 border-gray-200 mr-32 mb-24 mt-2 p-5'>
-            <div className='flex  w-full justify-center mt-10 pt-3 space-x-14 '>
+            <div className='flex  w-full justify-center mt-2 pt-3 space-x-14 '>
               <div>
                 <div className='mb-3'>
                   <label
@@ -212,15 +209,14 @@ const CombinedForm: React.FC = () => {
                 </div>
 
                 <div className='mb-3'>
-                  <div className='mb-5 mt-2 pl-2 pt-5 '>
+                <div className="flex items-center">
                     <Switch
                       id='auto-update'
                       onClick={handlePaid}
-                      label='Paid'
                       crossOrigin='anonymous'
                     />
+                    <p className="ml-7 mt-5">Paid</p>
                   </div>
-
                   {paid && (
                     <div className='mb-2'>
                       <label
@@ -424,4 +420,4 @@ const CombinedForm: React.FC = () => {
   );
 };
 
-export default CombinedForm;
+export default CombinedCourseAddForm;

@@ -12,6 +12,9 @@ import {googleAuthService} from "../../../frameworks/services/googleAuthService"
 import { googleAuthServiceInterface } from "../../../app/services/googleAuthServicesInterface";
 import {nodeMailService} from "../../../frameworks/services/nodeMailservice"
 import { nodemailerServiceInterface } from "../../../app/services/nodeMailerService";
+import upload from "../middlewares/multer";
+import { cloudinaryService} from "../../../frameworks/services/cloudinaryService";
+import { cloudServiceInterface } from "../../../app/services/cloudServiceInterface";
 
 
 const authRouter = () => {
@@ -19,6 +22,8 @@ const authRouter = () => {
     const controller = authController(
         authServiceInterface,
         authService,
+        cloudServiceInterface,
+        cloudinaryService,
         studentDbRepository,
         studentRepositoryMongoDB,
         instructorDbRepository,
@@ -29,8 +34,6 @@ const authRouter = () => {
         googleAuthService,
         nodemailerServiceInterface,
         nodeMailService
-
-
     );
     
 
@@ -45,7 +48,7 @@ const authRouter = () => {
     
 
     //INSTRUCTOR
-    router.post("/instructor/instructor-register", controller.registerInstructor);
+    router.post("/instructor/instructor-register",upload.array('images'), controller.registerInstructor);
     router.post("/instructor/instructor-login", controller.loginInstructor);
     router.post("/login-with-google-instructor", controller.loginWithGoogleByInstructor);
    

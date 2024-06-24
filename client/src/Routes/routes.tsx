@@ -55,6 +55,12 @@ const LazyAddCourse = lazy(
 );
 
 
+const LazyInstructorDashBoard = lazy(
+  () => import("../components/pages/instructors/instructor-dashboard")
+);
+
+
+
 //ADMIN
 const LazyAdminLogin = lazy(
   () => import("../components/pages/admin/admin-login")
@@ -208,6 +214,14 @@ export const router = createBrowserRouter([
     path: "/instructors",
     element: <Instructor />,
     children: [
+      {
+        path: "",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <LazyInstructorDashBoard />
+          </Suspense>
+        ),
+      },
       {
         path: "add-course",
         element: (

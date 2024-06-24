@@ -1,13 +1,12 @@
 import authInstanceAxios from "../../middlewares/interceptor";
 import CONFIG_KEYS from "../../../config";
 import {
-  InstructorLoginInfo,
-  InstructorRegisterDataInterface
+  InstructorLoginInfo
 } from "../../types/instructor/auth-interface";
 
 export const register = async (
   endpoint: string,
-  instructorData:InstructorRegisterDataInterface
+  instructorData:FormData
 ) => {
   const response = await authInstanceAxios.post(
     `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`,
