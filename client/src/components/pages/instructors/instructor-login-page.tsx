@@ -1,4 +1,4 @@
-import React,{useEffect,useState}from 'react'
+import React,{useEffect}from 'react'
 import { NavLink } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { instructorLoginValidationSchema } from "../../../validations/auth/InstructorLoginValidation";
@@ -6,36 +6,38 @@ import { InstructorLoginInfo } from "../../../api/types/instructor/auth-interfac
 import { loginInstructor } from "../../../api/endpoints/auth/instructor-auth";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-import {GoogleSignInByInstructor} from '../../common/googleAuth'
+import { GoogleSignInByInstructor } from '../../common/googleAuth'
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserType } from "../../../redux/reducers/authSlice";
+import { selectIsLoggedIn } from "../../../redux/reducers/authSlice";
+import { setToken } from "../../../redux/reducers/authSlice";
 const InstructorLoginPage: React.FC = () => {
-    const [isLogged,setIsLogged] =useState(false)
-    const navigate = useNavigate();
-    useEffect(() => {
-        const accessToken = localStorage?.getItem("accessToken");
-        if (accessToken) {
-          setIsLogged(true);
-          navigate('/instructor-home');
-        }
-      }, [isLogged,navigate]);
-    const handleSubmit = async (
-        instructorInfo: InstructorLoginInfo
-    ) => {
-        try {
-
-            const response = await loginInstructor(instructorInfo);
-            console.log("response", response);
-            toast.success(response?.data?.message, {
-                position: toast.POSITION.TOP_RIGHT,
-            });
-            navigate('/instructor-home');
-
-        } catch (error: any) {
-
-            toast.error("Un Authorized", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
-        }
-    };
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const user = useSelector(selectUserType)
+  const handleSubmit = async (instructorInfo: InstructorLoginInfo) => {
+      try {
+        console.log("ok",instructorInfo)
+      const response = await loginInstructor(instructorInfo);
+      const {accessToken,refreshToken}:{accessToken:string,refreshToken:string} = response.data
+          dispatch(setToken({ accessToken, refreshToken, userType: "instructor" }))
+          console.log("ok",accessToken,"ok",refreshToken)
+      toast.success(response?.data?.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      }); 
+    //   response && navigate('/instructors')
+    } catch (error:any) {
+      toast.error(error.data?.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
+  };
+  useEffect(() => {
+    if(isLoggedIn&&user==="instructor"){
+      navigate("/instructors")
+    }
+  },[])
 
     return (
         <div className="w-full h-screen  flex item-start overflow-hidden">
@@ -48,15 +50,12 @@ const InstructorLoginPage: React.FC = () => {
                     validationSchema={instructorLoginValidationSchema}
                     onSubmit={handleSubmit}
                 >
-
                     <div className="w-full flex flex-col max-w-[400px]">
                         <Form>
                             <div className="w-full flex flex-col mb-2 ">
                                 <h3 className="text-3xl text-[#1a2f34] font-semibold mb-2">Log In</h3>
                             </div>
-
                             <div className="w-full flex flex-col ">
-
                                 <Field
                                     name="email"
                                     type="email"
@@ -86,8 +85,6 @@ const InstructorLoginPage: React.FC = () => {
                                 <div className="w-full flex items-end">
 
                                 </div>
-                            
-
                             </div>
 
                             <div className="w-full flex flex-col my-4">
@@ -103,15 +100,12 @@ const InstructorLoginPage: React.FC = () => {
                             <div className="w-full flex items-center justify-center">
                                 <p className="text-sm my-3 font-normal text-black ">Do you have an account? <span className="font-semibold underline underline-offset-2 cursor-pointer"> <NavLink to="/instructor-register">Sign Up</NavLink></span> for free</p>
                             </div>
-
                         </Form>
                         <div className='mx-16'>
                         <GoogleSignInByInstructor/>
                         </div>
                     </div>
                 </Formik>
-                
-
             </div >
         </div >
     )

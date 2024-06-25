@@ -15,7 +15,8 @@ import { nodemailerServiceInterface } from "../../../app/services/nodeMailerServ
 import upload from "../middlewares/multer";
 import { cloudinaryService} from "../../../frameworks/services/cloudinaryService";
 import { cloudServiceInterface } from "../../../app/services/cloudServiceInterface";
-
+import { refreshTokenDbRepository } from "../../../app/repositories/refreshTokenDBRepository";
+import { refreshTokenRepositoryMongoDB } from "../../../frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb";
 
 const authRouter = () => {
     const router = express.Router();
@@ -33,7 +34,9 @@ const authRouter = () => {
         googleAuthServiceInterface,
         googleAuthService,
         nodemailerServiceInterface,
-        nodeMailService
+        nodeMailService,
+        refreshTokenDbRepository,
+        refreshTokenRepositoryMongoDB
     );
     
 

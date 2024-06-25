@@ -13,7 +13,7 @@ export const instructorDbRepository = (
     await repository.addInstructor(instructor);
 
 
-    const getInstructorByEmail = async (email: string): Promise<InstructorInterface | null> =>
+    const getInstructorByEmail = async (email: string) =>
     await repository.getInstructorByEmail(email);
 
     return {

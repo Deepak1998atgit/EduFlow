@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import { StudentsDbInterface } from '../../app/repositories/studentDbRepository';
 import { StudentRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/studentsRepoMongoDb';
 import { Request, Response } from 'express';
-import { instructorRegister,signInWithGoogleByInstructor,instructorLogin } from '../../app/usecases/auth/instructorAuth';
+import { instructorRegister, signInWithGoogleByInstructor, instructorLogin } from '../../app/usecases/auth/instructorAuth';
 import { StudentRegisterInterface } from '../../types/studentRegisterInterface';
 import { studentRegister, studentLogin, signInWithGoogleByStudent, sendOTP, verifyOTP, changePasswordAfterForgotU } from '../../app/usecases/auth/studentAuth';
 import { AuthServiceInterface } from '../../app/services/authServicesInterface';
@@ -19,6 +19,8 @@ import { NodemailerServiceInterface } from '../../app/services/nodeMailerService
 import { NodeMailService } from '../../frameworks/services/nodeMailservice';
 import { CloudServiceImpl } from '@src/frameworks/services/cloudinaryService';
 import { CloudServiceInterface } from '@src/app/services/cloudServiceInterface';
+import { RefreshTokenDbInterface } from '@src/app/repositories/refreshTokenDBRepository';
+import { RefreshTokenRepositoryMongoDb } from '@src/frameworks/database/mongodb/repositories/refreshTokenRepoMongoDb';
 
 
 
@@ -26,8 +28,8 @@ import { CloudServiceInterface } from '@src/app/services/cloudServiceInterface';
 const authController = (
     authServiceInterface: AuthServiceInterface,
     authServiceImpl: AuthService,
-    cloudServiceInterface:CloudServiceInterface,
-    CloudServiceImpl:CloudServiceImpl,
+    cloudServiceInterface: CloudServiceInterface,
+    CloudServiceImpl: CloudServiceImpl,
     studentDbRepository: StudentsDbInterface,
     studentDbRepositoryImpl: StudentRepositoryMongoDB,
     instructorDbRepository: InstructorDbInterface,
@@ -38,6 +40,8 @@ const authController = (
     googleAuthServiceImpl: GoogleAuthService,
     nodeMailerServiceInterface: NodemailerServiceInterface,
     nodeMailerServiceImpl: NodeMailService,
+    refreshTokenDbRepository: RefreshTokenDbInterface,
+    refreshTokenDbRepositoryImpl: RefreshTokenRepositoryMongoDb
 ) => {
     const dbRepositoryUser = studentDbRepository(studentDbRepositoryImpl());
     const dbRepositoryInstructor = instructorDbRepository(instructorDbRepositoryImpl());
@@ -46,6 +50,7 @@ const authController = (
     const nodeMailerService = nodeMailerServiceInterface(nodeMailerServiceImpl());
     const googleAuthService = googleAuthServiceInterface(googleAuthServiceImpl());
     const cloudService = cloudServiceInterface(CloudServiceImpl())
+    const dbRepositoryRefreshToken = refreshTokenDbRepository(refreshTokenDbRepositoryImpl());
 
 
     //STUDENT REGISTRATION 
@@ -74,7 +79,6 @@ const authController = (
             password,
             dbRepositoryUser,
             authService,
-
         ) ?? {};
         res.status(200).json({
             status: 'success',
@@ -115,7 +119,7 @@ const authController = (
                 dbRepositoryInstructor,
                 authService,
                 cloudService,
-                
+
             );
             res.status(200).json({
                 status: 'success',
@@ -130,15 +134,18 @@ const authController = (
     //INSTRUCTOR LOGIN
     const loginInstructor = asyncHandler(async (req: Request, res: Response) => {
         const { email, password }: { email: string; password: string } = req.body;
-        await instructorLogin(
+        const { accessToken, refreshToken } = await instructorLogin(
             email,
             password,
             dbRepositoryInstructor,
+            dbRepositoryRefreshToken,
             authService
         );
         res.status(200).json({
             status: 'success',
-            message: 'Instructor logged in successfully'
+            message: 'Instructor logged in successfully',
+            accessToken,
+            refreshToken
         });
     });
 

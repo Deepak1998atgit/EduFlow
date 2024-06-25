@@ -3,7 +3,9 @@ import AdminNav from '../../partials/adminNav';
 import AdminSideBar from '../../pages/admin/admin-sidebar';
 import Students from "./admin-user";
 import Instructors from './admin-tutor';
-import AdminHome from "./admin-home";
+// import AdminHome from "./admin-home";
+
+
 
 
 const AdminDashboard: React.FC = () => {
@@ -16,8 +18,9 @@ const AdminDashboard: React.FC = () => {
       <AdminNav />
       <div className="flex">
         <AdminSideBar onSidebarClick={handleSidebarClick}  />
-        {selectedButtonValue === 'dashboard' && <AdminHome/>}
-        {selectedButtonValue === 'users' && <Students/>}
+        {selectedButtonValue === 'dashboard' && <>Home</>}
+        {selectedButtonValue === 'students' && <Students/>}
+        {selectedButtonValue === 'instructor requests' && <>tutor req</>}  
         {selectedButtonValue === 'tutors' && <Instructors/>}  
       </div>
     </>

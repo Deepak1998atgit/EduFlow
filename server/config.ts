@@ -12,6 +12,8 @@ const configKeys = {
 
     JWT_SECRET: process.env.JWT_SECRET as string,
 
+    JWT_REFRESH_SECRET:process.env.JWT_REFRESH_SECRET as string,
+
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID as string,
 
     TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID as string,

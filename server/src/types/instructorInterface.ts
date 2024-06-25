@@ -25,7 +25,8 @@ export interface SavedInstructorInterface extends InstructorInterface {
     _id:string;
     isVerified:boolean;
     dateJoined:Date;
-    coursesCreated:Array<String>
+    // coursesCreated:Array<String>
+    coursesCreated: string[];
     profileUrl:string;
 
 }

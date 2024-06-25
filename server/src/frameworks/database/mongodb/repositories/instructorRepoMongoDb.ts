@@ -1,14 +1,15 @@
 import Instructor from '../models/instructor';
-import {InstructorInterface} from '../../../../types/instructorInterface';
+import {InstructorInterface,SavedInstructorInterface} from '@src/types/instructorInterface';
 
 export const instructorRepoMongoDb = () => {
   const addInstructor = async (instructor: InstructorInterface) => {
     return await Instructor.create(instructor);
   };
 
+
   const getInstructorByEmail = async (email: string) => {
-    const instructor: null =
-    await Instructor.findOne({ email });
+    const instructor: SavedInstructorInterface | null =
+      await Instructor.findOne({ email });
     return instructor;
   };
 

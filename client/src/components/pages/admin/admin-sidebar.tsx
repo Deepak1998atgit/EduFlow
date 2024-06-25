@@ -25,7 +25,10 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onSidebarClick }) => {
                         <PiStudentFill className="mr-2" /> USERS
                     </span></button></li>
                     <li className=""><button onClick={() => handleButtonClick('tutors')} className={`bg-${activeButton === 'tutors' ? 'white' : 'opacity-0'} text-left border border-transparent outline-none focus:border-transparent h-32 pl-4 py-2 hover:bg-gray-400 w-full text-${activeButton === 'tutors' ? 'black' : 'white'}`} ><span className="flex items-center">
-                        <GiTeacher className="mr-2" /> TUTORS
+                        <GiTeacher className="mr-2" /> INSTRUCTORS
+                    </span></button></li>
+                    <li className=""><button onClick={() => handleButtonClick('tutorrequests')} className={`bg-${activeButton === 'tutorrequests' ? 'white' : 'opacity-0'} text-left border border-transparent outline-none focus:border-transparent h-32 pl-4 py-2 hover:bg-gray-400 w-full text-${activeButton === 'tutorrequests' ? 'black' : 'white'}`} ><span className="flex items-center">
+                        <GiTeacher className="mr-2" /> INSTRUCTOR REQUESTS
                     </span></button></li>
                 </ul>
             </div>

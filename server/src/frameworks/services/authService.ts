@@ -67,13 +67,43 @@ export const authService = () => {
   };
 
 
+  const generateRefreshToken = (payload: JwtPayload) => {
+    const token = jwt.sign({ payload }, configKeys.JWT_REFRESH_SECRET, {
+      expiresIn: '7d'
+    });
+    return token;
+  };
+
+  
+
+  const decodeToken = (token:string)=>{
+    const decodedToken: jwt.JwtPayload | null = jwt.decode(token) as jwt.JwtPayload | null;
+    return decodedToken
+  }
+
+
+  const decodedTokenAndReturnExpireDate = (token: string): number => {
+    const decodedToken: any = jwt.decode(token);
+    let expirationTimestamp: number;
+    if (decodedToken && decodedToken.exp) {
+      expirationTimestamp = decodedToken.exp * 1000;
+    } else {
+      expirationTimestamp = 0;
+    }
+    return expirationTimestamp;
+  };
+
+
   return {
     hashPassword,
     comparePassword,
     generateToken,
     generateRandomPassword,
     generateOTP,
-    verifyOTP 
+    verifyOTP,
+    generateRefreshToken,
+    decodeToken,
+    decodedTokenAndReturnExpireDate
   };
 };
 

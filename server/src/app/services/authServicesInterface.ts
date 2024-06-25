@@ -22,7 +22,10 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
   const verifyOTP = (phoneNumber: string, otp: string) => service.verifyOTP(phoneNumber, otp);
   
 
-  // const verifyOTP = (phoneNumber: string, otp: string) => service.verifyOTP(phoneNumber, otp);
+  const generateRefreshToken = (payload: JwtPayload) => service.generateRefreshToken(payload);
+  
+
+  const decodedTokenAndReturnExpireDate = (token: string) => service.decodedTokenAndReturnExpireDate(token);
 
   return {
     hashPassword,
@@ -30,7 +33,9 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
     generateToken,
     generateRandomPassword,
     generateOTP,
-    verifyOTP 
+    verifyOTP,
+    generateRefreshToken,
+    decodedTokenAndReturnExpireDate
   };
 };
 
