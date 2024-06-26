@@ -3,6 +3,7 @@ import AdminNav from '../../partials/adminNav';
 import AdminSideBar from '../../pages/admin/admin-sidebar';
 import Students from "./admin-user";
 import Instructors from './admin-tutor';
+import ViewInstructorRequests from "../instructor-management/view-instructor-requests";
 // import AdminHome from "./admin-home";
 
 
@@ -20,7 +21,7 @@ const AdminDashboard: React.FC = () => {
         <AdminSideBar onSidebarClick={handleSidebarClick}  />
         {selectedButtonValue === 'dashboard' && <>Home</>}
         {selectedButtonValue === 'students' && <Students/>}
-        {selectedButtonValue === 'instructor requests' && <>tutor req</>}  
+        {selectedButtonValue === 'tutorrequests' && <ViewInstructorRequests/>}  
         {selectedButtonValue === 'tutors' && <Instructors/>}  
       </div>
     </>

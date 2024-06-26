@@ -26,7 +26,9 @@ const configKeys = {
 
     CLOUDINARY_API_KEY:process.env.CLOUDINARY_API_KEY as string,
 
-    CLOUDINARY_API_SECRET:process.env.CLOUDINARY_API_SECRET as string
+    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET as string,
+    
+    FROM_EMAIL_NODE_MAILER:process.env.FROM_EMAIL as string,
 }
 
 export default configKeys;

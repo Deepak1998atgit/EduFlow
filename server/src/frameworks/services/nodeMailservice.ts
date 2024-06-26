@@ -1,26 +1,28 @@
-import nodemailer from 'nodemailer';
+import nodemailer, { Transporter } from 'nodemailer';
+import configKeys from '../../../config';
 
 export const nodeMailService = () => {
-    const sendPassword = async (generatedPassword:string) => {
-        // Create a transporter using SMTP
-        const transporter = await nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user:process.env.GOOGLE_ACCOUND,
-                pass:process.env.GOOGLE_NODEMAILER_PASSWORD, 
-            },
-        });
+    // Create a transporter using SMTP
+    const transporter: Transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.GOOGLE_ACCOUND,
+            pass: process.env.GOOGLE_NODEMAILER_PASSWORD,
+        },
+    });
 
+
+    const sendPassword = async (generatedPassword: string) => {
         // Other email options
         const mailOptions = {
             from: 'deepaksanjeev1998@gmail.com',
             to: 'deepakvs2022@gmail.com',
             subject: 'Your Password for Eduflow',
-            text:generatedPassword,
+            text: generatedPassword,
         };
 
-        // Send email
-       await  transporter.sendMail(mailOptions, (error, info) => {
+        // Send password to email
+        await transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.error('Error:', error);
             } else {
@@ -29,8 +31,28 @@ export const nodeMailService = () => {
         });
     }
 
+
+    const sendEmail = (email: string, subject: string, text: string) => {
+        const mailOptions = {
+            from: configKeys.FROM_EMAIL_NODE_MAILER,
+            to: email,
+            subject: subject,
+            text: text,
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error('Error sending email:', error);
+            } else {
+                console.log('Email sent:', info.response);
+            }
+        });
+    };
+
+
+
     return {
-        sendPassword
+        sendPassword,
+        sendEmail
     }
 
 };

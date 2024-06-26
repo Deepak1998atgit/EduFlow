@@ -11,7 +11,7 @@ import { adminRepoMongoDb } from "../../../frameworks/database/mongodb/repositor
 import {googleAuthService} from "../../../frameworks/services/googleAuthService"
 import { googleAuthServiceInterface } from "../../../app/services/googleAuthServicesInterface";
 import {nodeMailService} from "../../../frameworks/services/nodeMailservice"
-import { nodemailerServiceInterface } from "../../../app/services/nodeMailerService";
+import { nodemailerServiceInterface } from "../../../app/services/nodeMailerServiceInterface";
 import upload from "../middlewares/multer";
 import { cloudinaryService} from "../../../frameworks/services/cloudinaryService";
 import { cloudServiceInterface } from "../../../app/services/cloudServiceInterface";

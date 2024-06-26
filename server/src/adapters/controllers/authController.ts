@@ -15,7 +15,7 @@ import { AdminRepositoryMongoDb } from '../../frameworks/database/mongodb/reposi
 import { adminLogin } from '../../app/usecases/auth/adminAuth';
 import { GoogleAuthServiceInterface } from '../../app/services/googleAuthServicesInterface';
 import { GoogleAuthService } from '../../frameworks/services/googleAuthService';
-import { NodemailerServiceInterface } from '../../app/services/nodeMailerService';
+import { NodemailerServiceInterface } from '../../app/services/nodeMailerServiceInterface';
 import { NodeMailService } from '../../frameworks/services/nodeMailservice';
 import { CloudServiceImpl } from '@src/frameworks/services/cloudinaryService';
 import { CloudServiceInterface } from '@src/app/services/cloudServiceInterface';

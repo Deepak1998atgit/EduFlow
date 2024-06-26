@@ -5,7 +5,7 @@ import { AuthServiceInterface } from '../../services/authServicesInterface'
 import AppError from '../../../utils/appError';
 import HttpStatusCodes from '../../../constants/HttpStatusCodes';
 import { GoogleAuthServiceInterface } from '../../../app/services/googleAuthServicesInterface';
-import { NodemailerServiceInterface } from '../../../app/services/nodeMailerService';
+import { NodemailerServiceInterface } from '../../services/nodeMailerServiceInterface';
 
 
 //STUDENT REGISTRATION
