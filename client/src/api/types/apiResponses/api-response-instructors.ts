@@ -1,6 +1,6 @@
 export interface InstructorApiResponse {
     profilePic: ProfilePic
-    certificates: Certificate[]
+    certificates?: Certificate[]
     isBlocked: boolean
     blockedReason: string
     _id: string
@@ -33,6 +33,7 @@ interface ProfilePic {
 interface Certificate {
     name: string;
     url: string;
+    key: string;
 }
 
 export interface GetCourseByInstructorInterface {
