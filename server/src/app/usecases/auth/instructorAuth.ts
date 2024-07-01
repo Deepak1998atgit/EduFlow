@@ -79,12 +79,12 @@ export const instructorLogin = async (
       HttpStatusCodes.UNAUTHORIZED
     );
   }
-  // if (!instructor.isVerified) {
-  //   throw new AppError(
-  //     'Your details is under verification please try again later',
-  //     HttpStatusCodes.UNAUTHORIZED
-  //   );
-  // }
+  if (!instructor.isVerified) {
+    throw new AppError(
+      'Your details is under verification please try again later',
+      HttpStatusCodes.UNAUTHORIZED
+    );
+  }
   const isPasswordCorrect = await authService.comparePassword(
     password,
     instructor.password
@@ -110,6 +110,7 @@ export const instructorLogin = async (
     refreshToken,
     expirationDate
   );
+  console.log(accessToken,refreshToken)
   return {
     accessToken,
     refreshToken

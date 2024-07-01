@@ -15,8 +15,8 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ onSidebarClick }) => {
     };
     return (
         <>
-            <div className="bg-[#134457]  h-screen w-64 top-17 left-0 overflow-y-auto mr-28">
-                <div className="p-4 bg- text-white font-bold">ADMIN</div>
+            <div className="bg-[#134457]  h-screen w-80   top-17 left-0 overflow-y-auto">
+                <div className="p-4 text-white font-bold">ADMIN</div>
                 <ul className="py-2">
                     <li className=""><button onClick={() => handleButtonClick('dashboard')} className={`bg-${activeButton === 'dashboard' ? 'white' : 'opacity-0'} text-left border h-32 border-transparent outline-none focus:border-transparent pl-4 py-2 w-full  hover:bg-gray-400 text-${activeButton === 'dashboard' ? 'black' : 'white'}`}> <span className="flex items-center">
                         <AiFillDashboard className="mr-2" /> DASHBOARD

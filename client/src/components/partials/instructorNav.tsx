@@ -1,11 +1,27 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
+import { clearToken } from "../../redux/reducers/authSlice";
+import { clearDetails } from "../../redux/reducers/instructorSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 const InstructorNav: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+  const handleLogOut = () => {
+    try {
+      dispatch(clearToken());
+      dispatch(clearDetails());
+      navigate("/instructor-login");
+    } catch (error) {
+      console.log("ERROR WHEN INSTRUCTOR LOGOUT",error)
+    }
+  }
   
   return (
     <>
@@ -15,7 +31,7 @@ const InstructorNav: React.FC = () => {
             <img src="https://svgsilh.com/svg/1319606.svg?color=indigo&shade=500" alt="Logo" className="h-10" />
           </div>
           <div className="hidden md:flex space-x-4">
-            <NavLink to="/admin-login" className="w-24 h-11 pl-5 bg-white pt-1 flex justify-between items-center  rounded-xl  text-black">LogOut</NavLink>
+            <button onClick={handleLogOut} className="w-24 h-11 pl-5 bg-white pt-1 flex justify-between items-center  rounded-xl  text-black">LogOut</button>
           </div>
           <div className="md:hidden">
             <button onClick={toggleMobileMenu} className="text-white focus:outline-none">
@@ -27,9 +43,9 @@ const InstructorNav: React.FC = () => {
         </div>
         {isMobileMenuOpen && (
           <div className="flex items-center justify-center min-h-screen bg-gray-100">
-          <NavLink to="/admin-login" className="block bg-black text-white px-4 py-2 rounded">
+          <button  className="block bg-black text-white px-4 py-2 rounded">
             LogOut
-          </NavLink>
+          </button>
         </div>
         )}
       </nav>

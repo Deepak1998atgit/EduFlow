@@ -211,7 +211,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/instructors",
+    path: "/instructor-management",
     element: <Instructor />,
     children: [
       {

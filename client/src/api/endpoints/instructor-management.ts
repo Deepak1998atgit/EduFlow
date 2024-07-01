@@ -16,6 +16,7 @@ export const getAllInstructorRequests = () => {
 };
 
 export const acceptInstructorRequest = (instructorId: string) => {
+  console.log("id",instructorId)
   return acceptRequest(END_POINTS.ACCEPT_INSTRUCTOR_REQUESTS, instructorId);
 };
 

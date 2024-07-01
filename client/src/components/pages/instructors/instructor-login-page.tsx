@@ -1,4 +1,4 @@
-import React,{useEffect}from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { instructorLoginValidationSchema } from "../../../validations/auth/InstructorLoginValidation";
@@ -11,33 +11,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserType } from "../../../redux/reducers/authSlice";
 import { selectIsLoggedIn } from "../../../redux/reducers/authSlice";
 import { setToken } from "../../../redux/reducers/authSlice";
+
 const InstructorLoginPage: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const isLoggedIn = useSelector(selectIsLoggedIn)
-  const user = useSelector(selectUserType)
-  const handleSubmit = async (instructorInfo: InstructorLoginInfo) => {
-      try {
-        console.log("ok",instructorInfo)
-      const response = await loginInstructor(instructorInfo);
-      const {accessToken,refreshToken}:{accessToken:string,refreshToken:string} = response.data
-          dispatch(setToken({ accessToken, refreshToken, userType: "instructor" }))
-          console.log("ok",accessToken,"ok",refreshToken)
-      toast.success(response?.data?.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      }); 
-    //   response && navigate('/instructors')
-    } catch (error:any) {
-      toast.error(error.data?.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-    }
-  };
-  useEffect(() => {
-    if(isLoggedIn&&user==="instructor"){
-      navigate("/instructors")
-    }
-  },[])
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector(selectIsLoggedIn)
+    const user = useSelector(selectUserType)
+    const handleSubmit = async (instructorInfo: InstructorLoginInfo) => {
+        try {
+            console.log("ok", instructorInfo)
+            const response = await loginInstructor(instructorInfo);
+            const { accessToken, refreshToken }: { accessToken: string, refreshToken: string } = response.data
+            dispatch(setToken({ accessToken, refreshToken, userType: "instructor" }))
+            console.log("ok", accessToken, "ok", refreshToken)
+            toast.success(response?.data?.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+            response && navigate('/instructors')
+        } catch (error: any) {
+            toast.error(error.data?.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+        }
+    };
+    useEffect(() => {
+        if (isLoggedIn && user === "instructor") {
+            navigate("/instructors")
+        }
+    }, [])
 
     return (
         <div className="w-full h-screen  flex item-start overflow-hidden">
@@ -102,7 +103,7 @@ const InstructorLoginPage: React.FC = () => {
                             </div>
                         </Form>
                         <div className='mx-16'>
-                        <GoogleSignInByInstructor/>
+                            <GoogleSignInByInstructor />
                         </div>
                     </div>
                 </Formik>

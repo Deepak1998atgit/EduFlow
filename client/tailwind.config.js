@@ -23,6 +23,18 @@ export default {
       'xl': '1280px',
     }
   },
-  plugins: [],
+  plugins: [
+    function({ addBase }) {
+      addBase({
+        '*': {
+          boxSizing: 'border-box',
+        },
+        'html, body': {
+          maxWidth: '100%',
+          overflowX: 'hidden',
+        },
+      });
+    },
+  ],
 }
 
