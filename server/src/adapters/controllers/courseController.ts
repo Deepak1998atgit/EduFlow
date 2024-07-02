@@ -29,6 +29,7 @@ const courseController = (
       const files: Express.Multer.File[] = req.files as Express.Multer.File[];
       const instructorId = req.user?.Id;
       const response = await addCourses(
+        instructorId,
         course,
         files,
         cloudService,

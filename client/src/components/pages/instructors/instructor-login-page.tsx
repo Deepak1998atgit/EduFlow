@@ -27,7 +27,7 @@ const InstructorLoginPage: React.FC = () => {
             toast.success(response?.data?.message, {
                 position: toast.POSITION.BOTTOM_RIGHT,
             });
-            response && navigate('/instructors')
+            response && navigate('/instructor')
         } catch (error: any) {
             toast.error(error.data?.message, {
                 position: toast.POSITION.BOTTOM_RIGHT,
@@ -36,7 +36,7 @@ const InstructorLoginPage: React.FC = () => {
     };
     useEffect(() => {
         if (isLoggedIn && user === "instructor") {
-            navigate("/instructors")
+            navigate("/instructor")
         }
     }, [])
 

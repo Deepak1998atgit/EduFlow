@@ -1,25 +1,42 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import InstructorNav from '../../partials/instructorNav';
 import InstructorSideBar from '../../pages/instructors/instructor-sidebar';
+import { useSelector } from "react-redux";
 import CombinedCourseAddForm from "../add-corse/add-course-form";
-
+import { selectIsLoggedIn } from "../../../redux/reducers/authSlice";
+import { useNavigate } from 'react-router-dom';
+import { selectUserType } from "../../../redux/reducers/authSlice";
 
 
 const AdminDashboard: React.FC = () => {
+
+  const navigate = useNavigate();
   const [selectedButtonValue, setSelectedButtonValue] = useState('dashboard');
-  const handleSidebarClick = (buttonValue :string) => {
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const user = useSelector(selectUserType)
+  const handleSidebarClick = (buttonValue: string) => {
     setSelectedButtonValue(buttonValue);
   };
-  return (
-    <>
-      <InstructorNav />
-      <div className="flex">
-        <InstructorSideBar onSidebarClick={handleSidebarClick}  />
-        {selectedButtonValue === 'dashboard' && <div>dash</div>}
-        {selectedButtonValue === 'users' && <CombinedCourseAddForm/>}
-        {selectedButtonValue === 'tutors' && <div>Tutors</div>}  
-      </div>
-    </>
-  );
+  useEffect(() => {
+    if (!isLoggedIn || user !== "instructor") {
+      navigate("/instructor-login");
+    }
+  }, [isLoggedIn, user, navigate]);
+
+  if (!isLoggedIn && user !== "instructor") {
+    return null;
+  }
+
+return (
+  <>
+    <InstructorNav />
+    <div className="flex">
+      <InstructorSideBar onSidebarClick={handleSidebarClick} />
+      {selectedButtonValue === 'dashboard' && <div>dash</div>}
+      {selectedButtonValue === 'users' && <CombinedCourseAddForm />}
+      {selectedButtonValue === 'tutors' && <div>Tutors</div>}
+    </div>
+  </>
+);
 };
 export default AdminDashboard;

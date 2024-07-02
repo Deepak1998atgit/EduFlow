@@ -145,7 +145,7 @@ export const router = createBrowserRouter([
               </Suspense>)
           },
           {
-            path: "/instructor-home",
+            path: "/instructor",
             element: (
               <Suspense fallback={<Loader />}>
                 <LazyInstructorHome />
@@ -198,14 +198,6 @@ export const router = createBrowserRouter([
                 <LazyAdminTutorView />
               </Suspense>)
           },
-          {
-            path: "/instructor-home",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <LazyInstructorHome />
-              </Suspense>)
-          },
-          { path: "historical-dividend", element: <>his</> },
         ],
       },
     ],

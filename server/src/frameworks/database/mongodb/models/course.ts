@@ -22,10 +22,10 @@ const courseSchema = new mongoose.Schema({
       minlength: 2,
       maxlength: 100
     },
-    // instructorId: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   required: true
-    // },
+    instructorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true
+    },
     duration: {
       type: Number,
       required: true,

@@ -34,6 +34,11 @@ export const authService = () => {
   };
 
 
+  const verifyToken = (token: string) => {
+    return jwt.verify(token, configKeys.JWT_SECRET);
+  }; 
+
+
   const generateRandomPassword=()=>{
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let password = '';
@@ -98,12 +103,14 @@ export const authService = () => {
     hashPassword,
     comparePassword,
     generateToken,
+    verifyToken,
     generateRandomPassword,
     generateOTP,
     verifyOTP,
     generateRefreshToken,
     decodeToken,
-    decodedTokenAndReturnExpireDate
+    decodedTokenAndReturnExpireDate,
+    
   };
 };
 

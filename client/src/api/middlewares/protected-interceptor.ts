@@ -16,10 +16,11 @@ api.interceptors.request.use(
     }else{
       console.error("No access token found in localStorage when category add");
     }
+    console.log(config,"conf")
     return config;
   },
   (error) => {
-    console.log("token",error);
+    console.log("Error on request interceptor on adding course",error);
     return Promise.reject(error);
   }
 );

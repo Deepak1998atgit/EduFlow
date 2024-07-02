@@ -1,12 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Croissant+One:regular);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-
-
-
 
 body {
   width: 100vw;
@@ -16,6 +10,7 @@ body {
   align-items: center;
   justify-content: start;
 }
+
 
 body,
 html {

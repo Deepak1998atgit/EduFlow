@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { FaShoppingCart, FaHeart } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa';
 import { useNavigate, NavLink } from 'react-router-dom';
 import decodeJwtToken from "../../utils/decodeJwt";
+import { FaShieldHeart } from "react-icons/fa6";
 import { AnimatePresence, motion } from "framer-motion";
 
 
@@ -98,8 +99,10 @@ const studentNavbar = () => {
                             {student ? false : (<button type="button" className="relative rounded-full w-28 h-10  bg-[#040404] p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                 <NavLink className='' to="/login">Login</NavLink>
                             </button>)}
-                            {student ? (<> <FaHeart className=' mt-1' size={30} />
-                                <FaShoppingCart className='ml-3 mt-1 mr-3' size={30} />{student?.name}</>) : null}
+                            {student ? (<> 
+                                <FaShieldHeart className='ml-3 mt-1 mr-3 text-[#6c8eb0]' size={30} />
+                                <FaShoppingCart className='ml-3 mt-1 mr-3 text-[#6c8eb0]' size={30} />
+                                {student?.name}</>) : null}
                             <div className="relative ml-3">
                                 <div>
 

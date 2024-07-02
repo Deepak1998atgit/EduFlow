@@ -47,7 +47,7 @@ const CombinedCourseAddForm: React.FC = () => {
     { resetForm }: FormikHelpers<CourseFormValues>
   ) => {
     try {
-      console.log("form data", "form data")
+      console.log("form data", "form data",values)
       const formData = new FormData();
       guidelines && formData.append("files", guidelines);
       thumbnail && formData.append("files", thumbnail);
@@ -209,11 +209,13 @@ const CombinedCourseAddForm: React.FC = () => {
                 </div>
 
                 <div className='mb-3'>
-                <div className="flex items-center">
+                  <div className="flex items-center">
                     <Switch
                       id='auto-update'
                       onClick={handlePaid}
                       crossOrigin='anonymous'
+                      onPointerEnterCapture={() => console.log('Pointer entered')}
+                      onPointerLeaveCapture={() => console.log('Pointer left')}
                     />
                     <p className="ml-7 mt-5">Paid</p>
                   </div>

@@ -1,4 +1,4 @@
-import api from "../../middlewares/interceptor";
+import api from "../../middlewares/protected-interceptor";
 import axiosInstance from "../../middlewares/interceptor";
 import CONFIG_KEYS from "../../../config";
 

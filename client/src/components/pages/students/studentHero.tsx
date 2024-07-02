@@ -18,7 +18,7 @@ const StudentHero: React.FC = () => {
                             <motion.img src="https://www.svgrepo.com/show/492788/book-and-person-winter.svg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                                 className="w-auto h-20 object-contain"
                                 initial={{ x: 0 }}
-                                animate={{ x: 300 }}
+                                animate={{ x: 259 }}
                                 transition={{
                                     repeat: Infinity,
                                     duration: 4,
@@ -27,12 +27,12 @@ const StudentHero: React.FC = () => {
                             </motion.img>
                             <motion.img src="https://www.svgrepo.com/show/171870/bookmark.svg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                                 className="w-auto  object-contain h-16 mr-24 md:mr-24"
-                                initial={{ y: 0 }}
-                                animate={{ y:[-10,10,-10]}}
+                                initial={{ y: 0}}
+                                animate={{ y:[-5,5,-5]}}
                                 transition={{
                                     repeat: Infinity,
                                     duration: 1,
-                                    ease: "linear"
+                                    ease: "easeIn"
                                 }}>
                             </motion.img>
                         </div>

@@ -4,7 +4,9 @@ import { courseRepositoryMongodb } from '../../../frameworks/database/mongodb/re
 import { courseDbRepository } from '../../../app/repositories/courseDbRepository';
 import upload from '../middlewares/multer';
 import { cloudServiceInterface } from '../../../app/services/cloudServiceInterface'
-import { cloudinaryService} from '../../../frameworks/services/cloudinaryService';
+import { cloudinaryService } from '../../../frameworks/services/cloudinaryService';
+import roleCheckMiddleware from '../middlewares/roleCheckMiddleware';
+import jwtAuthMiddleware from '../middlewares/userAuth';
 
 
 const courseRouter = () => {
@@ -21,6 +23,8 @@ const courseRouter = () => {
   //* Add course
   router.post(
     '/instructors/add-course',
+    jwtAuthMiddleware,
+    roleCheckMiddleware('instructor'),
     upload.array('files'),
     controller.addCourse
   );
