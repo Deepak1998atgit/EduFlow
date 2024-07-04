@@ -9,8 +9,11 @@ export const courseDbRepository = (
   
   const addCourse = async (courseInfo: AddCourseInfoInterface) => await repository.addCourse(courseInfo);
 
+  const getAllCourse = async () => await repository.getAllCourse();
+
   return {
     addCourse,
+    getAllCourse
   };
 
 };

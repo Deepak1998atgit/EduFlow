@@ -7,15 +7,22 @@ import { cloudServiceInterface } from '../../../app/services/cloudServiceInterfa
 import { cloudinaryService } from '../../../frameworks/services/cloudinaryService';
 import roleCheckMiddleware from '../middlewares/roleCheckMiddleware';
 import jwtAuthMiddleware from '../middlewares/userAuth';
+import { RedisClient } from '../../../../server';
+import { redisCacheRepository } from '../../../frameworks/database/redis/redisCacheRepository';
+import { cacheRepositoryInterface } from '../../../app/repositories/cachedRepoInterface';
+import { cachingMiddleware } from '../middlewares/redisCaching';
 
 
-const courseRouter = () => {
+const courseRouter = (redisClient: RedisClient) => {
   const router = express.Router();
   const controller = courseController(
     courseDbRepository,
     courseRepositoryMongodb,
     cloudServiceInterface,
-    cloudinaryService
+    cloudinaryService,
+    cacheRepositoryInterface,
+    redisCacheRepository,
+    redisClient
   );
 
     
@@ -28,7 +35,14 @@ const courseRouter = () => {
     upload.array('files'),
     controller.addCourse
   );
+  
 
+  //* Get all courses
+  router.get(
+    '/get-all-courses',
+    cachingMiddleware(redisClient, 'all-courses'), 
+    controller.getAllCourses
+  );
 
 
   return router;

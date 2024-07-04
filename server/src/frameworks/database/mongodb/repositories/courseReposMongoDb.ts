@@ -15,9 +15,16 @@ export const courseRepositoryMongodb = () => {
   };
 
 
+  const getAllCourse = async () => {
+    const courses: CourseInterface[] | null = await Course.find({});
+    return courses;
+  };
+
+
 
   return {
     addCourse,
+    getAllCourse
   };
 };
 
