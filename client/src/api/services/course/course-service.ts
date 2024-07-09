@@ -13,3 +13,11 @@ export const addCourseService = async (
   );
   return response;
 };
+
+
+export const getAllCoursesService = async (endpoint: string) => {
+  const response = await axiosInstance.get(
+    `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`
+  );
+  return response;
+};

@@ -12,6 +12,7 @@ export interface CourseInterface {
     introduction: Media;
     syllabus: string[];
     requirements: string[];
+    thumbnail: thumbnail;
     thumbnailUrl: string;
     guidelinesUrl: string;
     coursesEnrolled: any[];
@@ -27,4 +28,13 @@ export interface Media {
     key: string
     name: string
     _id: string
+}
+
+
+interface thumbnail{
+    name: string;
+    key: string;
+    url: string;
+    _id: string;
+
 }

@@ -1,47 +1,92 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import CourseCard from './course-card';
+import { CourseInterface } from "../../../types/course";
+import {
+  getAllCourses
+} from "../../../api/endpoints/course/Course";
+import { toast } from "react-toastify";
+import ShimmerCard from '../shimmer/shimmer-card';
+import { MdSentimentDissatisfied } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const ListCourse: React.FC = () => {
-    const StarRating = () => {
-        const stars = Array.from({ length: 5 }, (_, index) => (
-            <svg key={index} xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block" viewBox="0 0 24 24" stroke="#F7DC6F" fill=" #F7DC6F">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2 L15.09 8.26 L22 9.27 L17 14.14 L18.18 21.02 L12 17.77 L5.82 21.02 L7 14.14 L2 9.27 L8.91 8.26 L12 2 Z" />
-            </svg>
-        ));
-
-        return (
-            <div className="flex">
-                {stars}
-            </div>
-        );
-    };
-
+  const [courses, setCourses] = useState<CourseInterface[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const fetchCourse = async () => {
+    try {
+      const courses = await getAllCourses();
+      setCourses(courses?.data?.data || []);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    } catch (error: any) {
+      toast.error(error?.data?.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      setIsLoading(false);
+    }
+  };
+  console.log("course",courses,"courses")
+  useEffect(() => {
+    fetchCourse();
+  }, []);
+  if (isLoading) {
     return (
-        <div className="w-full shadow-md h-96 rounded-xl cursor-pointer">
-            <div className="relative">
-                <img
-                    src='./crown.png'
-                    alt="Crown Icon"
-                    className='w-4 h-4 top-2 left-2 absolute '
-                />
-                <img
-                    src="./react.jpg"
-                    alt="Course Image"
-                    className='w-full z-10 rounded-t-xl' 
-                />
-            </div>
-            <div className='pl-3'>
-                <p className='font-medium leading-6 mt-5 text-xl'>The Complete 2024 Web Development Bootcamp</p>
-                <p className='font-light mt-1 text-sm text-[#4C5E64]'>Dr.Angelina, Technical Lead Instructor</p>
-                <div className='flex items-center mt-3 relative'>
-                    <img src="./rupee.jpg" alt="Rupee Symbol" className='w-6 absolute' />
-                    <p className='text-xl z-10 ml-4'>3099</p>
-                </div>
-                <div className='flex mt-1'>
-                <p className='mr-2'>4.7</p><StarRating /><p className='ml-2 font-thin text-[#4C5E64]'>(7727)</p>
-                </div>  
-            </div>
+      <div className='text-customFontColorBlack  '>
+        <div className='pt-5 pb-5 pl-9 pr-9 mt-5 mx-auto flex justify-center'>
+          <div className='w-10/12 ml-2 pl-1 animate-pulse'>
+            <h1 className='text-3xl font-bold bg-gradient-to-r from-gray-300 to-gray-100 h-8 rounded'></h1>
+            <p className='text-gray-700 mt-2 bg-gradient-to-r from-gray-300 to-gray-100 h-4 rounded'></p>
+          </div>
         </div>
+        <div className='mx-auto pl-10 pr-10  flex justify-center'>
+          <div className='w-10/12 pl-1 border-b-gray-100 border-b-2 mx-auto animate-pulse'>
+            <div className='flex flex-wrap'>
+              <div className='text-gray-900 rounded-lg px-2 py-2 mr-2 mb-2 cursor-pointer bg-gradient-to-r from-gray-300 to-gray-100 h-8 w-16'></div>
+              <div className='text-gray-900 rounded-lg px-4 py-2 mr-2 mb-2 cursor-pointer bg-gradient-to-r from-gray-300 to-gray-100 h-8 w-24'></div>
+              <div className='text-gray-900 rounded-lg px-4 py-2 mr-2 mb-2 cursor-pointer bg-gradient-to-r from-gray-300 to-gray-100 h-8 w-20'></div>
+              <div className='text-gray-900 rounded-lg px-4 py-2 mr-2 mb-2 cursor-pointer bg-gradient-to-r from-gray-300 to-gray-100 h-8 w-24'></div>
+            </div>
+          </div>
+        </div>
+
+        <div className=' mx-auto flex justify-center'>
+          <div className='w-10/12 '>
+            <div className='flex mt-3 flex-wrap justify-center'>
+              {[...Array(8)].map((_, index) => (
+                <div className='m-2 py-3' key={index}>
+                  <ShimmerCard />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     );
+  }
+  return (
+    <>
+      {courses.length ? (
+        courses?.map((course: CourseInterface, index: number) => (
+          <Link to={course._id} key={course._id} className='mt-5'>
+            <div className='m-2'>
+              <CourseCard {...course} />
+            </div>
+          </Link>
+        ))
+      ) : (
+        <div className='text-center pt-8 pb-14 mt-8'>
+          <MdSentimentDissatisfied
+            className='mx-auto text-gray-500 mb-4'
+            size={38}
+          />
+          <p className='text-gray-500 text-sm'>
+            No results found for the search query.
+          </p>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default ListCourse;
