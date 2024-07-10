@@ -1,10 +1,4 @@
-import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-} from "@material-tailwind/react";
+
 
 const ShimmerCard = () => {
   return (

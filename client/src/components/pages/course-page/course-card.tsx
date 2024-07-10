@@ -20,10 +20,7 @@ const CourseCard: React.FC<CourseInterface> = ({ rating, price, about, isPaid, t
     };
 
     return (
-        <motion.div whileHover={{ scale: 1.1 }} transition={{ duration: 0.3, ease: "circOut" }} onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => {
-                setIsHovered(false); setShowText(false);
-            }} className="w-full shadow-md h-96 rounded-xl cursor-pointer relative">
+        <div  className="w-full shadow-md  rounded-xl cursor-pointer flex flex-col justify-center items-center">
             <div className="relative">
                 <img
                     src='./crown.png'
@@ -35,10 +32,13 @@ const CourseCard: React.FC<CourseInterface> = ({ rating, price, about, isPaid, t
                     alt="Course Image"
                     className='w-full h-48 z-10 rounded-t-xl'
                 />
+                <button className="bg-[#dfefe4] text-black text-base h-11 w-full flex items-center justify-center">
+                Add to cart
+                </button>
             </div>
-            <div className='pl-3'>
+            <div className='pl-3 h-52'>
                 <p className='font-medium leading-6 mt-5 text-xl'>{title}</p>
-                <p className='font-light mt-1 text-sm text-[#4C5E64]'>Dr.Arman</p>
+                <p className='font-light mt-1 text-sm text-[#566c45]'>Dr.Arman</p>
                 <div className='flex items-center mt-3 relative'>
                     <img src="./rupee.jpg" alt="Rupee Symbol" className='w-6 absolute' />
                     <p className='text-xl z-10 ml-4'>{price}</p>
@@ -47,23 +47,7 @@ const CourseCard: React.FC<CourseInterface> = ({ rating, price, about, isPaid, t
                     <p className='mr-2'>4.7</p><StarRating /><p className='ml-2 font-thin text-[#4C5E64]'>(7727)</p>
                 </div>
             </div>
-            {/* <button className="text-white bg-slate-700 mb-5">Add To Cart</button> */}
-            <motion.button
-                className="absolute text-base text-white top-1/2 left-20 f transform -translate-x-1/2 -translate-y-1/2 bg-slate-700 px-4 py-2 rounded-lg shadow-lg"
-                style={{ display: isHovered ? "block" : "none" }}
-                initial={{ scale: 0 }}
-                animate={{ scale: isHovered ? 1 : 0 }}
-                transition={{ duration: 0.1}}
-            >
-                <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: isHovered ? 1 : 0 }}
-                    transition={{ duration: 1 }}
-                >
-                
-                </motion.span>
-            </motion.button>
-        </motion.div>
+        </div>
 
 
 

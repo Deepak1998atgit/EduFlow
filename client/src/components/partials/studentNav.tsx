@@ -42,7 +42,7 @@ const studentNavbar = () => {
 
     return (
         <>
-            <nav className="bg-[#e2e3e5] bg-opacity-50 fixed top-0 w-full z-50 h-20">
+            <nav className="bg-[#dfefe4] bg-opacity-50 fixed top-0 w-full z-50 h-20">
                 <div className="mx-auto max-w-7xl px-7 sm:px-6 lg:px-8">
                     <div className="relative flex h-16 items-center justify-between">
                         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -82,21 +82,21 @@ const studentNavbar = () => {
                             <div className="hidden sm:ml-6 sm:block">
                                 <div className="flex space-x-4">
 
-                                    <a href="#" className=" text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Home</a>
-                                    <a href="#" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Categories</a>
+                                    <a href="#" className=" text-[#040404]  hover:bg-[#566c45] hover:text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Home</a>
+                                    <a href="#" className="text-[#040404]  hover:bg-[#566c45] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Categories</a>
                                     {student ? (<>
-                                        <a href="#" className="text-[#040404] hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Instructor</a>
-                                        <a href="#" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">My learning</a></>
+                                        <a href="#" className="text-[#040404] hover:bg-[#566c45] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Instructor</a>
+                                        <a href="#" className="text-[#040404]  hover:bg-[#566c45] hover:text-white rounded-md px-3 py-2 text-sm font-medium">My learning</a></>
 
                                     ) : null}
-                                    {student ? null : <NavLink to="/instructor-welcome" className="text-[#040404]  hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Teach on Eduflow</NavLink>}
+                                    {student ? null : <NavLink to="/instructor-welcome" className="text-[#040404]  hover:bg-[#566c45] hover:text-white rounded-md px-3 py-2 text-sm font-medium">Teach on Eduflow</NavLink>}
 
                                 </div>
                             </div>
                         </div>
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-                            {student ? false : (<button type="button" className="relative rounded-full w-28 h-10  bg-[#040404] p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                            {student ? false : (<button type="button" className="relative rounded-full w-28 h-10  bg-[#566c45] p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                 <NavLink className='' to="/login">Login</NavLink>
                             </button>)}
                             {student ? (<> 
@@ -115,7 +115,7 @@ const studentNavbar = () => {
 
                             </div>
                             {student ? (<>
-                                <button onClick={handleLogOut} type="button" className="mx-3 relative rounded-full w-1/2 h-10  bg-[#040404] p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                <button onClick={handleLogOut} type="button" className="mx-3 relative rounded-full w-1/2 h-10  bg-[#566c45] p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                     LogOut
                                 </button></>) : false}
                         </div>
