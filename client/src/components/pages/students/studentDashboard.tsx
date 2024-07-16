@@ -3,7 +3,7 @@ import StudentNavbar from '../../partials/studentNav';
 import StudentHero from './studentHero';
 import StudentCoursecard from './studentCourseCard';
 import StudentFooter from './studentFooter';
-import StudentNav from "./studentheaderdemo"
+import StudentHeader from "./studentheaderdemo"
 
 const StudentDashboard: React.FC = () => {
  
@@ -14,7 +14,7 @@ const StudentDashboard: React.FC = () => {
       <StudentHero />
       <StudentCoursecard />
       <StudentFooter /> */}
-      <StudentNav/>
+      <StudentHeader/>
     </>
   )
 }

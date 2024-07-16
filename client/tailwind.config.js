@@ -13,7 +13,12 @@ export default {
         primary: "#00FFAA",
         secondary: "#00FF60",
         texlight: "#a7a7a7",
-        bgPrimary: "#020010",
+        bgprimary: "#020010",
+        darkred: "#5D001E",
+        platinum: "#E3E2DF",
+        rosepink: "#E3AFBC",
+        jazzberryjam: "#9A1750",
+        darkpink:"#EE4C7C"
       }
     },
     screens: {

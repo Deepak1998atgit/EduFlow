@@ -29,6 +29,26 @@ const LazyStudentHome = lazy(
 );
 
 
+const LazyCart = lazy(
+  () => import("../components/pages/cart/view-cart")
+)
+
+
+const LazyWishList = lazy(
+  () => import("../components/pages/wishlist/viewWishlist")
+)
+
+
+const LazyContactPage = lazy(
+  () => import("../components/pages/contact/contact")
+)
+
+
+const LazyCommunityPage = lazy(
+  ()=> import("../components/pages/community/community-home")
+)
+
+
 //INSTRUCTOR
 const LazyInstructorRegister = lazy(
   () => import("../components/pages/instructors/instructor-register-page")
@@ -90,165 +110,166 @@ export const router = createBrowserRouter([
     element: <Student />,
     children: [
       {
-        path: "", element: (
+        path: "",
+        element: (
           <Suspense fallback={<Loader />}>
             <LazyStudentHome />
-          </Suspense>)
+          </Suspense>
+        ),
       },
       {
-        path: "/login",
+        path: "login",
         element: (
-          <Suspense fallback={
-            <Loader />
-          }>
+          <Suspense fallback={<Loader />}>
             <LazyStudentLogin />
-          </Suspense>)
+          </Suspense>
+        ),
       },
       {
-        path: "/signup",
+        path: "signup",
         element: (
-          <Suspense fallback={
-            <Loader />
-          }>
+          <Suspense fallback={<Loader />}>
             <LazyStudentRegister />
-          </Suspense>)
+          </Suspense>
+        ),
       },
       {
-        path: "/forgot-password",
+        path: "forgot-password",
         element: (
-          <Suspense fallback={
-            <Loader />
-          }>
+          <Suspense fallback={<Loader />}>
             <LazyStudentForgotPassword />
-          </Suspense>)
+          </Suspense>
+        ),
       },
       {
-        path: "/",
-        element: <Instructor />,
-        children: [
-          {
-            path: "/instructor-register",
-            element: (
-              <Suspense fallback={
-                <Loader />
-              }>
-                <LazyInstructorRegister />
-              </Suspense>)
-          },
-          {
-            path: "/instructor-login",
-            element: (
-              <Suspense fallback={
-                <Loader />
-              }>
-                <LazyInstructorLogin />
-              </Suspense>)
-          },
-          {
-            path: "/instructor",
-            element: (
-              <Suspense fallback={<Loader />}>
-                <LazyInstructorHome />
-              </Suspense>)
-          },
-          {
-            path: "/instructor-welcome", element: (
-              <Suspense fallback={<Loader />}>
-                <LazyInstructorWelcome />
-              </Suspense>)
-          },
-          {
-            path: "add-course",
-            element: (
-              <Suspense fallback={<div>Loading...</div>}>
-                <LazyAddCourse />
-              </Suspense>
-            ),
-          }
-        ],
+        path: "cart",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LazyCart />
+          </Suspense>
+        ),
       },
       {
-        path: "/",
-        element: <Admin />,
-        children: [
-          {
-            path: "/admin-login",
-            element: (
-              <Suspense fallback={
-                <Loader />
-              }>
-                <LazyAdminLogin />
-              </Suspense>)
-          },
-          {
-            path: "/admin-dashboard",
-            element: (
-              <Suspense fallback={
-                <Loader />
-              }>
-                <LazyAdminDashBoard />
-              </Suspense>)
-          },
-          {
-            path: "/admin-tutor",
-            element: (
-              <Suspense fallback={
-                <Loader />
-              }>
-                <LazyAdminTutorView />
-              </Suspense>)
-          },
-        ],
+        path: "wishlist",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LazyWishList />
+          </Suspense>
+        ),
+      },
+      {
+        path: "contact",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LazyContactPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "community",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LazyCommunityPage />
+          </Suspense>
+        ),
       },
     ],
   },
   {
-    path: "/instructor-management",
+    path: "/instructor",
     element: <Instructor />,
     children: [
       {
         path: "",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loader />}>
             <LazyInstructorDashBoard />
+          </Suspense>
+        ),
+      },
+      {
+        path: "welcome",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LazyInstructorWelcome />
           </Suspense>
         ),
       },
       {
         path: "add-course",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loader />}>
             <LazyAddCourse />
           </Suspense>
         ),
-      }
+      },
     ],
   },
   {
-    path: "admin",
+    path: "/admin",
     element: <Admin />,
     errorElement: <ErrorElement />,
     children: [
       {
-        path: "", // Matched when accessing /admin
+        path: "",
         element: (
-          <Suspense fallback={<div>loading...</div>}>
-            <div>admin</div>
+          <Suspense fallback={<Loader />}>
+            <LazyAdminDashBoard />
           </Suspense>
         ),
       },
       {
-        path: "categories", // Matched when accessing /admin/categories
+        path: "login",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loader />}>
+            <LazyAdminLogin />
+          </Suspense>
+        ),
+      },
+      {
+        path: "dashboard",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LazyAdminDashBoard />
+          </Suspense>
+        ),
+      },
+      {
+        path: "tutor",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LazyAdminTutorView />
+          </Suspense>
+        ),
+      },
+      {
+        path: "categories",
+        element: (
+          <Suspense fallback={<Loader />}>
             <div>cater</div>
           </Suspense>
         ),
       },
       {
-        path: "categories/add-category", // Relative path
-        element: <AddCategory/>,
+        path: "categories/add-category",
+        element: <AddCategory />,
       },
     ],
-  }
+  },
+  {
+    path: "/instructor-login",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <LazyInstructorLogin />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/instructor-register",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <LazyInstructorRegister />
+      </Suspense>
+    ),
+  },
 ]);
