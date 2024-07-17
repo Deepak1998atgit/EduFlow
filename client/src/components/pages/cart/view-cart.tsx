@@ -1,9 +1,9 @@
 
 const viewCart: React.FC = () => {
     return (
-        <>
-            viewcart
-        </>
+        <div className="w-45 mt-2 h-45 bg-slate-600">
+            Hi Hello
+        </div>
     )
 }
 

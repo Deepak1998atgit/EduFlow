@@ -8,6 +8,8 @@ import StudentFooter from "./components/partials/student-footer";
 import { selectIsLoggedIn, selectUserType } from "./redux/reducers/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import InstructorHeader from "./components/partials/instructor-header";
+import StairTransition from "./components/common/stair-transition";
+import PageTransition from "./components/common/page-Transition";
 
 
 
@@ -18,7 +20,11 @@ export const Student = () => {
   return (
     <>
       <StudentHeader />
-      <Outlet />
+      <StairTransition/>
+      <PageTransition >
+        <Outlet />
+      </PageTransition>
+      
     </>
   )
 }
