@@ -1,52 +1,37 @@
+import { useState } from "react";
 import MobileNav from "../common/mobile-nav";
 import StudentNav from "./student-nav";
-const Links = [
-    {
-        name: "Home",
-        path: "/"
-    },
-    {
-        name: "Wishlist",
-        path: "/wishlist"
-    },
-    {
-        name: "Cart",
-        path: "/cart"
-    },
-    {
-        name: "Community",
-        path: "/community"
-    },
-    {
-        name: "Contact",
-        path: "/contact"
-    },
-];
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars ,faTimes} from '@fortawesome/free-solid-svg-icons';
+
 
 const StudentHeader: React.FC = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleNav = () => {
+        setIsOpen(!isOpen);
+    };
     return (
-        <header className="py-5  bg-platinum   border border-b-2 xl:h-30">
-            <div className="container mx-4 flex justify-between">
-                <h1 className="text-4xl text-darkpink font-semibold" >EduFlow<span className="text-darkred">.</span></h1>
-                <div className="hidden xl:flex gap-8 items-center">
-                    <StudentNav />
-                    <button className="sm:hidden">Hire ME</button>
+        <>
+            <header className=" relative py-5 bg-platinum   border border-b-2 xl:h-30">
+                <div className="container mx-4 flex justify-between">
+                    <img className="h-14  ml-10"  src="./icon.png"/>
+                    <div className="hidden xl:flex gap-8 items-center">
+                        <StudentNav />
+                        <button className="sm:hidden">Hire ME</button>
+                    </div>
+                    <div className="xl:hidden mr-14">
+                       {isOpen ? (<FontAwesomeIcon icon={faTimes} onClick={toggleNav} className="text-3xl cursor-pointer" />):(<FontAwesomeIcon icon={faBars} onClick={toggleNav} className="text-3xl cursor-pointer" />)} 
+                    </div>
                 </div>
-                <div className="xl:hidden ">
+            </header>
+            {isOpen && <div className='mr-0 w-full  h-screen-minus-nav  bg-platinum xl:hidden'>
+                <div className="flex flex-col items-center   text">
                     <MobileNav />
                 </div>
             </div>
-            <nav className='relative mr-0'>
-            <div className="text-3xl cursor-pointer" />
-           
-                <div className="absolute top-14 right-0 h-screen w-48 bg-platinum border-l border-gray-200">
-                    {Links.map((link, index) => (
-                        <p key={index}  className="block py-2 px-4 text-gray-800 hover:text-darkpink">{link.name}</p>
-                    ))}
-                </div>
-            
-        </nav>
-        </header>
+            }
+        </>
+
     );
 }
 

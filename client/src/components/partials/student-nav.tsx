@@ -20,7 +20,7 @@ const StudentNav: React.FC = () => {
                 <Link
                     to={link.path}
                     key={index}
-                    className={`flex items-center capitalize text-darkred hover:text-darkpink font-medium transition-all ${link.path === location.pathname && 'xl:text-darkpink border-b-2 border-darkpink'}`}
+                    className={`flex items-center capitalize text-black hover:text-[#f5f5f5] font-medium transition-all ${link.path === location.pathname && 'xl:text-[#f5f5f5] border-b-2 border-[#f5f5f5]'}`}
                 >
                     <FontAwesomeIcon icon={link.icon} />
                     
