@@ -9,9 +9,6 @@ export default {
       backgroundColor: {
         customPink: '#ea1f63',
       },
-      height:{
-        'screen-minus-nav': 'calc(100vh - 5rem)'
-      },
       colors: {
         primary: "#00FFAA",
         secondary: "#00FF60",

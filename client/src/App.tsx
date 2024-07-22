@@ -9,7 +9,7 @@ import { selectIsLoggedIn, selectUserType } from "./redux/reducers/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import InstructorHeader from "./components/partials/instructor-header";
 import StairTransition from "./components/common/stair-transition";
-import PageTransition from "./components/common/page-Transition";
+
 
 
 
@@ -19,11 +19,10 @@ export const Student = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
     <>
+      
       <StudentHeader />
       <StairTransition/>
-      <PageTransition >
-        <Outlet />
-      </PageTransition>
+      <Outlet />
       
     </>
   )

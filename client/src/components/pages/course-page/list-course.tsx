@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import ShimmerCard from '../shimmer/shimmer-card';
 import { MdSentimentDissatisfied } from "react-icons/md";
 import { Link } from "react-router-dom";
-
 const ListCourse: React.FC = () => {
   const [courses, setCourses] = useState<CourseInterface[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -46,15 +45,17 @@ const ListCourse: React.FC = () => {
     );
   }
   return (
-    <>
+    <section className='conatiner mx-auto  p-4'>
       {courses.length ? (
-        courses?.map((course: CourseInterface, index: number) => (
-          <Link to={course._id} key={course._id} className='mt-5'>
-            <div className='m-2'>
-              <CourseCard {...course} />
-            </div>
-          </Link>
-        ))
+        <div className='flex flex-wrap'>
+          {
+            courses?.map((course: CourseInterface, index: number) => (
+              <Link to={course._id} key={course._id} className=''>
+                <CourseCard {...course} />
+              </Link>
+            ))
+          }
+        </div>
       ) : (
         <div className='text-center pt-8 pb-14 mt-8'>
           <MdSentimentDissatisfied
@@ -66,7 +67,7 @@ const ListCourse: React.FC = () => {
           </p>
         </div>
       )}
-    </>
+    </section>
   );
 };
 

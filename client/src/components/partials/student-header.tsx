@@ -12,7 +12,7 @@ const StudentHeader: React.FC = () => {
     };
     return (
         <>
-            <header className=" relative py-5 bg-platinum   border border-b-2 xl:h-30">
+            <header className=" py-5 bg-[#D6EFD8]   border border-b-2 xl:h-30">
                 <div className="container mx-4 flex justify-between">
                     <img className="h-14  ml-10"  src="./icon.png"/>
                     <div className="hidden xl:flex gap-8 items-center">
