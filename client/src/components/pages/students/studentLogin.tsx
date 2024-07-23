@@ -19,23 +19,22 @@ const studentLogin = () => {
       navigate('/');
     }
   }, [isLogged, navigate]);
-
-
-
   const handleSubmit = async (studentInfo: any) => {
     try {
       const response: AxiosResponse<any> = await loginStudent(studentInfo);
       const responseData = response.data || {};
 
       const {
-        accessToken
-      }: { accessToken?: any } = responseData;
+        accessToken,refreshToken
+      }: { accessToken?: string ,refreshToken:string  } = responseData;
       console.log(accessToken, "access token from the google res")
-      await dispatch(await setToken({ accessToken, userType: "student" }));
-      toast.success(response?.data?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      navigate('/');
+      if (accessToken) {
+        await dispatch(await setToken({ accessToken,refreshToken, userType: "student" }));
+        toast.success(response?.data?.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        navigate('/');
+      }
     } catch (error: any) {
       console.log("Error on the student Login:", error);
       if (error) {
@@ -52,7 +51,7 @@ const studentLogin = () => {
       {
         isLogged ? false : (<div className="w-full h-screen  item-start grid grid-cols-1 md:grid-cols-6">
           <div className="relative  h-full flex flex-col col-span-3">
-            <img src="https://img.freepik.com/free-vector/digital-presentation-concept-illustration_114360-8175.jpg?w=740&t=st=1699346079~exp=1699346679~hmac=76a5032728c90aaf18f6461d14366fba8c710b5e167d99f66c88eb2c42da1f38" className="w-full h-full object-cover" />
+            <img src="https://img.freepik.com/free-vector/learning-concept-illustration_114360-3454.jpg?w=740&t=st=1699603068~exp=1699603668~hmac=705a6c88bcc020ab331b529b1cd303c6c8e2a6d95d877cbc20cc33ff2eaec322" className="w-full h-full object-cover" />
           </div>
           <div className="h-full  bg-[#fefffe] col-span-3  items-center flex flex-col py-7  justify-between">
             <Formik
@@ -63,7 +62,7 @@ const studentLogin = () => {
               <div className="w-full  flex flex-col max-w-[400px]">
                 <Form>
                   <div className="w-full flex flex-col mb-2">
-                    <h3 className="text-3xl text-[#92468f] font-semibold mb-2">Login</h3>
+                    <h3 className="text-3xl text-black font-semibold mb-2">Login</h3>
                   </div>
                   <div className="w-full flex flex-col ">
                     <Field

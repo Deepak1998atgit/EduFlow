@@ -9,6 +9,7 @@ import { selectIsLoggedIn, selectUserType } from "./redux/reducers/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import InstructorHeader from "./components/partials/instructor-header";
 import StairTransition from "./components/common/stair-transition";
+import useIsOnline from "./hooks/useOnline";
 
 
 
@@ -17,13 +18,18 @@ import StairTransition from "./components/common/stair-transition";
 
 export const Student = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isOnline = useIsOnline();
   return (
     <>
-      
-      <StudentHeader />
-      <StairTransition/>
-      <Outlet />
-      
+      {
+        isOnline && (
+          <>
+            <StudentHeader />
+            <StairTransition />
+            <Outlet />
+          </>
+        )
+      }
     </>
   )
 }

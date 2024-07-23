@@ -28,11 +28,11 @@ const studentRegister = () => {
 
         <div className="w-full h-screen flex item-start">
             <div className="relative w-1/2 h-full flex flex-col">
-                <img src="https://img.freepik.com/free-vector/digital-presentation-concept-illustration_114360-8175.jpg?w=740&t=st=1699346079~exp=1699346679~hmac=76a5032728c90aaf18f6461d14366fba8c710b5e167d99f66c88eb2c42da1f38" className="w-full h-full object-cover" />
+                <img src="https://img.freepik.com/free-vector/learning-concept-illustration_114360-3454.jpg?w=740&t=st=1699603068~exp=1699603668~hmac=705a6c88bcc020ab331b529b1cd303c6c8e2a6d95d877cbc20cc33ff2eaec322" className="w-full h-full object-cover" />
             </div>
             <div className="w-1/2 h-full  bg-[#fefffe] items-center flex flex-col py-7  justify-between">
                 <Formik
-                    initialValues={{name:"", email: "", password: "" }}
+                    initialValues={{ name: "", email: "", password: "" }}
                     validationSchema={studentRegistrationValidationSchema}
                     onSubmit={handleSubmit}
                 >
@@ -40,7 +40,7 @@ const studentRegister = () => {
                     <div className="w-full  flex flex-col max-w-[400px]">
                         <Form>
                             <div className="w-full flex flex-col  ">
-                                <h3 className="text-3xl text-[#92468f] font-semibold ">Sign UP</h3>
+                                <h3 className="text-3xl text-black font-semibold ">Sign UP</h3>
                                 {/* <p className="text-base  text-[#1B2E35]">welcome Back! Please enter your deatils</p> */}
                             </div>
 
@@ -128,17 +128,12 @@ const studentRegister = () => {
                             <div className="w-full flex items-center justify-center">
                                 <p className="text-sm font-normal text-black ">Already have an account? <span className="font-semibold underline underline-offset-2 cursor-pointer"><Link to="/login">Sign In</Link></span> for free</p>
                             </div>
-
                         </Form>
                     </div>
-
                 </Formik>
-
-
             </div >
         </div >
-
-    )
+    );
 }
 
 export default studentRegister;

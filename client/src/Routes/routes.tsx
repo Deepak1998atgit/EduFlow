@@ -118,22 +118,6 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "login",
-        element: (
-          <Suspense fallback={<Loader />}>
-            <LazyStudentLogin />
-          </Suspense>
-        ),
-      },
-      {
-        path: "signup",
-        element: (
-          <Suspense fallback={<Loader />}>
-            <LazyStudentRegister />
-          </Suspense>
-        ),
-      },
-      {
         path: "forgot-password",
         element: (
           <Suspense fallback={<Loader />}>
@@ -256,6 +240,23 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/login",
+    element:(
+      <Suspense fallback={<Loader />}>
+        <LazyStudentLogin />
+      </Suspense>
+    )
+  },
+  {
+    path: "signup",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <LazyStudentRegister/>
+      </Suspense>
+    )
+  }
+  ,
   {
     path: "/instructor-login",
     element: (

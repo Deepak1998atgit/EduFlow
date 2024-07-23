@@ -95,7 +95,6 @@ const studentNavbar = () => {
                             </div>
                         </div>
                         <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
                             {student ? false : (<button type="button" className="relative rounded-full w-28 h-10  bg-[#566c45] p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                 <NavLink className='' to="/login">Login</NavLink>
                             </button>)}
@@ -105,21 +104,18 @@ const studentNavbar = () => {
                                 {student?.name}</>) : null}
                             <div className="relative ml-3">
                                 <div>
-
                                     <button type="button" className="relative w-full flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                         <span className="absolute -inset-1.5"></span>
                                         <span className="sr-only">Open user menu</span>
                                         {student ? (<img className="h-9 w-9 rounded-full object-cover object-center" src={student?.prifile} />) : null}
                                     </button>
                                 </div>
-
                             </div>
                             {student ? (<>
                                 <button onClick={handleLogOut} type="button" className="mx-3 relative rounded-full w-1/2 h-10  bg-[#566c45] p-1 text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                     LogOut
                                 </button></>) : false}
                         </div>
-
                     </div>
                 </div>
                 <div className={isOpen ? 'sm:hidden' : 'hidden'} id="mobile-menu">

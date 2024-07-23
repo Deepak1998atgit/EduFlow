@@ -31,9 +31,9 @@ const ListCourse: React.FC = () => {
   }, []);
   if (isLoading) {
     return (
-      <div className=' mx-auto flex  flex-wrap justify-center'>
+      <div className='mx-auto flex  flex-wrap justify-center'>
         <div className='w-10/12 '>
-          <div className='flex mt-3  justify-center'>
+          <div className='flex mt-3 justify-center'>
             {[...Array(4)].map((_, index) => (
               <div className='m-2 py-3' key={index}>
                 <ShimmerCard />
@@ -45,14 +45,16 @@ const ListCourse: React.FC = () => {
     );
   }
   return (
-    <section className='conatiner mx-auto  p-4'>
+    <section className='container w-screen flex justify-center items-center'>
       {courses.length ? (
-        <div className='flex flex-wrap'>
+        < div className=' w-full flex flex-wrap'>
           {
             courses?.map((course: CourseInterface, index: number) => (
-              <Link to={course._id} key={course._id} className=''>
-                <CourseCard {...course} />
-              </Link>
+              <div className='w-screen   xl:w-1/3  md:w-1/2 flex items-center justify-center'>
+                <Link to={course._id} key={course._id} className=''>
+                  <CourseCard {...course} />
+                </Link>
+              </div>
             ))
           }
         </div>
