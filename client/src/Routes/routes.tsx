@@ -96,7 +96,9 @@ const LazyAdminTutorView = lazy(
   () => import("../components/pages/admin/admin-tutor")
 );
 
-
+const LazyViewCorse = lazy(
+  ()=>import("../components/pages/course-page/view-course")
+)
 
 
 
@@ -272,5 +274,12 @@ export const router = createBrowserRouter([
         <LazyInstructorRegister />
       </Suspense>
     ),
-  },
+  }, {
+    path: "/course",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <LazyViewCorse/>
+      </Suspense>
+    )
+  }
 ]);
