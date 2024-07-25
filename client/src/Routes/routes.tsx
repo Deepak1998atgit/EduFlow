@@ -159,6 +159,14 @@ export const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "/course",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LazyViewCorse/>
+          </Suspense>
+        )
+      }
     ],
   },
   {
@@ -274,12 +282,5 @@ export const router = createBrowserRouter([
         <LazyInstructorRegister />
       </Suspense>
     ),
-  }, {
-    path: "/course",
-    element: (
-      <Suspense fallback={<Loader />}>
-        <LazyViewCorse/>
-      </Suspense>
-    )
-  }
+  }, 
 ]);
