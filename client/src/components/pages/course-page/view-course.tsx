@@ -1,20 +1,26 @@
-import { FaIcons, FaPause, FaPlay, FaAngleRight } from "react-icons/fa";
+import { FaIcons, FaPause, FaPlay, FaAngleRight, FaAngleUp } from "react-icons/fa";
 import { useRef, useState } from "react";
 import { motion, Variants } from "framer-motion";
 const ViewCourseStudent: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isOpenIndex, setIsOpenIndex] = useState<number | null>(null);
-    const [isOpen,setIsOpen] =useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const randomArrayGeneratorForLesson = Array.from({ length: 7 }, (_, index) => index);
     const itemVariants: Variants = {
         open: {
-            height:"auto",
+            padding: 13,
+            height: "10rem",
             opacity: 1,
             y: 0,
             transition: { type: "spring", stiffness: 300, damping: 24 }
         },
-        closed: { height: 0, opacity: 0, y: 20, transition: { duration: 0.2 } }
+        closed: {
+            height: 0,
+            opacity: 0,
+            y: 20,
+            transition: { duration: 0.2 }
+        }
     };
     const StarRating = () => {
 
@@ -41,15 +47,15 @@ const ViewCourseStudent: React.FC = () => {
 
     const handleOpenlist = (index: number) => {
         setIsOpen(!isOpen);
-        setIsOpenIndex(index); 
+        setIsOpenIndex(index);
     }
     return (
         <main className="w-full pt-20">
-            <section className="w-full flex p-10 flex-row bg-[#fdfdfd] h-72 gap-2">
+            <section className="w-full flex p-10 shadow-md flex-row bg-gradient-to-br from-[#EAEEEB] to-[#969BA2] h-72 gap-2">
                 <div className="w-1/2 h-full relative">
                     <h3 className="flex items-center font-bold  ">Category <i><FaAngleRight /></i> WebDevelopment </h3>
                     <h3 className="h3 absolute left-0 top-7">React - The Complete Guide 2024 (incl. Next.js, Redux)</h3>
-                    <div className="absolute left-0 top-16"> <StarRating /></div>
+                    <div className="absolute right-0 top-16"> <StarRating /></div>
                     <div className=" absolute text-right text-sm  right-0 bottom-0 text-black">
                         <p>Duraton:25 Min</p>
                         <p>Language:English</p>
@@ -81,76 +87,94 @@ const ViewCourseStudent: React.FC = () => {
                                     <p>FREE</p>
                                 </div>
                             </div>
-                            <button className="bg-[#D6EFD8] h-10  absolute bottom-0 left-24 w-48"><span className="text-sm font-light">ENROLL NOW</span></button>
+                            <button className="bg-[#B1E1B5] h-10  absolute bottom-0 left-24 w-48"><span className="text-sm font-light">ENROLL NOW</span></button>
                         </div>
                     </figure>
                 </aside>
 
             </section>
-            <div className="w-1/2 mt-3 flex flex-col pr-8 pl-8 justify-between">
-                <h4 className="font-semibold w-full text-center  bg-[#D6EFD8] flex items-center justify-center mb-4">DETAILS</h4>
-                <p className="text-justify">
+            <div className="w-1/2 mt-3  flex flex-col pr-8 pl-8 justify-between">
+                <h4 className="font-semibold w-full text-center  bg-[#B1E1B5] flex items-center justify-center">DETAILS</h4>
+                <p className="text-justify p-4 bg-[#EAEEEB]">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                 </p>
             </div>
-            {
-                randomArrayGeneratorForLesson.map((_, index) => (
-                    <div className="w-5/6">
-                        <motion.div
-                            initial={false}
-                            animate={isOpen? "open" : "closed"}
-                            className="menu pr-6 "
-                            key={index}
-                        >
-                            <motion.button
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => {handleOpenlist(index)}}
-                                className="w-full bg-slate-400  "
-                                
+            <div className="w-full pt-7 pl-8">
+                <h2 className="text-2xl font-medium">LESSONS</h2>
+                {
+                    randomArrayGeneratorForLesson.map((_, index) => (
+                        <div className="w-5/6">
+                            <motion.div
+                                initial={false}
+                                animate={isOpen ? "open" : "closed"}
+                                className="menu pr-6"
+                                key={index}
                             >
-                                Menu
-                                <motion.div
-                                    variants={{
-                                        open: { rotate: 180 },
-                                        closed: { rotate: 0 }
-                                    }}
-                                    transition={{ duration: 0.2 }}
-                                    style={{ originY: 0.55 }}
+                                <motion.button
+                                    whileTap={{ scale: 0.97 }}
+                                    onClick={() => { handleOpenlist(index) }}
+                                    className="w-full bg-[#B1E1B5] text-left flex h-10 border border-[#EAEEEB] justify-center items-center rounded-xl gap-4"
+
                                 >
-                                </motion.div>
-                            </motion.button>
-                            <motion.ul
-                                variants={{
-                                    open: {
-                                        clipPath: "inset(0% 0% 0% 0% round 10px)",
-                                        transition: {
-                                            type: "spring",
-                                            bounce: 0,
-                                            duration: 0.7,
-                                            delayChildren: 0.3,
-                                            staggerChildren: 0.05
+                                    <motion.div
+                                        variants={{
+                                            open: { rotate: isOpen && isOpenIndex === index ? 180 : 0 },
+                                            closed: { rotate: 0 }
+                                        }}
+                                        transition={{ duration: 0.4 }}
+                                        style={{ originY: 0.55 }}
+                                        key={index}
+                                        className="w-4 font-bold"
+                                    >
+                                        <FaAngleUp />
+                                    </motion.div>
+                                    <span className="font-medium ">LESSON {index+1}</span>  
+                                </motion.button>
+                                <motion.ul
+                                    variants={{
+                                        open: {
+                                            clipPath: "inset(0% 0% 0% 0% round 10px)",
+                                            transition: {
+                                                type: "spring",
+                                                bounce: 0,
+                                                duration: 0.7,
+                                                delayChildren: 0.3,
+                                                staggerChildren: 0.05
+                                            }
+                                        },
+                                        closed: {
+                                            clipPath: "inset(10% 50% 90% 50% round 10px)",
+                                            transition: {
+                                                type: "spring",
+                                                bounce: 0,
+                                                duration: 0.3
+                                            }
                                         }
-                                    },
-                                    closed: {
-                                        clipPath: "inset(10% 50% 90% 50% round 10px)",
-                                        transition: {
-                                            type: "spring",
-                                            bounce: 0,
-                                            duration: 0.3
-                                        }
-                                    }
-                                }}
-                                animate={isOpen && isOpenIndex === index ? "open" : "closed"}
-                                    // style={{ overflow: "hidden", pointerEvents: isOpen? "auto" : "none" }}
-                            >
-                                <motion.li key={index} className="bg-slate-400" variants={itemVariants}>Item 1sgggggggggggggggggggggggg</motion.li>
-                            </motion.ul>
-                        </motion.div>
-                    </div>
+                                    }}
+                                    animate={isOpen && isOpenIndex === index ? "open" : "closed"}
+                                // style={{ overflow: "hidden", pointerEvents: isOpen? "auto" : "none" }}
+                                >
+                                    <motion.li key={index} className="bg-[#EAEEEB] text-justify " variants={itemVariants}>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</motion.li>
+                                </motion.ul>
+                            </motion.div>
+                        </div>
 
-                ))
-            }
-
+                    ))
+                }
+            </div>
+            <div className="w-full flex p-8">
+                <div className="w-1/2 h-40 border border-[#969BA2] text-start">
+                    <textarea
+                        className="w-full h-full box-border  focus:outline-none pt-4 pl-3"
+                        placeholder="Write a review"
+                        rows={4}
+                    />
+                </div>
+                <div className="w-1/3 flex items-center bg-[#969BA2] justify-center   h-40">
+                    <StarRating/>
+                </div>
+                
+            </div>
         </main>
     )
 }
