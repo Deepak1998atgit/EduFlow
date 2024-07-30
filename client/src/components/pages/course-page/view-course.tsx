@@ -1,5 +1,5 @@
 import { FaIcons, FaPause, FaPlay, FaAngleRight, FaAngleUp } from "react-icons/fa";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 const ViewCourseStudent: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -22,12 +22,39 @@ const ViewCourseStudent: React.FC = () => {
             transition: { duration: 0.2 }
         }
     };
-    const StarRating = () => {
-
+    const StarRating = ({ enableTransition }: { enableTransition: boolean }) => {
+        const [rating, setRating] = useState<number>(0);
+        const [time, setTime] = useState<number>(500)
+        useEffect(() => {
+            const timer = setTimeout(() => {
+                if (rating < 5) {
+                    setRating(rating + 1);
+                    setTime(500)
+                    rating === 4 ? setTime(6500) : setTime(500)
+                } else {
+                    setRating(0);
+                }
+            }, time);
+            return () => clearTimeout(timer)
+        }, [rating])
+        const pulseAnimation = {
+            scale: [1, 1.5, 1],
+            transition: { duration: 1, repeat: Infinity, repeatDelay: 2 }
+        };
         const stars = Array.from({ length: 5 }, (_, index) => (
-            <svg key={index} xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block" viewBox="0 0 24 24" stroke="#F7DC6F" fill=" #F7DC6F">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2 L15.09 8.26 L22 9.27 L17 14.14 L18.18 21.02 L12 17.77 L5.82 21.02 L7 14.14 L2 9.27 L8.91 8.26 L12 2 Z" />
-            </svg>
+            <motion.div
+                animate={index < rating ? pulseAnimation : { scale: 1 }}
+            >
+                <svg
+                    key={index}
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 inline-block"
+                    viewBox="0 0 24 24"
+                    stroke="#F7DC6F"
+                    fill={index < rating ? "#F7DC6F" : enableTransition ? "none" : "#F7DC6F"}>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2 L15.09 8.26 L22 9.27 L17 14.14 L18.18 21.02 L12 17.77 L5.82 21.02 L7 14.14 L2 9.27 L8.91 8.26 L12 2 Z" />
+                </svg>
+            </motion.div>
         ));
         return (
             <div className="flex">
@@ -51,53 +78,56 @@ const ViewCourseStudent: React.FC = () => {
     }
     return (
         <main className="w-full pt-20">
-            <section className="w-full lg:flex p-10 shadow-md md:flex-row lg:h-72 gap-2">
+            <section className="w-full lg:flex p-10  md:flex-row lg:h-72 gap-2">
                 <div className="sm:w-full mb-7 lg:w-1/2 h-full lg:relative ">
                     <h3 className="flex items-center font-bold">Category <i><FaAngleRight /></i> WebDevelopment </h3>
-                    <h3 className="h3 lg:absolute lg:left-0 lg:top-7">React - The Complete Guide 2024 (incl. Next.js, Redux)</h3>
-                    <div className="lg:absolute lg:right-0 lg:top-16"> <StarRating /></div>
-                    <div className=" lg:absolute text-right text-sm  right-0 bottom-0 text-black">
-                        <p>Duraton:25 Min</p>
+                    <h3 className="h3 lg:absolute lg:left-">React - The Complete Guide 2024 (incl. Next.js, Redux)</h3>
+                    <div className="lg:absolute  lg:right-0 lg:top-16"><StarRating enableTransition={true} /></div>
+                    <div className="left-12 mt-4 lg:left-0   lg:items-start items-center lg:mt-16 flex flex-row lg:flex-col   gap-1 lg:w-1/5">
+                        <h5 className="h2 lg:left-0">4.5</h5>
+                        <StarRating enableTransition={false} />
+                        <p className="customfont">46 Ratings</p>
+                    </div>
+                    <div className=" lg:absolute text-right customfontforsmallheadding  right-0 bottom-0 text-black">
+                        <p >Duraton:25 Min</p>
                         <p>Language:English</p>
                     </div>
                 </div>
-                <aside className="w-full flex justify-center items-center lg:justify-start  lg:items-start  lg:w-1/2  lg:pt-24">
-                    <figure className="relative ">
-                        <video ref={videoRef} controls className="w-96" >
-                            <source src="https://videocdn.cdnpk.net/videos/cebe11b1-e085-4f12-9374-3fe8f8d95501/horizontal/previews/videvo_watermarked/large.mp4" type="video/mp4" />
-                            Your Browser does not support the Video
-                        </video>
-                        <div className="absolute top-20  left-28  flex flex-col items-center justify-center">
-                            <button onClick={handlePlayandPauseOnVideo} className="h-14 w-14  bg-white  opacity-80 text-black flex items-center justify-center rounded-full">
-                                <i>
-                                    <FaPlay />
-                                </i>
-                            </button>
-                            <p className="text-white font-bold">Preview This Course</p>
-                            <button>d</button>
-                        </div>
-                        <div className="h-36 relative shadow-md border border-[#D6EFD8] pt-5 bg-[#f9f9f9] w-96">
-
-                            <div className="ml-2 text-sm  font-thin flex w-full  leading-9">
-                                <div className="w-1/2 
+                <aside className="w-full   flex-col justify-center items-center  lg:justify-start  lg:items-start  lg:w-1/2  lg:pt-7">
+                    <figure className="w-full">
+                        <div className="relative flex flex-col items-center justify-center">
+                            <div className="relative lg:w-5/6 md:w-1/2  z-10 rounded-t-lg">
+                            <video ref={videoRef} controls className="w-full    z-10 rounded-t-lg" >
+                                <source src="https://videocdn.cdnpk.net/videos/cebe11b1-e085-4f12-9374-3fe8f8d95501/horizontal/previews/videvo_watermarked/large.mp4" type="video/mp4" />
+                                Your Browser does not support the Video
+                            </video>
+                            <div className="absolute  inset-0 flex flex-col items-center justify-center">
+                                <button onClick={handlePlayandPauseOnVideo} className="h-20 w-20 z-20 bg-white  opacity-80 text-black flex items-center justify-center rounded-full">
+                                    <i>
+                                        <FaPlay size={35} />
+                                    </i>
+                                </button>
+                                <p className="text-white font-bold">Preview This Course</p>
+                            </div>
+                            </div>
+        
+                            <div className="h-32 relative rounded-bl-xl  border border-[#D6EFD8] pt-3 bg-[#f9f9f9] w-full md:w-1/2 lg:w-5/6">
+                                <div className="ml-2 text-sm  font-thin flex  w-full  leading-9">
+                                    <div className="w-full flex gap-6
                                 ">
-                                    <p>CREATER: <span className=" font-semibold">Ana James</span></p>
-                                    <p>PUBLISHED ON: <span className="font-semibold">21/7/2024</span></p>
+                                        <p><span className="customfontforsmallheadding">Ana James</span></p>
+                                        <p> <span className="customfontforsmallheadding">21/7/2024</span></p>
+                                    </div>
+                                    <div className="text-right underline text-sm font-semibold text-[#78A793] mr-6 w-1/2">
+                                        <p>FREE</p>
+                                    </div>
+                                </div><div className="flex items-center justify-center w-full">
+                                    <button
+                                        className="bg-[#B1E1B5] h-10  absolute bottom-0  w-2/3"><span className="text-sm font-light">ENROLL NOW</span></button>
                                 </div>
-                                <div className="text-right underline text-sm font-semibold text-[#78A793] mr-6 w-1/2">
-                                    <p>FREE</p>
+                                <div className="absolute -bottom-2 -left-2 w-4/5  -z-10 rounded-xl bg-[#D6EFD8] h-52">
                                 </div>
                             </div>
-                            <motion.button
-                                initial={{x:0}}
-                                animate={
-                                    {
-                                        x: [-2, 2, -2],
-                                    }
-                                }
-                    
-                                transition={{repeat:Infinity, ease: "easeOut", duration: 2 }}
-                                className="bg-[#B1E1B5] h-10  absolute bottom-0 left-24 w-48"><span className="text-sm font-light">ENROLL NOW</span></motion.button>
                         </div>
                     </figure>
                 </aside>
@@ -138,7 +168,7 @@ const ViewCourseStudent: React.FC = () => {
                                     >
                                         <FaAngleUp />
                                     </motion.div>
-                                    <span className="font-medium ">LESSON {index+1}</span>  
+                                    <span className="font-medium ">LESSON {index + 1}</span>
                                 </motion.button>
                                 <motion.ul
                                     variants={{
@@ -181,9 +211,9 @@ const ViewCourseStudent: React.FC = () => {
                     />
                 </div>
                 <div className="lg:w-1/3 flex rounded-full md:rounded-none items-center bg-[#969BA2] justify-center h-16  lg:h-16">
-                    <StarRating/>
+                    <StarRating enableTransition={false} />
                 </div>
-                
+
             </div>
         </main>
     )

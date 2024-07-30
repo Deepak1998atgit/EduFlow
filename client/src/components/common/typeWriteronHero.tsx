@@ -1,5 +1,5 @@
 import { useState,useEffect} from "react";
-const HeroTypeWritter = ({ words, speed }:{ words:string[], speed:number }) => {
+const HeroTypeWritter = ({ words, speed }:{ words:string[] | any, speed:number }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("")
   const currentWord = words[currentWordIndex]

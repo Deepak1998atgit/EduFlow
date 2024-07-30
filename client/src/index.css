@@ -30,6 +30,13 @@ html {
   .h3{
     @apply text-[20px] xl:text-[24px] leading-[1.1]  font-semibold
   }
+
+  .customfont{
+    @apply text-[10px] xl:text-[15px] leading-[1.1]  font-semibold
+  }
   
+  .customfontforsmallheadding{
+    @apply text-[12px] xl:text-[13px] leading-[1.1]  font-semibold
+  }
 
 }
