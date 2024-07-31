@@ -88,6 +88,7 @@ const ViewCourseStudent: React.FC = () => {
                         <StarRating enableTransition={false} />
                         <p className="customfont">46 Ratings</p>
                     </div>
+                    <button>sh</button>
                     <div className=" lg:absolute text-right customfontforsmallheadding  right-0 bottom-0 text-black">
                         <p >Duraton:25 Min</p>
                         <p>Language:English</p>
@@ -96,7 +97,7 @@ const ViewCourseStudent: React.FC = () => {
                 <aside className="w-full   flex-col justify-center items-center  lg:justify-start  lg:items-start  lg:w-1/2  lg:pt-7">
                     <figure className="w-full">
                         <div className="relative flex flex-col items-center justify-center">
-                            <div className="relative lg:w-5/6 md:w-1/2  z-10 rounded-t-lg">
+                            <div className="relative lg:w-4/6 md:w-1/2  z-10 rounded-t-lg">
                             <video ref={videoRef} controls className="w-full    z-10 rounded-t-lg" >
                                 <source src="https://videocdn.cdnpk.net/videos/cebe11b1-e085-4f12-9374-3fe8f8d95501/horizontal/previews/videvo_watermarked/large.mp4" type="video/mp4" />
                                 Your Browser does not support the Video
@@ -111,7 +112,7 @@ const ViewCourseStudent: React.FC = () => {
                             </div>
                             </div>
         
-                            <div className="h-32 relative rounded-bl-xl  border border-[#D6EFD8] pt-3 bg-[#f9f9f9] w-full md:w-1/2 lg:w-5/6">
+                            <div className="h-32 relative rounded-bl-xl  border border-[#D6EFD8] pt-3 bg-[#f9f9f9] w-full md:w-1/2 lg:w-4/6">
                                 <div className="ml-2 text-sm  font-thin flex  w-full  leading-9">
                                     <div className="w-full flex gap-6
                                 ">
