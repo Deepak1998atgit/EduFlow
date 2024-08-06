@@ -51,7 +51,7 @@ const ListCourse: React.FC = () => {
           {
             courses?.map((course: CourseInterface, index: number) => (
               <div className='w-screen   xl:w-1/3  md:w-1/2 flex items-center justify-center'>
-                <Link to={course._id} key={course._id} className=''>
+                <Link to={`courses/${course._id}`} key={course._id}>
                   <CourseCard {...course} />
                 </Link>
               </div>

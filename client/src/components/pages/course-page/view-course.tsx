@@ -1,4 +1,4 @@
-import { FaIcons, FaPause, FaPlay, FaAngleRight, FaAngleUp } from "react-icons/fa";
+import {  FaPlay, FaAngleRight, FaAngleUp } from "react-icons/fa";
 import { useRef, useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 const ViewCourseStudent: React.FC = () => {

@@ -8,7 +8,7 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ]
+      ],
     },
 
     /* Bundler mode */
@@ -25,6 +25,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/main.tsx", "src/App.tsx",".eslintrc.cjs"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

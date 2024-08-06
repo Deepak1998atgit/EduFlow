@@ -9,6 +9,8 @@ import AddCategory from "../components/pages/categories/add-category";
 const LazyStudentLogin = lazy(
   () => import("../components/pages/students/studentLogin")
 );
+
+
 const Loader = lazy(
   () => import("../components/common/spinner")
 );
@@ -49,6 +51,11 @@ const LazyCommunityPage = lazy(
 )
 
 
+const LazyViewCorse = lazy(
+  () => import("../components/pages/course-page/view-course")
+);
+
+
 //INSTRUCTOR
 const LazyInstructorRegister = lazy(
   () => import("../components/pages/instructors/instructor-register-page")
@@ -60,9 +67,9 @@ const LazyInstructorLogin = lazy(
 );
 
 
-const LazyInstructorHome = lazy(
-  () => import("../components/pages/instructors/instructor-dashboard")
-);
+// const LazyInstructorHome = lazy(
+//   () => import("../components/pages/instructors/instructor-dashboard")
+// );
 
 
 const LazyInstructorWelcome = lazy(
@@ -96,9 +103,7 @@ const LazyAdminTutorView = lazy(
   () => import("../components/pages/admin/admin-tutor")
 );
 
-const LazyViewCorse = lazy(
-  ()=>import("../components/pages/course-page/view-course")
-)
+
 
 
 
@@ -160,7 +165,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/course",
+        path: "/courses/:id",
         element: (
           <Suspense fallback={<Loader />}>
             <LazyViewCorse/>

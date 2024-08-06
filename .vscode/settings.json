@@ -1,0 +1,6 @@
+{
+    "typescript.reportStyleChecksAsWarnings": true,
+    "typescript.showUnused": false,
+    "javascript.showUnused": false,
+    
+}

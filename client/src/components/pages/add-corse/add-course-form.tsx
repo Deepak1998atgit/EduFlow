@@ -54,11 +54,11 @@ const CombinedCourseAddForm: React.FC = () => {
       introduction && formData.append("files", introduction)
       Object.keys(values).forEach((key) => formData.append(key, values[key]));
       console.log("form data", thumbnail, "ok", guidelines, "ok", introduction, "form data")
-      const response = await addCourse(formData);
-      toast.success(response.data.message, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      resetForm();
+      // const response = await addCourse(formData);
+      // toast.success(response.data.message, {
+      //   position: toast.POSITION.BOTTOM_RIGHT,
+      // });
+      // resetForm();
       setGuidelines(null)
       setThumbnail(null)
       setIntroduction(null)

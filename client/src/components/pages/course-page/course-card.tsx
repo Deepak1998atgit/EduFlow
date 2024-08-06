@@ -1,9 +1,9 @@
 import { Rating } from "@material-tailwind/react";
-import react, { useState } from "react"
+import { useState } from "react"
 import { CourseInterface } from "../../../types/course";
 import { motion } from "framer-motion";
 
-const CourseCard: React.FC<CourseInterface> = ({ rating, price, about, isPaid, title, thumbnail, description }) => {
+const CourseCard: React.FC<CourseInterface> = ({ rating, price, about, isPaid, title, thumbnail,description }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [showText, setShowText] = useState(false);
     const StarRating = () => {
