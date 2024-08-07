@@ -67,6 +67,10 @@ const LazyInstructorLogin = lazy(
 );
 
 
+const LazyAddLessonForm = lazy(
+  ()=>import("../components/pages/add-lesson/add-lesson")
+)
+
 // const LazyInstructorHome = lazy(
 //   () => import("../components/pages/instructors/instructor-dashboard")
 // );
@@ -202,6 +206,14 @@ export const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "add-lesson",
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LazyAddLessonForm/>
+          </Suspense>
+        )
+      }
     ],
   },
   {

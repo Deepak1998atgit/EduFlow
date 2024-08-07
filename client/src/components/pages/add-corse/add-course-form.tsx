@@ -47,21 +47,21 @@ const CombinedCourseAddForm: React.FC = () => {
     { resetForm }: FormikHelpers<CourseFormValues>
   ) => {
     try {
-      console.log("form data", "form data",values)
+      console.log("form data", "form data",guidelines,"set")
       const formData = new FormData();
       guidelines && formData.append("files", guidelines);
       thumbnail && formData.append("files", thumbnail);
       introduction && formData.append("files", introduction)
       Object.keys(values).forEach((key) => formData.append(key, values[key]));
       console.log("form data", thumbnail, "ok", guidelines, "ok", introduction, "form data")
-      // const response = await addCourse(formData);
-      // toast.success(response.data.message, {
-      //   position: toast.POSITION.BOTTOM_RIGHT,
-      // });
+      const response = await addCourse(formData);
+      toast.success(response.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       // resetForm();
-      setGuidelines(null)
-      setThumbnail(null)
-      setIntroduction(null)
+      // setGuidelines(null)
+      // setThumbnail(null)
+      // setIntroduction(null)
     } catch (error: any) {
       toast.error(error.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
@@ -366,7 +366,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     name='guidelines'
                     accept='application/pdf'
                     onChange={(event) => {
-                      const file = event.target.files?.[0] || null;
+                      const file = event?.target?.files?.[0] || null;
                       setGuidelines(file);
                     }}
                     required
@@ -394,8 +394,9 @@ const CombinedCourseAddForm: React.FC = () => {
                     accept='image/*'
                     required
                     onChange={(event) => {
-                      const file = event.target.files?.[0] || null;
+                      const file = event?.target?.files?.[0] || null;
                       setThumbnail(file);
+                      console.log("file on thumb",event.target.files,"filr")
                     }}
                     className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   />

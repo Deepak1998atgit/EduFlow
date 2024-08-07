@@ -41,15 +41,15 @@ export const addCourses = async (
   console.log("ok",courseInfo.instructorId,"ok")
 
   if (typeof courseInfo.tags === 'string') {
-    courseInfo.tags = courseInfo.tags.split(',');
+    courseInfo.tags = courseInfo.tags.trim().split(',').map(item=>item.trim());
   }
   if (typeof courseInfo.syllabus === 'string') {
-    courseInfo.syllabus = courseInfo.syllabus.split(',');
+    courseInfo.syllabus = courseInfo.syllabus.trim().split(',').map(item=>item.trim());
   }
   if (typeof courseInfo.requirements === 'string') {
-    courseInfo.requirements = courseInfo.requirements.split(',');
+    courseInfo.requirements = courseInfo.requirements.split(',').map(item=>item.trim());
   }
-
+  console.log("courseinfo",courseInfo,"courseInfo")
   const courseId = await courseDbRepository.addCourse(courseInfo);
 
   if (!courseId) {

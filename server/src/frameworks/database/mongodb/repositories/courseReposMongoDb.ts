@@ -1,6 +1,5 @@
 import Course from '../models/course';
-import mongoose, { FilterQuery } from 'mongoose';
-import Students from '../models/student';
+
 import {
   AddCourseInfoInterface,
   CourseInterface
