@@ -40,6 +40,8 @@ const CombinedCourseAddForm: React.FC = () => {
   const [introduction, setIntroduction] = useState<File | null>(null)
   const [categories, setCategories] = useState<ApiResponseCategory[] | null>(
     null
+
+
   );
 
   const handleFormSubmit = async (

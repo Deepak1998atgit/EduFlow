@@ -1,6 +1,6 @@
 import React from "react";
-import { Typography } from "@material-tailwind/react";
-import { Switch } from "@material-tailwind/react";
+// import { Typography } from "@material-tailwind/react";
+// import { Switch } from "@material-tailwind/react";
 
 type QuizzesSwitchProps = {
   addQuiz: boolean;

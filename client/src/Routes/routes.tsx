@@ -67,8 +67,8 @@ const LazyInstructorLogin = lazy(
 );
 
 
-const LazyAddLessonForm = lazy(
-  ()=>import("../components/pages/add-lesson/add-lesson")
+const LazyViewLessons = lazy(
+  ()=>import("../components/pages/add-lesson/view-lesson")
 )
 
 // const LazyInstructorHome = lazy(
@@ -207,10 +207,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "add-lesson",
+        path: "view-lessons",
         element: (
           <Suspense fallback={<Loader />}>
-            <LazyAddLessonForm/>
+            < LazyViewLessons/>
           </Suspense>
         )
       }

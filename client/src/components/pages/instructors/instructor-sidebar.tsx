@@ -21,6 +21,9 @@ const InstructorSidebar: React.FC<AdminSidebarProps> = ({ onSidebarClick }) => {
                     <li className=""><button onClick={() => handleButtonClick('dashboard')} className={`bg-${activeButton === 'dashboard' ? 'white' : 'opacity-0'} text-left border h-32 border-transparent outline-none focus:border-transparent pl-4 py-2 w-full  hover:bg-gray-400 text-${activeButton === 'dashboard' ? 'black' : 'white'}`}> <span className="flex items-center">
                         <AiFillDashboard className="mr-2" /> DASHBOARD
                     </span></button></li>
+                    <li className=""><button onClick={() => handleButtonClick('view-courses')} className={`bg-${activeButton === 'view-courses' ? 'white' : 'opacity-0'} text-left border h-32 border-transparent outline-none focus:border-transparent pl-4 py-2 w-full  hover:bg-gray-400 text-${activeButton === 'view-courses' ? 'black' : 'white'}`}> <span className="flex items-center">
+                        <AiFillDashboard className="mr-2" />  View Courses
+                    </span></button></li>
                     <li className=""><button onClick={() => handleButtonClick('users')} className={`bg-${activeButton === 'users' ? 'white' : 'opacity-0'} text-left border h-32 border-transparent outline-none focus:border-transparent pl-4 py-2 w-full  hover:bg-gray-400 text-${activeButton === 'users' ? 'black' : 'white'}`}> <span className="flex items-center">
                         <PiStudentFill className="mr-2" /> COURSE MANAGEMAENT
                     </span></button></li>
