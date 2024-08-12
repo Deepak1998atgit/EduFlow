@@ -1,5 +1,5 @@
 import { v2 as cloudinary, UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
-import configKeys from '../../../config'; 
+import configKeys from '../../../config';
 import crypto from 'crypto';
 import streamifier from 'streamifier';
 
@@ -22,7 +22,7 @@ export const cloudinaryService = () => {
             return reject(error);
           }
           if (result) {
-            console.log("result",result,"result")
+            console.log("result", result, "result")
             resolve({
               name: file.originalname,
               key: result.public_id,
@@ -37,8 +37,14 @@ export const cloudinaryService = () => {
     });
   };
 
+
+  const getFile = async (fileKey: string) => {
+    return await cloudinary.url(fileKey,{resource_type:"auto"})
+  };
+
   return {
     uploadFile,
+    getFile
   };
 };
 

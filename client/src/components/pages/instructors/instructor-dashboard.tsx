@@ -7,13 +7,10 @@ import CombinedCourseAddForm from "../add-corse/add-course-form";
 import { selectIsLoggedIn } from "../../../redux/reducers/authSlice";
 import { useNavigate } from 'react-router-dom';
 import { selectUserType } from "../../../redux/reducers/authSlice";
-
-
-
 const AdminDashboard: React.FC = () => {
-
   const navigate = useNavigate();
   const [selectedButtonValue, setSelectedButtonValue] = useState('dashboard');
+  const [isLesson,setIsLesson]=useState<boolean>(false)
   const isLoggedIn = useSelector(selectIsLoggedIn)
   const user = useSelector(selectUserType)
   const handleSidebarClick = (buttonValue: string) => {

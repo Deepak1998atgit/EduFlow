@@ -1,7 +1,8 @@
 import END_POINTS from "../../../constants/endPoints";
 import {
   addCourseService,
-  getAllCoursesService
+  getAllCoursesService,
+  getCoursesByInstructorService
 } from "../../services/course/course-service";
 
 
@@ -13,4 +14,9 @@ export const addCourse = (courseInfo: FormData) => {
 
 export const getAllCourses = () => {
   return getAllCoursesService(END_POINTS.GET_ALL_COURSES);
+};
+
+
+export const getCourseByInstructor = () => {
+  return getCoursesByInstructorService(END_POINTS.GET_COURSES_BY_INSTRUCTORS);
 };

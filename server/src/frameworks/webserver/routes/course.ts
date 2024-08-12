@@ -25,7 +25,7 @@ const courseRouter = (redisClient: RedisClient) => {
     redisClient
   );
 
-    
+
 
   //* Add course
   router.post(
@@ -35,15 +35,22 @@ const courseRouter = (redisClient: RedisClient) => {
     upload.array('files'),
     controller.addCourse
   );
-  
+
 
   //* Get all courses
   router.get(
     '/get-all-courses',
-    cachingMiddleware(redisClient, 'all-courses'), 
+    cachingMiddleware(redisClient, 'all-courses'),
     controller.getAllCourses
   );
 
+
+  router.get(
+    '/get-course-by-instructor',
+    jwtAuthMiddleware,
+    roleCheckMiddleware('instructor'),
+    controller.getCoursesByInstructor
+  );
 
   return router;
 };

@@ -207,7 +207,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "view-lessons",
+        path: "view-lessons/:courseId",
         element: (
           <Suspense fallback={<Loader />}>
             < LazyViewLessons/>

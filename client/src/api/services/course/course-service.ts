@@ -21,3 +21,11 @@ export const getAllCoursesService = async (endpoint: string) => {
   );
   return response;
 };
+
+
+export const getCoursesByInstructorService = async (endpoint: string) => {
+  const response = await api.get(
+    `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`
+  );
+  return response.data;
+};

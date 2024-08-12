@@ -17,27 +17,26 @@ import {
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
-// import { formatDate } from "../../../utils/helpers";
+import { formatDate } from "../../../utils/helpers";
 // import { getLessonsByCourse } from "../../../api/endpoints/course/lesson";
 import { useParams } from "react-router-dom";
 import { ApiResponseLessons } from "../../../api/types/apiResponses/api-response-instructors";
-import AddLessonForm from "./add-lesson";
+import AddLessonForm from "./add-lessons-form";
 import { Link } from "react-router-dom";
 import { LESSON_AVATAR } from "../../../constants/common";
-  
 const ViewLessons: React.FC = () => {
   const [lessons, setLessons] = useState<ApiResponseLessons[] | null>(null);
   const [formVisible, setFormVisible] = useState<boolean>(false);
   const { courseId } = useParams<{ courseId: string | undefined }>();
 
-//   const fetchData = async (courseId: string) => {
-//     const response = await getLessonsByCourse(courseId);
-//     setLessons(response.data);
-//   };
+  // const fetchData = async (courseId: string) => {
+  //   const response = await getLessonsByCourse(courseId);
+  //   setLessons(response.data);
+  // };
 
-//   useEffect(() => {
-//     if (courseId) fetchData(courseId);
-//   }, [courseId]);
+  // useEffect(() => {
+  //   if (courseId) fetchData(courseId);
+  // }, [courseId]);
 
   return (
     <Card className='h-auto w-full mb-24'>
@@ -76,8 +75,8 @@ const ViewLessons: React.FC = () => {
           <div className='w-full md:w-72'>
             <Input
               label='Search'
-              icon={<MagnifyingGlassIcon className='h-5 w-5'/>}
-              crossOrigin="anonymous" 
+              crossOrigin="anonymous"
+              icon={<MagnifyingGlassIcon className='h-5 w-5' />}
             />
           </div>
         </div>  
@@ -108,7 +107,7 @@ const ViewLessons: React.FC = () => {
                               color='blue-gray'
                               className='font-normal'
                             >
-                              {/* {title} */} React 
+                              {title}
                             </Typography>
                           </div>
                           <div className='flex items-center gap-3'>
@@ -118,7 +117,7 @@ const ViewLessons: React.FC = () => {
                               color='blue-gray'
                               className='font-normal opacity-70'
                             >
-                              {/* {description} */} This is the react course
+                              {description}
                             </Typography>
                           </div>
                         </div>
@@ -128,7 +127,7 @@ const ViewLessons: React.FC = () => {
                             color='blue-gray'
                             className='font-normal'
                           >
-                            {/* {formatDate(createdAt)} */} 10 /3/21
+                            {formatDate(createdAt)}
                           </Typography>
                         </div>
                         <div className='flex items-center mr-6 gap-2'>

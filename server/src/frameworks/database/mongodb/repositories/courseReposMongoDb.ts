@@ -1,4 +1,5 @@
 import Course from '../models/course';
+import mongoose from 'mongoose';
 
 import {
   AddCourseInfoInterface,
@@ -20,10 +21,18 @@ export const courseRepositoryMongodb = () => {
   };
 
 
+  const getCourseByInstructorId = async (instructorId: string) => {
+    const courses = await Course.find({
+      instructorId: new mongoose.Types.ObjectId(instructorId)
+    });
+    return courses;
+  };
+
 
   return {
     addCourse,
-    getAllCourse
+    getAllCourse,
+    getCourseByInstructorId
   };
 };
 

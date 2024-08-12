@@ -7,6 +7,8 @@ import {
   getAllCourseU,
 } from '../../app/usecases/course/listCourse';
 import {
+  getCourseByInstructorU } from "../../app/usecases/course/view-course"
+import {
   AddCourseInfoInterface,
 } from '../../types/courseInterface';
 import { CustomRequest } from '../../types/customRequest';
@@ -25,16 +27,16 @@ const courseController = (
   cacheDbRepository: CacheRepositoryInterface,
   cacheDbRepositoryImpl: RedisRepositoryImpl,
   cacheClient: RedisClient
-  
+
 ) => {
   const dbRepositoryCourse = courseDbRepository(courseDbRepositoryImpl());
   const cloudService = cloudServiceInterface(cloudServiceImpl());
   const dbRepositoryCache = cacheDbRepository(cacheDbRepositoryImpl(cacheClient));
- 
+
 
   const addCourse = asyncHandler(
     async (req: CustomRequest, res: Response, next: NextFunction) => {
-        console.log("ok get")
+      console.log("ok get")
       const course: AddCourseInfoInterface = req.body;
       const files: Express.Multer.File[] = req.files as Express.Multer.File[];
       const instructorId = req.user?.Id;
@@ -73,13 +75,30 @@ const courseController = (
   });
 
 
-    
+  const getCoursesByInstructor = asyncHandler(
+    async (req: CustomRequest, res: Response) => {
+      const instructorId = req.user?.Id;
+      const courses = await getCourseByInstructorU(
+        instructorId,
+        cloudService,
+        dbRepositoryCourse
+      );
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully retrieved your courses',
+        data: courses
+      });
+    }
+  );
+
+
 
   return {
     addCourse,
-    getAllCourses
+    getAllCourses,
+    getCoursesByInstructor
   };
-  
+
 };
 
 export default courseController;

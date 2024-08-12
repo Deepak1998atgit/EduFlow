@@ -3,9 +3,12 @@ import { CloudServiceImpl } from '../../frameworks/services/cloudinaryService';
 export const cloudServiceInterface = (service: ReturnType<CloudServiceImpl>) => {
     
     const upload = async (file: Express.Multer.File) => await service.uploadFile(file)
+
+    const getFile = async(fileKey:string) =>await service.getFile(fileKey)
     
     return {
         upload,
+        getFile
     };
     
 };
