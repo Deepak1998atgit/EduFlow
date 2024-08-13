@@ -21,12 +21,9 @@ export const getCourseByInstructorU = async (
   await Promise.all(
     courses.map(async (course) => {
       if (course.thumbnail) {
-        console.log(course.thumbnail,"url");
-        const data= await cloudService.getFile(course.thumbnail.key);
-        console.log(data,"url")
+        course.thumbnailUrl = await cloudService.getFile(course.thumbnail.key);
       }
     })
   );
-
   return courses;
 };

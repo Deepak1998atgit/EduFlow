@@ -12,7 +12,7 @@ import { Button} from "@material-tailwind/react";
 import { TiTrash } from "react-icons/ti";  
 import QuizSwitch from "./quiz-switch";
 import { Tooltip } from "@material-tailwind/react";
-// import { addLesson } from "../../../api/endpoints/course/lesson";
+import { addLesson } from "../../../api/endpoints/course/lesson";
 import { FormValuesLesson } from "../../../types/lesson";
 import SpinnerDialog from "../../common/spinner-page";
 import { lessonSchema } from "../../../validations/lesson/lesson";
@@ -36,8 +36,9 @@ const AddLessonForm: React.FC = () => {
   const [lessonVideo, setLessonVideo] = useState<File | null>(null);
   const [materialFile, setMaterialFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const {courseId} = useParams()
-
+  const {courseId} = useParams();
+  
+ 
   const handleVideoFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     setLessonVideo(file);
@@ -81,7 +82,7 @@ const AddLessonForm: React.FC = () => {
       });
     }
   };
-
+  console.log("courseId",courseId,"courseId")
   return (
     <div className='flex justify-center items-center mt-10 pt-5 pb-10 text-customFontColorBlack'>
       <div className='bg-white rounded-lg mx-10 border w-full p-6'>

@@ -17,6 +17,7 @@ import { CloudServiceImpl } from '../../frameworks/services/cloudinaryService';
 import { RedisClient } from '../../../server';
 import { RedisRepositoryImpl } from '@src/frameworks/database/redis/redisCacheRepository';
 import { CacheRepositoryInterface } from '@src/app/repositories/cachedRepoInterface';
+import { addLessonsU } from '../../app/usecases/lessons/addLesson';
 
 
 const courseController = (
@@ -92,11 +93,36 @@ const courseController = (
   );
 
 
+  const addLesson = asyncHandler(async (req: CustomRequest, res: Response) => {
+    const instructorId = req.user?.Id;
+    const courseId = req.params.courseId;
+    const lesson = req.body;
+    const medias = req.files as Express.Multer.File[];
+    const questions = JSON.parse(lesson.questions);
+    lesson.questions = questions;
+    await addLessonsU(
+      medias,
+      courseId,
+      instructorId,
+      lesson,
+      dbRepositoryLesson,
+      cloudService,
+      dbRepositoryQuiz
+    );
+    res.status(200).json({
+      status: 'success',
+      message: 'Successfully added new lesson',
+      data: null
+    });
+  });
+
+
 
   return {
     addCourse,
     getAllCourses,
-    getCoursesByInstructor
+    getCoursesByInstructor,
+    addLesson
   };
 
 };

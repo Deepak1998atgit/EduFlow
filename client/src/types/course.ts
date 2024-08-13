@@ -34,7 +34,7 @@ export interface Media {
 interface thumbnail{
     name: string;
     key: string;
-    url: string;
+    url?: string;
     _id: string;
 
 }

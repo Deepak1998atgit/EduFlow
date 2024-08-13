@@ -31,15 +31,12 @@ import { formatDate } from "../../../utils/helpers";
 import { Link } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";
 import useSearch from "../../../hooks/useSearch";
-
 const TABS = [
     { label: "All", value: "all" },
     { label: "Monitored", value: "monitored" },
     { label: "Pending", value: "pending" },
 ];
-
 const TABLE_HEAD = ["Course", "Category", "Status", "Added", ""];
-
 const ListCourseForInstructors: React.FC = () => {
     const [courses, setCourses] = useState([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
@@ -50,7 +47,7 @@ const ListCourseForInstructors: React.FC = () => {
         goToPage,
         goToPreviousPage,
         goToNextPage,
-    } = usePagination(courses, 4);
+    } = usePagination(courses, 3);
     const searchResult = useSearch(courses, searchQuery);
 
     const fetData = async () => {
@@ -66,8 +63,9 @@ const ListCourseForInstructors: React.FC = () => {
         fetData();
     }, []);
 
-    const displayData = searchQuery !== "" ? searchResult : currentData;
-
+    const displayData = searchQuery !== ""
+        ? searchResult
+        : currentData;
     return (
         <Card className='h-auto w-full mb-24 '>
             <CardHeader floated={false} shadow={false} className='rounded-none'>
@@ -143,7 +141,6 @@ const ListCourseForInstructors: React.FC = () => {
                                         _id,
                                         title,
                                         thumbnailUrl,
-                                        description,
                                         category,
                                         createdAt,
                                         isVerified,
@@ -158,7 +155,7 @@ const ListCourseForInstructors: React.FC = () => {
                                         <tr key={_id}>
                                             <td className={classes}>
                                                 <div className='flex items-center gap-2'>
-                                                    <Avatar src={thumbnailUrl} alt={"image"} size='sm' />
+                                                    <Avatar src={thumbnailUrl} alt={"image"} size='md' />
                                                     <div className='flex flex-col'>
                                                         <Typography
                                                             variant='small'
@@ -264,5 +261,4 @@ const ListCourseForInstructors: React.FC = () => {
         </Card>
     );
 };
-
 export default ListCourseForInstructors;

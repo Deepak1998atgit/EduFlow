@@ -39,7 +39,7 @@ export const cloudinaryService = () => {
 
 
   const getFile = async (fileKey: string) => {
-    return await cloudinary.url(fileKey,{resource_type:"auto"})
+    return await cloudinary.url(fileKey)
   };
 
   return {
