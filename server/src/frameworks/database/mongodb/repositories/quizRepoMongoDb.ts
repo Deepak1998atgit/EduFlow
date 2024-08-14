@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import Quiz from '../models/quiz';
-import { QuizInterface } from '@src/types/quiz';
+import { QuizInterface } from '../../../../types/quiz';
 
-import { AddQuizInfoInterface, EditQuizInfoInterface } from '@src/types/courseInterface';
+import { AddQuizInfoInterface, EditQuizInfoInterface } from '../../../../types/courseInterface';
 
 export const quizRepositoryMongodb = () => {
     const getQuizByLessonId = async (lessonId: string) => {

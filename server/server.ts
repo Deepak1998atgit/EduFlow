@@ -1,4 +1,5 @@
 import express, { Application} from 'express';
+import 'tsconfig-paths/register';
 import connectDB from './src/frameworks/database/mongodb/connection';
 import expressConfig from './src/frameworks/webserver/express';
 import serverConfig from './src/frameworks/webserver/server';

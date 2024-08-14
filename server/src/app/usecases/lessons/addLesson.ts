@@ -1,13 +1,12 @@
 import HttpStatusCodes from '../../../constants/HttpStatusCodes';
 import AppError from '../../../utils/appError';
 import { CreateLessonInterface } from '../../../types/lesson';
-import { CloudServiceInterface } from '@src/app/services/cloudServiceInterface';
-import { QuizDbInterface } from '@src/app/repositories/quizDbRepository';
-import { LessonDbRepositoryInterface } from '@src/app/repositories/lessonDbRepository';
+import { CloudServiceInterface } from '../../services/cloudServiceInterface';
+import { QuizDbInterface } from '../../repositories/quizDbRepository';
+import { LessonDbRepositoryInterface } from '../../repositories/lessonDbRepository';
 import * as ffprobePath from 'ffprobe-static';  // usefull for getting in to the ffmpeg as a probe
 import ffmpeg from 'fluent-ffmpeg'; // This library is help us to make simply do with ffmpeg using javascript
 import * as fs from 'fs';
-
 export const addLessonsU = async (
   media: Express.Multer.File[] | undefined,
   courseId: string | undefined,
