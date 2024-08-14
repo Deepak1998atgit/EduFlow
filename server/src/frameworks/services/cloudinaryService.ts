@@ -15,7 +15,7 @@ export const cloudinaryService = () => {
   const uploadFile = async (file: Express.Multer.File): Promise<{ name: string; key: string; url: string }> => {
     const key = randomImageName();
     return new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(
+      const uploadStream = cloudinary.uploader.upload_stream(  // it creates the mechanisms to upload files to cloudinary
         { public_id: key, resource_type: 'auto' },
         (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
           if (error) {
@@ -33,7 +33,8 @@ export const cloudinaryService = () => {
           }
         }
       );
-      streamifier.createReadStream(file.buffer).pipe(uploadStream);
+      console.log("upstraem",uploadStream,"upload")
+      streamifier.createReadStream(file.buffer).pipe(uploadStream); // The Streamifier converts the file buffer to readablestraem  and pipe to  readable to writable to cloudinary
     });
   };
 
