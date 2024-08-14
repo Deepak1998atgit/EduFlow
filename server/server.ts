@@ -1,4 +1,4 @@
-import express, { Application, NextFunction } from 'express';
+import express, { Application} from 'express';
 import connectDB from './src/frameworks/database/mongodb/connection';
 import expressConfig from './src/frameworks/webserver/express';
 import serverConfig from './src/frameworks/webserver/server';
@@ -9,7 +9,7 @@ import errorHandlingMiddleware from './src/frameworks/webserver/middlewares/erro
 
 
 
-const port = 5000;
+
 
 const app: Application = express();
 const server = http.createServer(app);

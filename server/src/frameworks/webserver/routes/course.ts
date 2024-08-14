@@ -11,6 +11,10 @@ import { RedisClient } from '../../../../server';
 import { redisCacheRepository } from '../../../frameworks/database/redis/redisCacheRepository';
 import { cacheRepositoryInterface } from '../../../app/repositories/cachedRepoInterface';
 import { cachingMiddleware } from '../middlewares/redisCaching';
+import { lessonDbRepository } from '@src/app/repositories/lessonDbRepository';
+import { quizDbRepository } from '@src/app/repositories/quizDbRepository';
+import { quizRepositoryMongodb } from '@src/frameworks/database/mongodb/repositories/quizRepoMongoDb';
+import { lessonRepositoryMongodb } from '@src/frameworks/database/mongodb/repositories/lessonRepoMongoDb';
 
 
 const courseRouter = (redisClient: RedisClient) => {
@@ -18,6 +22,10 @@ const courseRouter = (redisClient: RedisClient) => {
   const controller = courseController(
     courseDbRepository,
     courseRepositoryMongodb,
+    lessonDbRepository,
+    lessonRepositoryMongodb,
+    quizDbRepository,
+    quizRepositoryMongodb,
     cloudServiceInterface,
     cloudinaryService,
     cacheRepositoryInterface,

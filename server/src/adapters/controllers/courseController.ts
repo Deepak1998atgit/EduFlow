@@ -18,11 +18,19 @@ import { RedisClient } from '../../../server';
 import { RedisRepositoryImpl } from '@src/frameworks/database/redis/redisCacheRepository';
 import { CacheRepositoryInterface } from '@src/app/repositories/cachedRepoInterface';
 import { addLessonsU } from '../../app/usecases/lessons/addLesson';
+import { LessonDbRepositoryInterface } from '@src/app/repositories/lessonDbRepository';
+import { LessonRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/lessonRepoMongoDb';
+import { QuizDbInterface } from '@src/app/repositories/quizDbRepository';
+import { QuizRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/quizRepoMongoDb';
 
 
 const courseController = (
   courseDbRepository: CourseDbRepositoryInterface,
   courseDbRepositoryImpl: CourseRepositoryMongoDbInterface,
+  lessonDbRepository:LessonDbRepositoryInterface,
+  lessonDbRepositoryImp:LessonRepositoryMongoDbInterface,
+  quizDbRepository:QuizDbInterface,
+  quizDbRepositoryImp:QuizRepositoryMongoDbInterface,
   cloudServiceInterface: CloudServiceInterface,
   cloudServiceImpl: CloudServiceImpl,
   cacheDbRepository: CacheRepositoryInterface,
@@ -31,6 +39,8 @@ const courseController = (
 
 ) => {
   const dbRepositoryCourse = courseDbRepository(courseDbRepositoryImpl());
+  const dbRepositoryLesson=lessonDbRepository(lessonDbRepositoryImp());
+  const dbRepositoryQuiz=quizDbRepository(quizDbRepositoryImp());
   const cloudService = cloudServiceInterface(cloudServiceImpl());
   const dbRepositoryCache = cacheDbRepository(cacheDbRepositoryImpl(cacheClient));
 
