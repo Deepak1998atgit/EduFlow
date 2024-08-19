@@ -30,7 +30,7 @@ const errorHandlingMiddleware = (
       .status(err.statusCode)
       .json({ errors: err.status, message: err.message });
   } else {
-    console.log("jfjfj",err)
+    console.log("Other errors",err)
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,

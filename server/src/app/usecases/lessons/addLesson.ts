@@ -37,20 +37,19 @@ export const addLessonsU = async (
   if (media) {
     const videoFile = media[0];
     const tempFilePath = './temp_video.mp4';
+    console.log("passing ...2")
     fs.writeFileSync(tempFilePath, videoFile.buffer);
-
     const getVideoDuration = () =>
       new Promise<string>((resolve, reject) => {
         ffmpeg(tempFilePath)
           .setFfprobePath(ffprobePath.path)
           .ffprobe((err: Error | null, data: any) => {
             fs.unlinkSync(tempFilePath);
-
             if (err) {
               console.error('Error while probing the video:', err);
               reject(err);
             }
-
+            console.log("passing ...3",data.format,"end")
             const duration: string = data.format.duration;
             resolve(duration);
           });
@@ -58,6 +57,7 @@ export const addLessonsU = async (
 
     try {
       const videoDuration = await getVideoDuration();
+      console.log("duration ",videoDuration," dur")
       lesson.duration = parseFloat(videoDuration);
     } catch (error) {
       console.error('Error while getting video duration:', error);
@@ -69,11 +69,13 @@ export const addLessonsU = async (
       media.map(async (files) => await cloudService.upload(files))
     );
   }
+  console.log("start repo")
   const lessonId = await lessonDbRepository.addLesson(
     courseId,
     instructorId,
     lesson
   );
+  console.log("end repo repo",lessonId)
   if (!lessonId) {
     throw new AppError('Data is not provided', HttpStatusCodes.BAD_REQUEST);
   }

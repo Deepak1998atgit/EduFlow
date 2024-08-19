@@ -37,8 +37,8 @@ const AddLessonForm: React.FC = () => {
   const [materialFile, setMaterialFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const {courseId} = useParams();
+
   
- 
   const handleVideoFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     setLessonVideo(file);
@@ -67,14 +67,14 @@ const AddLessonForm: React.FC = () => {
         }
       });
 
-    //   const response = await addLesson(courseId??"", formData);
-    //   setIsUploading(false);
-    //   setLessonVideo(null);
-    //   setMaterialFile(null);
-    //   resetForm();
-    //   toast.success(response.message, {
-    //     position: toast.POSITION.BOTTOM_RIGHT,
-    //   });
+      const response = await addLesson(courseId??"", formData);
+      setIsUploading(false);
+      setLessonVideo(null);
+      setMaterialFile(null);
+      resetForm();
+      toast.success(response.message, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
     } catch (error) {
       setIsUploading(false);
       toast.error("Failed to add lesson", {
