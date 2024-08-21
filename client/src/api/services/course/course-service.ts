@@ -29,3 +29,13 @@ export const getCoursesByInstructorService = async (endpoint: string) => {
   );
   return response.data;
 };
+
+export const getIndividualCourseService = async (
+  endpoint: string,
+  courseId: string
+) => {
+  const response = await axiosInstance.get(
+    `${CONFIG_KEYS.API_BASE_URL}/${endpoint}/${courseId}`
+  );
+  return response;
+};

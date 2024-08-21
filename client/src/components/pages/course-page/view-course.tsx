@@ -1,11 +1,50 @@
-import {  FaPlay, FaAngleRight, FaAngleUp } from "react-icons/fa";
+import { FaPlay, FaAngleRight, FaAngleUp } from "react-icons/fa";
 import { useRef, useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
+import { toast } from "react-toastify";
+import useApiData from "@/hooks/useApiCall";
+import { useParams } from "react-router-dom";
+import { CourseInterface } from "@/types/course";
+import { getIndividualCourse } from "@/api/endpoints/course/Course";
+import { getLessonsByCourse } from "../../../api/endpoints/course/lesson";
 const ViewCourseStudent: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isOpenIndex, setIsOpenIndex] = useState<number | null>(null);
     const [isOpen, setIsOpen] = useState(false)
+    const params = useParams();
+    const courseId: string | undefined = params.courseId;
+    const fetchCourse = async (courseId: string): Promise<CourseInterface> => {
+        try {
+            const course = await getIndividualCourse(courseId);
+            return course?.data?.data as CourseInterface;
+        } catch (error: any) {
+            toast.error(error.data.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+            throw error;
+        }
+    };
+
+    const fetchLessons = async (courseId: string) => {
+        try {
+            const lessons = await getLessonsByCourse(courseId);
+            return lessons.data;
+        } catch (error: any) {
+            toast.error(error.data.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+            throw error;
+        }
+    };
+    console.log("courseId",courseId,"courseId")
+    const { data, isLoading, refreshData } = useApiData(fetchCourse, courseId);
+    const { data: lessons, isLoading: isLessonsLoading } = useApiData(
+        fetchLessons,
+        courseId
+    );
+    console.log("data of lesson","course",data,"course")
+    const course: CourseInterface | null = data;
     const randomArrayGeneratorForLesson = Array.from({ length: 7 }, (_, index) => index);
     const itemVariants: Variants = {
         open: {
@@ -98,20 +137,20 @@ const ViewCourseStudent: React.FC = () => {
                     <figure className="w-full">
                         <div className="relative flex flex-col items-center justify-center">
                             <div className="relative lg:w-4/6 md:w-1/2  z-10 rounded-t-lg">
-                            <video ref={videoRef} controls className="w-full    z-10 rounded-t-lg" >
-                                <source src="https://videocdn.cdnpk.net/videos/cebe11b1-e085-4f12-9374-3fe8f8d95501/horizontal/previews/videvo_watermarked/large.mp4" type="video/mp4" />
-                                Your Browser does not support the Video
-                            </video>
-                            <div className="absolute  inset-0 flex flex-col items-center justify-center">
-                                <button onClick={handlePlayandPauseOnVideo} className="h-20 w-20 z-20 bg-white  opacity-80 text-black flex items-center justify-center rounded-full">
-                                    <i>
-                                        <FaPlay size={35} />
-                                    </i>
-                                </button>
-                                <p className="text-white font-bold">Preview This Course</p>
+                                <video ref={videoRef} controls className="w-full    z-10 rounded-t-lg" >
+                                    <source src="https://videocdn.cdnpk.net/videos/cebe11b1-e085-4f12-9374-3fe8f8d95501/horizontal/previews/videvo_watermarked/large.mp4" type="video/mp4" />
+                                    Your Browser does not support the Video
+                                </video>
+                                <div className="absolute  inset-0 flex flex-col items-center justify-center">
+                                    <button onClick={handlePlayandPauseOnVideo} className="h-20 w-20 z-20 bg-white  opacity-80 text-black flex items-center justify-center rounded-full">
+                                        <i>
+                                            <FaPlay size={35} />
+                                        </i>
+                                    </button>
+                                    <p className="text-white font-bold">Preview This Course</p>
+                                </div>
                             </div>
-                            </div>
-        
+
                             <div className="h-32 relative rounded-bl-xl  border border-[#D6EFD8] pt-3 bg-[#f9f9f9] w-full md:w-1/2 lg:w-4/6">
                                 <div className="ml-2 text-sm  font-thin flex  w-full  leading-9">
                                     <div className="w-full flex gap-6
@@ -216,6 +255,20 @@ const ViewCourseStudent: React.FC = () => {
                 </div>
 
             </div>
+            {lessons.map((lesson: any) => {
+                return (
+                    <div
+                        
+                        key={lesson._id}
+                    >
+                        {lesson._id}
+                        <li className='p-6 border-b flex items-center cursor-pointer hover:bg-customBlueShade'>
+                            <span className='mr-2 text-blue-500' />
+                            <span className='flex-1'>{lesson.title}</span>
+                        </li>
+                    </div>
+                );
+            })}
         </main>
     )
 }

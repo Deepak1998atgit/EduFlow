@@ -169,7 +169,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/courses/:id",
+        path: "/courses/:courseId",
         element: (
           <Suspense fallback={<Loader />}>
             <LazyViewCorse/>

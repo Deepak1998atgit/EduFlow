@@ -20,3 +20,40 @@ export const getAllCourseU = async (
 //   );
   return courses;
 };
+
+
+
+export const getCourseByIdU = async (
+  courseId: string,
+  cloudService: ReturnType<CloudServiceInterface>,
+  courseDbRepository: ReturnType<CourseDbRepositoryInterface>
+) => {
+  if (!courseId) {
+    throw new AppError(
+      'Please provide a course id',
+      HttpStatusCodes.BAD_REQUEST
+    );
+  }
+  const course: CourseInterface | null = await courseDbRepository.getCourseById(
+    courseId
+  );
+  // if(course){
+  //   course.introductionUrl=" "
+  // }
+  if (course) {
+    if (course.thumbnail) {
+      const thumbnail = await cloudService.getFile(course.thumbnail.key);
+      course.thumbnailUrl = thumbnail;
+    }
+    if (course.guidelines) {
+      const guidelines = await cloudService.getFile(course.guidelines.key);
+      course.guidelinesUrl = guidelines;
+    }
+    // if(course.introduction){
+    //   const introduction = await cloudService.getFile(course.introduction.key)
+    //   console.log(introduction)
+    //   course.introductionUrl = introduction
+    // }
+  }
+  return course;
+};

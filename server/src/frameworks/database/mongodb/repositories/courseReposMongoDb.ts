@@ -29,10 +29,19 @@ export const courseRepositoryMongodb = () => {
   };
 
 
+  const getCourseById = async (courseId: string) => {
+    const course: CourseInterface | null = await Course.findOne({
+      _id: new mongoose.Types.ObjectId(courseId)
+    }).lean()                                               //lean() Mongoose skips the process of creating full Mongoose documents, making queries faster. making js plain objects to remove overhead
+    return course;
+  };
+
+
   return {
     addCourse,
     getAllCourse,
-    getCourseByInstructorId
+    getCourseByInstructorId,
+    getCourseById
   };
 };
 

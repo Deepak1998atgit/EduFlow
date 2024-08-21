@@ -12,13 +12,17 @@ export const courseDbRepository = (
   const getAllCourse = async () => await repository.getAllCourse();
 
   const getCourseByInstructorId = async (instructorId: string) =>
-  await repository.getCourseByInstructorId(instructorId);
+    await repository.getCourseByInstructorId(instructorId);
+
+  const getCourseById = async (courseId: string) =>
+    await repository.getCourseById(courseId);
 
 
   return {
     addCourse,
     getAllCourse,
-    getCourseByInstructorId
+    getCourseByInstructorId,
+    getCourseById 
   };
 
 };

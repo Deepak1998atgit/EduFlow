@@ -60,12 +60,21 @@ const courseRouter = (redisClient: RedisClient) => {
     controller.getCoursesByInstructor
   );
 
+  router.get('/get-course/:courseId',
+    controller.getIndividualCourse
+  );
+
   router.post(
     '/instructors/add-lesson/:courseId',
     jwtAuthMiddleware,
     roleCheckMiddleware('instructor'),
     upload.array('media'),
     controller.addLesson
+  );
+
+  router.get(
+    '/instructors/get-lessons-by-course/:courseId',
+    controller.getLessonsByCourse
   );
 
   return router;

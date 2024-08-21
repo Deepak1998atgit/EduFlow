@@ -5,9 +5,12 @@ import { CourseDbRepositoryInterface } from '../../app/repositories/courseDbRepo
 import { addCourses } from '../../app/usecases/course/addCourse';
 import {
   getAllCourseU,
+  getCourseByIdU,
 } from '../../app/usecases/course/listCourse';
 import {
-  getCourseByInstructorU } from "../../app/usecases/course/view-course"
+  getCourseByInstructorU
+} from "../../app/usecases/course/view-course"
+import { getLessonsByCourseIdU } from '../../app/usecases/lessons/view-lessons';
 import {
   AddCourseInfoInterface,
 } from '../../types/courseInterface';
@@ -27,10 +30,10 @@ import { QuizRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb
 const courseController = (
   courseDbRepository: CourseDbRepositoryInterface,
   courseDbRepositoryImpl: CourseRepositoryMongoDbInterface,
-  lessonDbRepository:LessonDbRepositoryInterface,
-  lessonDbRepositoryImp:LessonRepositoryMongoDbInterface,
-  quizDbRepository:QuizDbInterface,
-  quizDbRepositoryImp:QuizRepositoryMongoDbInterface,
+  lessonDbRepository: LessonDbRepositoryInterface,
+  lessonDbRepositoryImp: LessonRepositoryMongoDbInterface,
+  quizDbRepository: QuizDbInterface,
+  quizDbRepositoryImp: QuizRepositoryMongoDbInterface,
   cloudServiceInterface: CloudServiceInterface,
   cloudServiceImpl: CloudServiceImpl,
   cacheDbRepository: CacheRepositoryInterface,
@@ -39,8 +42,8 @@ const courseController = (
 
 ) => {
   const dbRepositoryCourse = courseDbRepository(courseDbRepositoryImpl());
-  const dbRepositoryLesson=lessonDbRepository(lessonDbRepositoryImp());
-  const dbRepositoryQuiz=quizDbRepository(quizDbRepositoryImp());
+  const dbRepositoryLesson = lessonDbRepository(lessonDbRepositoryImp());
+  const dbRepositoryQuiz = quizDbRepository(quizDbRepositoryImp());
   const cloudService = cloudServiceInterface(cloudServiceImpl());
   const dbRepositoryCache = cacheDbRepository(cacheDbRepositoryImpl(cacheClient));
 
@@ -128,12 +131,44 @@ const courseController = (
   });
 
 
+  const getIndividualCourse = asyncHandler(
+    async (req: Request, res: Response) => {
+      const courseId: string = req.params.courseId;
+      const course = await getCourseByIdU(
+        courseId,
+        cloudService,
+        dbRepositoryCourse
+      );
+      console.log(course)
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully retrieved the course',
+        data: course
+      });
+    }
+  );
+
+
+  const getLessonsByCourse = asyncHandler(
+    async (req: Request, res: Response) => {
+      const courseId = req.params.courseId;
+      const lessons = await getLessonsByCourseIdU(courseId, dbRepositoryLesson);
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully retrieved lessons based on the course',
+        data: lessons
+      });
+    }
+  );
+
 
   return {
     addCourse,
     getAllCourses,
     getCoursesByInstructor,
-    addLesson
+    addLesson,
+    getIndividualCourse,
+    getLessonsByCourse
   };
 
 };
