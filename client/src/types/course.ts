@@ -28,6 +28,7 @@ export interface Media {
     key: string
     name: string
     _id: string
+    url?:string
 }
 
 

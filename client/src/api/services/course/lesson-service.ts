@@ -1,13 +1,15 @@
 import api from "../../middlewares/protected-interceptor";
 import CONFIG_KEYS from "../../../config";
+import axiosInstance from "../../middlewares/interceptor";
 
 export const getLessonsByCourseService = async (
   endpoint: string,
   courseId: string
 ) => {
-  const response = await api.get(
+  const response = await axiosInstance.get(
     `${CONFIG_KEYS.API_BASE_URL}/${endpoint}/${courseId}`
   );
+  console.log("ok")
   return response.data;
 };
 

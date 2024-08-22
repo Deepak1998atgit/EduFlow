@@ -152,6 +152,7 @@ const courseController = (
   const getLessonsByCourse = asyncHandler(
     async (req: Request, res: Response) => {
       const courseId = req.params.courseId;
+      console.log("obtaind",courseId)
       const lessons = await getLessonsByCourseIdU(courseId, dbRepositoryLesson);
       res.status(200).json({
         status: 'success',

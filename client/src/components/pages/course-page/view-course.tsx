@@ -7,8 +7,14 @@ import { useParams } from "react-router-dom";
 import { CourseInterface } from "@/types/course";
 import { getIndividualCourse } from "@/api/endpoints/course/Course";
 import { getLessonsByCourse } from "../../../api/endpoints/course/lesson";
+import { useDispatch } from "react-redux";
+import { setCourse } from "@/redux/reducers/courseSlice";
+import { getIndividualInstructors } from "@/api/endpoints/instructor-management";
+import useTimeAgo from "@/hooks/useTimeAgo";
 const ViewCourseStudent: React.FC = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const dispatch = useDispatch();
+    const calculateTimeAgo=useTimeAgo();
     const [isPlaying, setIsPlaying] = useState(false);
     const [isOpenIndex, setIsOpenIndex] = useState<number | null>(null);
     const [isOpen, setIsOpen] = useState(false)
@@ -25,7 +31,6 @@ const ViewCourseStudent: React.FC = () => {
             throw error;
         }
     };
-
     const fetchLessons = async (courseId: string) => {
         try {
             const lessons = await getLessonsByCourse(courseId);
@@ -37,28 +42,55 @@ const ViewCourseStudent: React.FC = () => {
             throw error;
         }
     };
-    console.log("courseId",courseId,"courseId")
+    console.log("courseId", courseId, "courseId")
     const { data, isLoading, refreshData } = useApiData(fetchCourse, courseId);
     const { data: lessons, isLoading: isLessonsLoading } = useApiData(
         fetchLessons,
         courseId
     );
-    console.log("data of lesson","course",data,"course")
+    console.log("data of lesson", "coursejj", lessons, "course")
     const course: CourseInterface | null = data;
-    const randomArrayGeneratorForLesson = Array.from({ length: 7 }, (_, index) => index);
+    course && dispatch(setCourse({ course }));
+    const instructorId: string | undefined = course?.instructorId;
+    const fetchInstructorDetails = async (instructorId: string) => {
+        try {
+            if (instructorId) {
+                const instructor = await getIndividualInstructors(instructorId);
+                return instructor?.data;
+            }
+        } catch (error: any) {
+            toast.error(error.data.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+            throw error;
+        }
+    }
+    const { data: instructor, isLoading: isfetchInstructorLoading } = useApiData(
+        fetchInstructorDetails,
+        instructorId
+    );
+    console.log("instructor", instructor, "instructor")
+    // const randomArrayGeneratorForLesson = Array.from({ length:lessons.length }, (_, index) => index);
     const itemVariants: Variants = {
         open: {
-            padding: 13,
-            height: "10rem",
+            padding: "1rem",
+            height: "8rem",
             opacity: 1,
             y: 0,
-            transition: { type: "spring", stiffness: 300, damping: 24 }
+            transition: {
+                type: "spring",
+                stiffness: 300,
+                damping: 24,
+                duration: 0.5,
+            }
         },
         closed: {
             height: 0,
             opacity: 0,
-            y: 20,
-            transition: { duration: 0.2 }
+            y: 10,
+            transition: {
+                duration: 0.3,
+            }
         }
     };
     const StarRating = ({ enableTransition }: { enableTransition: boolean }) => {
@@ -110,27 +142,32 @@ const ViewCourseStudent: React.FC = () => {
         }
         setIsPlaying(!isPlaying);
     }
-
     const handleOpenlist = (index: number) => {
         setIsOpen(!isOpen);
         setIsOpenIndex(index);
+    }
+    if (isLessonsLoading || isfetchInstructorLoading) {
+        return <div>Loading datas...</div>;
+    }
+    if (!lessons || lessons.length === 0 || !instructor || instructor?.length === 0) {
+        return <div>No datas available</div>;
     }
     return (
         <main className="w-full pt-20">
             <section className="w-full lg:flex p-10  md:flex-row lg:h-72 gap-2">
                 <div className="sm:w-full mb-7 lg:w-1/2 h-full lg:relative ">
-                    <h3 className="flex items-center font-bold">Category <i><FaAngleRight /></i> WebDevelopment </h3>
-                    <h3 className="h3 lg:absolute lg:left-">React - The Complete Guide 2024 (incl. Next.js, Redux)</h3>
+                    <h3 className="flex items-center font-bold">Category <i><FaAngleRight /></i> {course?.category} </h3>
+                    <h3 className="h3 lg:absolute lg:left-">{course?.title}</h3>
                     <div className="lg:absolute  lg:right-0 lg:top-16"><StarRating enableTransition={true} /></div>
                     <div className="left-12 mt-4 lg:left-0   lg:items-start items-center lg:mt-16 flex flex-row lg:flex-col   gap-1 lg:w-1/5">
                         <h5 className="h2 lg:left-0">4.5</h5>
                         <StarRating enableTransition={false} />
                         <p className="customfont">46 Ratings</p>
                     </div>
-                    <button>sh</button>
                     <div className=" lg:absolute text-right customfontforsmallheadding  right-0 bottom-0 text-black">
-                        <p >Duraton:25 Min</p>
+                        <p >Duraton:{course?.duration}Weeks</p>
                         <p>Language:English</p>
+
                     </div>
                 </div>
                 <aside className="w-full   flex-col justify-center items-center  lg:justify-start  lg:items-start  lg:w-1/2  lg:pt-7">
@@ -138,7 +175,7 @@ const ViewCourseStudent: React.FC = () => {
                         <div className="relative flex flex-col items-center justify-center">
                             <div className="relative lg:w-4/6 md:w-1/2  z-10 rounded-t-lg">
                                 <video ref={videoRef} controls className="w-full    z-10 rounded-t-lg" >
-                                    <source src="https://videocdn.cdnpk.net/videos/cebe11b1-e085-4f12-9374-3fe8f8d95501/horizontal/previews/videvo_watermarked/large.mp4" type="video/mp4" />
+                                    <source src={course?.introduction.url} type="video/mp4" />
                                     Your Browser does not support the Video
                                 </video>
                                 <div className="absolute  inset-0 flex flex-col items-center justify-center">
@@ -150,18 +187,23 @@ const ViewCourseStudent: React.FC = () => {
                                     <p className="text-white font-bold">Preview This Course</p>
                                 </div>
                             </div>
-
                             <div className="h-32 relative rounded-bl-xl  border border-[#D6EFD8] pt-3 bg-[#f9f9f9] w-full md:w-1/2 lg:w-4/6">
                                 <div className="ml-2 text-sm  font-thin flex  w-full  leading-9">
                                     <div className="w-full flex gap-6
                                 ">
-                                        <p><span className="customfontforsmallheadding">Ana James</span></p>
-                                        <p> <span className="customfontforsmallheadding">21/7/2024</span></p>
+                                        <p><span className="customfontforsmallheadding">{instructor ? `${instructor?.data?.firstName} ${instructor?.data?.lastName}`:null}</span></p>
+                                        <p> <span className="customfontforsmallheadding"> {calculateTimeAgo(course?.createdAt as string)}</span></p> 
+                                        <p> <span className="customfontforsmallheadding">{course?.level}</span></p>
+
                                     </div>
+
                                     <div className="text-right underline text-sm font-semibold text-[#78A793] mr-6 w-1/2">
-                                        <p>FREE</p>
+                                        <p>{course?.isPaid ? "PAID" : "FREE"}</p>
                                     </div>
-                                </div><div className="flex items-center justify-center w-full">
+
+                                </div>
+                                <p> <span className="ml-2 h3">{course?.price}/-</span></p>
+                                <div className="flex items-center justify-center w-full">
                                     <button
                                         className="bg-[#B1E1B5] h-10  absolute bottom-0  w-2/3"><span className="text-sm font-light">ENROLL NOW</span></button>
                                 </div>
@@ -171,18 +213,17 @@ const ViewCourseStudent: React.FC = () => {
                         </div>
                     </figure>
                 </aside>
-
             </section>
             <div className="lg:w-1/2 mt-3  flex flex-col pr-8 pl-8 justify-between">
                 <h4 className="font-semibold w-full text-center h-11   bg-[#B1E1B5] flex items-center justify-center">DETAILS</h4>
                 <p className="text-justify p-4 border border-[#B1E1B5]">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    {course?.description}
                 </p>
             </div>
             <div className="w-full pt-7 pl-8">
                 <h2 className="text-2xl font-medium">LESSONS</h2>
                 {
-                    randomArrayGeneratorForLesson.map((_, index) => (
+                    lessons.map((lesson: any, index: number) => (
                         <div className="lg:w-5/6">
                             <motion.div
                                 initial={false}
@@ -208,7 +249,7 @@ const ViewCourseStudent: React.FC = () => {
                                     >
                                         <FaAngleUp />
                                     </motion.div>
-                                    <span className="font-medium ">LESSON {index + 1}</span>
+                                    <span className="font-medium "> {course?.syllabus[index]}</span>
                                 </motion.button>
                                 <motion.ul
                                     variants={{
@@ -232,9 +273,8 @@ const ViewCourseStudent: React.FC = () => {
                                         }
                                     }}
                                     animate={isOpen && isOpenIndex === index ? "open" : "closed"}
-                                // style={{ overflow: "hidden", pointerEvents: isOpen? "auto" : "none" }}
                                 >
-                                    <motion.li key={index} className="border shadow-lg text-justify " variants={itemVariants}>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</motion.li>
+                                    <motion.li key={index} className="border overflow-hidden transition-max-height shadow-lg text-justify" variants={itemVariants}>{lesson?.about}</motion.li>
                                 </motion.ul>
                             </motion.div>
                         </div>
@@ -253,22 +293,7 @@ const ViewCourseStudent: React.FC = () => {
                 <div className="lg:w-1/3 flex rounded-full md:rounded-none items-center bg-[#969BA2] justify-center h-16  lg:h-16">
                     <StarRating enableTransition={false} />
                 </div>
-
             </div>
-            {lessons.map((lesson: any) => {
-                return (
-                    <div
-                        
-                        key={lesson._id}
-                    >
-                        {lesson._id}
-                        <li className='p-6 border-b flex items-center cursor-pointer hover:bg-customBlueShade'>
-                            <span className='mr-2 text-blue-500' />
-                            <span className='flex-1'>{lesson.title}</span>
-                        </li>
-                    </div>
-                );
-            })}
         </main>
     )
 }

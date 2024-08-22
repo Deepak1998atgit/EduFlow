@@ -72,8 +72,8 @@ const courseRouter = (redisClient: RedisClient) => {
     controller.addLesson
   );
 
-  router.get(
-    '/instructors/get-lessons-by-course/:courseId',
+  router.get( 
+    '/instructors/get-lessons-by-course/:courseId', ///instructors/get-lessons-by-course
     controller.getLessonsByCourse
   );
 
