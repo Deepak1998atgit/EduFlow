@@ -1,11 +1,12 @@
 import { FaPlay, FaAngleRight, FaAngleUp } from "react-icons/fa";
+import { FcComboChart,FcCustomerSupport,FcSpeaker} from "react-icons/fc";
 import { useRef, useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import { toast } from "react-toastify";
 import useApiData from "@/hooks/useApiCall";
 import { useParams } from "react-router-dom";
 import { CourseInterface } from "@/types/course";
-import { getIndividualCourse } from "@/api/endpoints/course/Course";
+import { getIndividualCourse } from "@/api/endpoints/course/course";
 import { getLessonsByCourse } from "../../../api/endpoints/course/lesson";
 import { useDispatch } from "react-redux";
 import { setCourse } from "@/redux/reducers/courseSlice";
@@ -137,6 +138,8 @@ const ViewCourseStudent: React.FC = () => {
     const handlePlayandPauseOnVideo = () => {
         if (isPlaying) {
             videoRef?.current?.play()
+            videoRef?.current?.requestFullscreen();
+
         } else {
             videoRef?.current?.pause();
         }
@@ -175,7 +178,7 @@ const ViewCourseStudent: React.FC = () => {
                         <div className="relative flex flex-col items-center justify-center">
                             <div className="relative lg:w-4/6 md:w-1/2  z-10 rounded-t-lg">
                                 <video ref={videoRef} controls className="w-full    z-10 rounded-t-lg" >
-                                    <source src={course?.introduction.url} type="video/mp4" />
+                                    <source src={course?.introduction?.url} type="video/mp4" />
                                     Your Browser does not support the Video
                                 </video>
                                 <div className="absolute  inset-0 flex flex-col items-center justify-center">
@@ -189,18 +192,16 @@ const ViewCourseStudent: React.FC = () => {
                             </div>
                             <div className="h-32 relative rounded-bl-xl  border border-[#D6EFD8] pt-3 bg-[#f9f9f9] w-full md:w-1/2 lg:w-4/6">
                                 <div className="ml-2 text-sm  font-thin flex  w-full  leading-9">
-                                    <div className="w-full flex gap-6
+                                    <div className="w-full flex mt-3 gap-6
                                 ">
-                                        <p><span className="customfontforsmallheadding">{instructor ? `${instructor?.data?.firstName} ${instructor?.data?.lastName}`:null}</span></p>
-                                        <p> <span className="customfontforsmallheadding"> {calculateTimeAgo(course?.createdAt as string)}</span></p> 
-                                        <p> <span className="customfontforsmallheadding">{course?.level}</span></p>
+                                        <p><span className="customfontforsmallheadding flex"><FcCustomerSupport/>{instructor ? `${instructor?.data?.firstName} ${instructor?.data?.lastName}`:null}</span></p>
+                                        <p> <span className="customfontforsmallheadding fle"><FcSpeaker/> {calculateTimeAgo(course?.createdAt as string)}</span></p> 
+                                        <p> <span className="customfontforsmallheadding "><span className="flex gap-1"><FcComboChart />{course?.level}</span></span></p>
 
                                     </div>
-
                                     <div className="text-right underline text-sm font-semibold text-[#78A793] mr-6 w-1/2">
                                         <p>{course?.isPaid ? "PAID" : "FREE"}</p>
                                     </div>
-
                                 </div>
                                 <p> <span className="ml-2 h3">{course?.price}/-</span></p>
                                 <div className="flex items-center justify-center w-full">
@@ -272,8 +273,7 @@ const ViewCourseStudent: React.FC = () => {
                                             }
                                         }
                                     }}
-                                    animate={isOpen && isOpenIndex === index ? "open" : "closed"}
-                                >
+                                    animate={isOpen && isOpenIndex === index ? "open" : "closed"}>
                                     <motion.li key={index} className="border overflow-hidden transition-max-height shadow-lg text-justify" variants={itemVariants}>{lesson?.about}</motion.li>
                                 </motion.ul>
                             </motion.div>

@@ -1,15 +1,16 @@
 
 import { Outlet } from "react-router";
 import React, { useEffect } from 'react';
-import { useUser } from "./hooks/useContext";
-import { UserProviderForUserIsBlock } from "./hooks/useContext";
-import StudentHeader from "./components/partials/student-header";
-import StudentFooter from "./components/partials/student-footer";
+// import { useUser } from "./hooks/useContext";
+// import { UserProviderForUserIsBlock } from "./hooks/useContext";
+import StudentHeader from "./components/layouts/student-header";
+import StudentFooter from "./components/layouts/student-footer";
 import { selectIsLoggedIn, selectUserType } from "./redux/reducers/authSlice";
 import { useSelector, useDispatch } from "react-redux";
-import InstructorHeader from "./components/partials/instructor-header";
-import StairTransition from "./components/common/stair-transition";
+import InstructorHeader from "./components/layouts/instructor-header";
+import StairTransition from "./components/common-components/stair-transition";
 import useIsOnline from "./hooks/useOnline";
+import ScrollToTopButton from "./components/common-components/ScrollToTopButton";
 
 
 
@@ -24,9 +25,13 @@ export const Student = () => {
       {
         isOnline && (
           <>
+           
             <StudentHeader />
             <StairTransition />
+           
             <Outlet />
+            <ScrollToTopButton/>
+           
           </>
         )
       }

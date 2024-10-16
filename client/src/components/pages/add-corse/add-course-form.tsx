@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import { AddCourseValidationSchema } from "@/validations/course/AddCourse";
 import { Switch } from "@material-tailwind/react";
-import { addCourse } from "../../../api/endpoints/course/Course";
+import { addCourse } from "@/api/endpoints/course/course"; 
 import { toast } from "react-toastify";
 import { getAllCategories } from "../../../api/endpoints/category";
 import { ApiResponseCategory } from "../../../api/types/apiResponses/api-response-category";

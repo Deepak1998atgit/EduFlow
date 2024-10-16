@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AdminNav from '../../partials/adminNav';
+import AdminNav from '../../layouts/adminNav';
 import AdminSideBar from '../../pages/admin/admin-sidebar';
 import Students from "./admin-user";
 import Instructors from './admin-tutor';

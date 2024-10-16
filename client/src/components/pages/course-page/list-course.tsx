@@ -3,7 +3,7 @@ import CourseCard from './course-card';
 import { CourseInterface } from "../../../types/course";
 import {
   getAllCourses
-} from "../../../api/endpoints/course/Course";
+} from "../../../api/endpoints/course/course";
 import { toast } from "react-toastify";
 import ShimmerCard from '../shimmer/shimmer-card';
 import { MdSentimentDissatisfied } from "react-icons/md";

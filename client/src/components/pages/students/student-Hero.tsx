@@ -1,6 +1,6 @@
 import { FaDownload } from "react-icons/fa";
 import { motion } from "framer-motion";
-import HeroTypeWritter from "../../common/typeWriteronHero";
+import HeroTypeWritter from "@/components/common-components/typeWriteronHero";
 
 const StuentHero: React.FC = () => {
     return (
@@ -18,8 +18,8 @@ const StuentHero: React.FC = () => {
                             EduFlow believe in transforming education through innovative digital experiences. Our goal is to empower learners with knowledge that open new horizons and unlock their full potential.
                         </p>
                         <div className="flex flex-col items-center xl:flex-row gap-5 ">
-                            <button className="uppercase gap-3 flex border rounded-3xl w-44  items-center justify-center h-10"><span>View Courses</span><FaDownload /></button>
-                            <div>Socials</div>
+                            <button className="uppercase gap-3 flex border rounded-3xl w-44  items-center justify-center h-10"><span>Join for free</span><FaDownload /></button>
+                            
                         </div>
                     </div>
                     {/* Photo */}
@@ -59,7 +59,7 @@ const StuentHero: React.FC = () => {
                                         src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c3R1ZGVudHN8ZW58MHx8MHx8fDA%3D" alt="" />
                                 </motion.div>
                                 <motion.svg className="w-[300px] xl:w-[506px]  h-[300px] xl:h-[506px] " fill="transparent" viewBox="0 0 506 506" xmlns="http://www.w3.org/2000/svg">
-                                    <motion.circle className="" cx="253" cy="253" r="220" stroke="#80AF81" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" initial={{ strokeDasharray: "24 10 0 0" }} animate={{ strokeDasharray: ["15 120 25 25", "16 25 92 72", "4 250 22 22"], rotate: [120, 360] }} transition={{ duration: 20, repeat: Infinity, repeatType: "reverse" }}>
+                                    <motion.circle className="" cx="253" cy="253" r="220" stroke="#00CBB8" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" initial={{ strokeDasharray: "24 10 0 0" }} animate={{ strokeDasharray: ["15 120 25 25", "16 25 92 72", "4 250 22 22"], rotate: [120, 360] }} transition={{ duration: 20, repeat: Infinity, repeatType: "reverse" }}>
                                     </motion.circle>
                                 </motion.svg>
                             </motion.div>

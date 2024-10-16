@@ -33,7 +33,7 @@ const Stairs: React.FC = () => {
               ease: "easeInOut",
                 delay: reverseIndex(index) * 0.1,
             }}
-            className="w-full h-full bg-gradient-to-b from-[#D6EFD8] to-white border border-white  relative"
+            className="w-full h-full bg-gradient-to-b from-[#49BBBD]  to-white border border-white  relative"
           />
         );
       })}

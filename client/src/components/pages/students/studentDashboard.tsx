@@ -1,6 +1,7 @@
 import React from 'react';
 import StudentHero from './student-Hero';
 import StudentCoursecard from './studentCourseCard';
+import StudentLandingPageFeatures from "./studentFeatures"
 
 
 const StudentDashboard: React.FC = () => {
@@ -10,6 +11,7 @@ const StudentDashboard: React.FC = () => {
     <>
       <StudentHero />
       <StudentCoursecard />
+      <StudentLandingPageFeatures/>
       {/* <StudentFooter /> */}
       
     </>

@@ -23,10 +23,9 @@ import {
     TabsHeader,
     Tab,
     Avatar,
-    IconButton,
     Tooltip,
 } from "@material-tailwind/react";
-import { getCourseByInstructor } from "../../../api/endpoints/course/Course";
+import { getCourseByInstructor } from "@/api/endpoints/course/course"; 
 import { formatDate } from "../../../utils/helpers";
 import { Link } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";

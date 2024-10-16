@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import InstructorNav from '../../partials/instructorNav';
+import InstructorNav from '../../layouts/instructorNav';
 import InstructorSideBar from '../../pages/instructors/instructor-sidebar';
 import ListCourseForInstructors from "../add-corse/list-course-for-instructors";
 import { useSelector } from "react-redux";

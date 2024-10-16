@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Student, Instructor, Admin } from '../App';
-import ErrorElement from "../components/common/error-element";
+import ErrorElement from "../components/common-components/error-element";
 import AddCategory from "../components/pages/categories/add-category";
 
 
@@ -12,7 +12,7 @@ const LazyStudentLogin = lazy(
 
 
 const Loader = lazy(
-  () => import("../components/common/spinner")
+  () => import("../components/common-components/spinner")
 );
 
 
@@ -30,6 +30,9 @@ const LazyStudentHome = lazy(
   () => import("../components/pages/students/studentDashboard")
 );
 
+const LazyStudentProfile = lazy(
+  () => import("../components/pages/students/student-profile")
+);
 
 const LazyCart = lazy(
   () => import("../components/pages/cart/view-cart")
@@ -54,6 +57,11 @@ const LazyCommunityPage = lazy(
 const LazyViewCorse = lazy(
   () => import("../components/pages/course-page/view-course")
 );
+
+
+const LazyViewCheckout=lazy(
+  ()=> import("../components/pages/checkout/view-checkout")
+)
 
 
 //INSTRUCTOR
@@ -173,6 +181,22 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <LazyViewCorse/>
+          </Suspense>
+        )
+      },
+      {
+        path:"/checkout",
+        element:(
+          <Suspense fallback={<Loader />}>
+              <LazyViewCheckout/>
+          </Suspense>
+        )
+      },
+      {
+        path:"/profile",
+        element:(
+          <Suspense fallback={<Loader />}>
+              <LazyStudentProfile/>
           </Suspense>
         )
       }

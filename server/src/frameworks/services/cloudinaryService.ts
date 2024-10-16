@@ -10,7 +10,6 @@ cloudinary.config({
 });
 
 const randomImageName = (bytes = 32): string => crypto.randomBytes(bytes).toString('hex');
-
 export const cloudinaryService = () => {
   const uploadFile = async (file: Express.Multer.File): Promise<{ name: string; key: string; url: string }> => {
     const key = randomImageName();

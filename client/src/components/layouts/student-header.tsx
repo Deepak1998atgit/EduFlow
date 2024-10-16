@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MobileNav from "../common/mobile-nav";
+import MobileNav from "../common-components/mobile-nav";
 import StudentNav from "./student-nav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars ,faTimes,faSignOut} from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,7 @@ const StudentHeader: React.FC = () => {
     };
     return (
         <>
-            <header className=" py-5 bg-[#D6EFD8] fixed w-screen z-50   border border-b-2 xl:h-30">
+            <header className="fixed py-5 bg-[#49BBBD]  w-screen z-50    xl:h-30">
                 <div className="container mx-4 flex justify-between">
                     <img className="h-14  ml-10"  src="./icon.png"/>
                     <div className="hidden xl:flex gap-8 items-center">
