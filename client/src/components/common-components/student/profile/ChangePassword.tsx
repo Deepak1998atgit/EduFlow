@@ -22,8 +22,8 @@ export default function ChangePassword() {
         setConfirmPasswordType(prev => (prev === "password" ? "text" : "password"));
     };
     return (
-        <div className="flex col-span-3  justify-center py-8">
-            <Card className="w-1/2 rounded-3xl h-fit">
+        <div className="flex col-span-4 md:col-span-4 lg:col-span-3  justify-center py-8">
+            <Card className="w-full md:w-1/2 rounded-3xl h-fit">
                 <CardBody className="p-6">
                     <Typography variant="h5" color="blue-gray" className="text-center">
                         Change Password
@@ -38,7 +38,7 @@ export default function ChangePassword() {
                                 crossOrigin="anonymous"
                                 value={newPassword}
                                 onChange={handleNewPasswordChange}
-                                className="focus:border-[#F48C06] rounded-full focus:outline-none"
+                                className="focus:border-[#F48C06]  !border-[#F48C06] rounded-full focus:outline-none"
                             />
                         </div>
                         <div className="mb-4">
@@ -50,7 +50,7 @@ export default function ChangePassword() {
                                 crossOrigin="anonymous"
                                 value={newPassword}
                                 onChange={handleNewPasswordChange}
-                                className="focus:border-[#F48C06] rounded-full focus:outline-none"
+                                className="focus:border-[#F48C06] !border-[#F48C06] rounded-full focus:outline-none"
                             />
                         </div>
                         <div className="mb-4 relative">
@@ -62,7 +62,7 @@ export default function ChangePassword() {
                                 crossOrigin="anonymous"
                                 value={confirmPassword}
                                 onChange={handleConfirmPasswordChange}
-                                className="focus:border-[#F48C06] rounded-full focus:outline-none"
+                                className="focus:border-[#F48C06] !border-[#F48C06] rounded-full focus:outline-none"
                             />
                             <button
                                 type="button"

@@ -71,7 +71,7 @@ const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({ onToggle }) => {
         setInputs({ ...inputs, [name]: value });
     };
     return (
-        <Card className="w-1/2 h-fit" >
+        <Card className="lg:w-1/2 md:w-1/2 w-full h-fit" >
             <form onSubmit={handleSubmit}>
                 <CardHeader className="bg-transparent shadow-none flex items-center justify-center relative">
                     {previewUrl ? (

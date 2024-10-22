@@ -50,7 +50,7 @@ const WalletDoughnutChart: React.FC = () => {
     };
 
     return (
-            <Doughnut data={data} options={options} />    
+        <Doughnut data={data} options={options} />
     );
 };
 

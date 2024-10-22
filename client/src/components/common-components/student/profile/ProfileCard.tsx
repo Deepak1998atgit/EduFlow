@@ -12,7 +12,7 @@ const ProfileCard = ({ onToggle ,isShowComponent}: { onToggle: () => void ,isSho
     };
     return (
         <>
-            <Card className={`${isShowComponent ? "relative p-6 lg:w-full lg:block  md:hidden sm:hidden items-center":"relative p-6 w-full items-center"}`}>
+            <Card className={`${isShowComponent ? "relative p-0 md:p-6 lg:p-6 lg:flex items-center w-full md:w-full justify-start lg:w-full md:hidden sm:hidden" : "relative p-0 md:p-6 w-full flex items-center justify-start"}`}>
                 {/* Circles */}
                 <motion.div
                     className="w-36 h-36 bg-[#49BBBD] bg-opacity-30 rounded-full absolute"
@@ -70,7 +70,7 @@ const ProfileCard = ({ onToggle ,isShowComponent}: { onToggle: () => void ,isSho
                         duration: 1.5,
                         ease: "easeInOut",
                         repeat: Infinity,
-                    }} className="w-52 h-52 bg-[#F48C06] bg-opacity-30 rounded-full absolute" style={{ top: '40%', left: '60%' }}></motion.div>
+                    }} className="md:w-52 w-36 h-36 md:h-52 bg-[#F48C06] bg-opacity-30 rounded-full absolute" style={{ top: '40%', left: '60%' }}></motion.div>
                 <motion.div initial={{ scale: 0.8, opacity: 0.5 }}
                     animate={{
                         scale: [1, 1.2, 1],
@@ -109,8 +109,8 @@ const ProfileCard = ({ onToggle ,isShowComponent}: { onToggle: () => void ,isSho
                     Profile
                 </Typography>
                 {/* Inner Card for User Info */}
-                <Card className="w-1/2 rounded-3xl h-auto">
-                    <CardBody className="flex flex-col items-center gap-y-2">
+                <Card className="md:w-1/2 w-full  lg:w-1/2 rounded-3xl h-auto">
+                    <CardBody className="flex  flex-col items-center gap-y-2">
                         <img
                             src="https://interactive-examples.mdn.mozilla.net/media/examples/plumeria-146x200.jpg"
                             alt={`${user.firstName} ${user.lastName}`}

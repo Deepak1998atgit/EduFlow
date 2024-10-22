@@ -12,8 +12,8 @@ const LandingPageFeatures: React.FC = () => {
                     <Typography variant="small" className="mt-4 text-[15px] text-[#696984]">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Typography>
                 </div>
             </div>
-            <div className="flex justify-around w-full mt-11">
-                <div>
+            <div className="flex flex-wrap justify-around w-full mt-11">
+                <div className="flex flex-col items-center w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/5">
                     <Typography
                         variant="h1"
                         className="text-transparent bg-clip-text bg-gradient-to-r from-[#136CB5] to-[#49BBBD]"
@@ -22,35 +22,51 @@ const LandingPageFeatures: React.FC = () => {
                     </Typography>
                     <Typography variant="h6" className="text-center">Students</Typography>
                 </div>
-                <div>
-                    <Typography variant="h1" className="text-transparent bg-clip-text bg-gradient-to-r from-[#136CB5] to-[#49BBBD]">75%</Typography>
+                <div className="flex flex-col items-center w-1/2 sm:w-1/3 md:w-1/3  lg:w-1/5">
+                    <Typography
+                        variant="h1"
+                        className="text-transparent bg-clip-text bg-gradient-to-r from-[#136CB5] to-[#49BBBD]"
+                    >
+                        75%
+                    </Typography>
                     <Typography variant="h6" className="text-center">Total success</Typography>
                 </div>
-                <div>
-                    <Typography variant="h1" className="text-transparent bg-clip-text bg-gradient-to-r from-[#136CB5] to-[#49BBBD]">35</Typography>
+                <div className="flex flex-col items-center w-1/2 sm:w-1/3 md:w-1/3  lg:w-1/5">
+                    <Typography
+                        variant="h1"
+                        className="text-transparent bg-clip-text bg-gradient-to-r from-[#136CB5] to-[#49BBBD]"
+                    >
+                        35
+                    </Typography>
                     <Typography variant="h6" className="text-center">Main Questions</Typography>
                 </div>
-                <div>
+                <div className="flex flex-col items-center w-1/2 sm:w-1/3 md:w-1/3  lg:w-1/5">
                     <Typography
                         variant="h1"
                         className="text-transparent bg-clip-text bg-gradient-to-r from-[#136CB5] to-[#49BBBD]"
                     >
                         26
                     </Typography>
-                    <Typography variant="h6" className="text-center">Cheif experts</Typography>
+                    <Typography variant="h6" className="text-center">Chief experts</Typography>
                 </div>
-                <div>
-                    <Typography variant="h1" className="text-transparent bg-clip-text bg-gradient-to-r from-[#136CB5] to-[#49BBBD]">16</Typography>
-                    <Typography variant="h6" className="text-center">Year of experience</Typography>
+                <div className="flex flex-col items-center w-1/2 sm:w-1/3 md:w-1/3  lg:w-1/5">
+                    <Typography
+                        variant="h1"
+                        className="text-transparent bg-clip-text bg-gradient-to-r from-[#136CB5] to-[#49BBBD]"
+                    >
+                        16
+                    </Typography>
+                    <Typography variant="h6" className="text-center">Years of experience</Typography>
                 </div>
             </div>
-            <div className="flex items-center justify-center  mt-11">
+
+            <div className="flex items-center  justify-center  mt-11">
                 <div className="text-center w-1/2">
                     <Typography variant="h4" className="text-[#2F327D]">What is <span className="text-[#00CBB8]">EDUFLOW</span></Typography>
                     <Typography variant="small" className="font-light text-[15px] text-[#696984] mt-3">orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </Typography>
                 </div>
             </div>
-            <div className="flex gap-10 mt-12 items-center justify-center">
+            <div className="flex flex-col md:flex-row gap-10 mt-12 items-center justify-center">
                 <div className="relative">
                     <img
                         src="https://media.gettyimages.com/id/1496098116/photo/a-happy-beautiful-blonde-businesswoman-looking-at-camera-while-holding-a-notebook.jpg?s=612x612&w=0&k=20&c=OZV1iAKpOgkUPq1L8GrhbMFfb0Yd3FM_cytwRPL39sU="
@@ -76,8 +92,8 @@ const LandingPageFeatures: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className="w-full flex p-20">
-                <div className="w-1/2 relative">
+            <div className="w-full flex flex-col md:flex-row p-20">
+                <div className="w-full lg:w-1/2 relative">
                     <div className="w-36 h-36 absolute left-16  bg-[#33EFA0]  rounded-full">
                     </div>
                     <div className="w-6 h-6 absolute top-2 left-52 bg-[#33D9EF] rounded-full">
@@ -141,7 +157,7 @@ const LandingPageFeatures: React.FC = () => {
                     </div>
 
                 </div>
-                <div className=" w-1/2 pt-20 pl-40 flex justify-end text-left">
+                <div className=" w-full md:w-full lg:w-1/2 pt-20 pl-40 flex justify-end text-left">
                     <div>
                         <p className="text-2xl font-semibold text-[#2F327D] mb-4">
                             A <span className="text-[#00CBB8]">user interface</span> designed for the classroom
@@ -166,8 +182,11 @@ const LandingPageFeatures: React.FC = () => {
             <footer className="bg-[#161F3D] h-80 mt-40 t-40 text-white py-8">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col items-center text-center">
-                        <h2 className="text-lg  font-semibold mb-2">EduFlow</h2>
-                        <p className="text-base">Virtual Class for Zoom</p>
+                        <div className="flex gap-2  items-center justify-center">
+                            <img src="./icon.png" className="w-4 h-4" alt="" />
+                            <h2 className="text-lg  font-semibold ">EduFlow</h2>
+                        </div>
+                        <p className="text-[14px]">Virtual Class for Zoom</p>
                         <div className="mb-4">
                             <p className="mb-2">Subscribe to get our Newsletter</p>
                             <input

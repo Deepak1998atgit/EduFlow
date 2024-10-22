@@ -17,7 +17,7 @@ const StudentHeader: React.FC = () => {
                     <img className="h-14  ml-10"  src="./icon.png"/>
                     <div className="hidden xl:flex gap-8 items-center">
                         <StudentNav />
-                        <button className="bg-white text-lg font-thin rounded-xl w-28  h-10">Logout<FontAwesomeIcon icon={ faSignOut } size="sm" className="ml-2" /></button>
+                        <button className="bg-white text-[14px] font-thin rounded-xl w-28  h-10">Logout<FontAwesomeIcon icon={ faSignOut } size="sm" className="ml-2" /></button>
                     </div>
                     <div className="xl:hidden mr-14">
                        {isOpen ? (<FontAwesomeIcon icon={faTimes} onClick={toggleNav} className="text-3xl cursor-pointer" />):(<FontAwesomeIcon icon={faBars} onClick={toggleNav} className="text-3xl cursor-pointer" />)} 

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import decodeJwtToken from "../../utils/decodeJwt";
-const accessToken = localStorage.getItem("accessToken")
+const accessToken = localStorage.getItem("accessToken");
 const refreshToken = localStorage.getItem('refreshToken')
 const decodedToken = decodeJwtToken(accessToken??"");
 

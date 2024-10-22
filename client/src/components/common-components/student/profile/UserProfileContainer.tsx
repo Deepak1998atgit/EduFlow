@@ -9,12 +9,13 @@ export default function UserProfileContainer({isShowComponent}:{isShowComponent:
         setUpdateProfileCardShow(prevState => !prevState);
     };
     return (
-        <div className="col-span-3 relative p-6 flex justify-center">
+        <div className="col-span-4 md:col-span-4 lg:col-span-3 relative p-6 flex justify-center">
             {isUpdateProfileCardShow ? (
                 <UpdateProfileCard onToggle={handleToggle} />
             ) : (
                 <ProfileCard onToggle={handleToggle} isShowComponent={isShowComponent} />
             )}
+            {/* <ProfileCard onToggle={handleToggle} isShowComponent={isShowComponent} /> */}
         </div>
     );
 }

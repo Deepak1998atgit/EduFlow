@@ -4,6 +4,7 @@ import UserProfileContainer from "@/components/common-components/student/profile
 import ChangePassword from '@/components/common-components/student/profile/ChangePassword';
 import Wallet from '@/components/common-components/student/profile/wallet';
 import ChatPage from '@/components/common-components/chat/ChatPage';
+import Quizzes from '../course-page/quiz-page';
 
 const CourseCalendar = () => {
     const [isShowComponent,setIsShowComponent]=useState<Boolean>(true)
@@ -12,14 +13,18 @@ const CourseCalendar = () => {
         setSelectedSideBarComponent(component);
         setIsShowComponent(false);
     };
+    const componentMap: Record<string, JSX.Element> = {
+        profile: <UserProfileContainer isShowComponent={isShowComponent} />,
+        changepassword: <ChangePassword />,
+        wallet: <Wallet isShowComponent={isShowComponent} />,
+        quiz: <Quizzes isShowComponent={isShowComponent} />,
+        chat: <ChatPage isShowComponent={isShowComponent} />,
+    };
     return (
         <div className="min-h-screen flex   justify-center  md:block lg:block pt-28" >
             <div className="grid grid-cols-4 w-full overflow-y-hidden gap-6">
                 <SideBar selectedComponent={selectedSideBarComponent} onComponentChange={handleComponentChange}  />
-                {selectedSideBarComponent === "profile" && <UserProfileContainer isShowComponent={isShowComponent}/>}
-                {selectedSideBarComponent === "changepassword" && <ChangePassword/>}
-                {selectedSideBarComponent === "wallet" && <Wallet isShowComponent={isShowComponent}/>}
-                {selectedSideBarComponent === "chat" && <ChatPage isShowComponent={isShowComponent}/>}
+                {componentMap[selectedSideBarComponent] || <UserProfileContainer isShowComponent={true} />}
             </div>
         </div>
     );
