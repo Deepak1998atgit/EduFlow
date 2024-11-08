@@ -1,6 +1,9 @@
 // src/components/ScrollToTopButton.tsx
 import React, { useState, useEffect } from 'react';
 import { FaArrowUp } from 'react-icons/fa'; // Using a font awesome arrow icon for simplicity
+import { Button, IconButton } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+ 
 
 const ScrollToTopButton: React.FC = () => {
   const [visible, setVisible] = useState(false);
@@ -27,10 +30,10 @@ const ScrollToTopButton: React.FC = () => {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-8 right-8 p-3 rounded-full bg-pink-500 text-white shadow-lg z-50 transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0'}`}
+      className={`fixed bottom-8 right-8 p-3 h-28 w-14 flex items-end justify-center pb-6 rounded-full bg-[#49BBBD] text-white shadow-lg z-50 transition-opacity duration-300 ${visible ? 'opacity-100' : 'opacity-0'}`}
       aria-label="Scroll to top"
     >
-      <FaArrowUp size={20} />
+      <FaArrowUp size={25} />
     </button>
   );
 };

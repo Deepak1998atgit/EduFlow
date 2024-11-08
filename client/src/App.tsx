@@ -44,10 +44,11 @@ export const Instructor = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const user = useSelector(selectUserType);
   return (
-    <>
-      <InstructorHeader />
+    <div  >    
       <Outlet />
-    </>
+      <InstructorHeader />
+      <div  className="grid grid-cols-12"></div>
+    </div>
   )
 }
 

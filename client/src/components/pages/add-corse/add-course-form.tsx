@@ -89,20 +89,20 @@ const CombinedCourseAddForm: React.FC = () => {
   };
 
   return (
-    <div className='mb-10'>
+    <div className='mb-10 w-full'>
       <Formik
         initialValues={initialValues}
         validationSchema={AddCourseValidationSchema}
         onSubmit={handleFormSubmit}
       >
         <Form>
-          <div className='bg-white ml-32  rounded-lg border-2 border-gray-200 mr-32 mb-24 mt-2 p-5'>
+          <div className='bg-white  w-full shadow-xl   mt-2 p-5'>
             <div className='flex  w-full justify-center mt-2 pt-3 space-x-14 '>
-              <div>
+              <div className="w-full">
                 <div className='mb-3'>
                   <label
                     htmlFor='title'
-                    className='block text-sm font-medium leading-6 text-gray-900'
+                    className='block text-sm rounded-2xl font-medium leading-6 text-gray-900'
                   >
                     Title
                   </label>
@@ -110,7 +110,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     type='text'
                     id='title'
                     name='title'
-                    className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   />
                   <ErrorMessage
                     name='title'
@@ -130,7 +130,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     type='number'
                     id='duration'
                     name='duration'
-                    className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   />
                   <ErrorMessage
                     name='duration'
@@ -150,7 +150,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     as='select'
                     id='category'
                     name='category'
-                    className='pl-2 block w-80 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   >
                     {categories?.map(({ _id, name }, index) => (
                       <option selected={index === 0} key={_id}>
@@ -176,7 +176,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     as='select'
                     id='level'
                     name='level'
-                    className='pl-2 block w-80 rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   >
                     <option value='easy' selected>
                       Easy
@@ -201,7 +201,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     type='text'
                     id='tags'
                     name='tags'
-                    className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   />
                   <ErrorMessage
                     name='tags'
@@ -233,7 +233,7 @@ const CombinedCourseAddForm: React.FC = () => {
                         type='number'
                         id='price'
                         name='price'
-                        className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                        className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                       />
                       <ErrorMessage
                         name='price'
@@ -260,7 +260,7 @@ const CombinedCourseAddForm: React.FC = () => {
                         setIntroduction(file);
                       }}
                       required
-                      className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                      className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                     />
                     <ErrorMessage
                       name='introduction-video'
@@ -283,7 +283,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     id='about'
                     name='about'
                     rows={4}
-                    className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   />
                   <ErrorMessage
                     name='about'
@@ -303,7 +303,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     id='description'
                     name='description'
                     rows={4}
-                    className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   />
                   <ErrorMessage
                     name='description'
@@ -323,7 +323,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     id='syllabus'
                     name='syllabus'
                     rows={4}
-                    className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   />
                   <ErrorMessage
                     name='syllabus'
@@ -343,7 +343,7 @@ const CombinedCourseAddForm: React.FC = () => {
                     id='requirements'
                     name='requirements'
                     rows={4}
-                    className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   />
                   <ErrorMessage
                     name='requirements'
@@ -372,7 +372,7 @@ const CombinedCourseAddForm: React.FC = () => {
                       setGuidelines(file);
                     }}
                     required
-                    className='pl-2 block w-80 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                    className='pl-2 block w-80 rounded-2xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
                   />
                   <ErrorMessage
                     name='guidelines'

@@ -12,7 +12,6 @@ const usePagination = <T>(data: T[], itemsPerPage: number): PaginationResult<T> 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [currentData, setCurrentData] = useState<T[]>([]);
-
   useEffect(() => {
     setTotalPages(Math.ceil(data.length / itemsPerPage));
   }, [data, itemsPerPage]);

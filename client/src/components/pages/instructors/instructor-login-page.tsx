@@ -6,7 +6,7 @@ import { InstructorLoginInfo } from "../../../api/types/instructor/auth-interfac
 import { loginInstructor } from "../../../api/endpoints/auth/instructor-auth";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
-import { GoogleSignInByInstructor } from '../../common/googleAuth'
+import { GoogleSignInByInstructor } from '@/components/common-components/googleAuth'; 
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserType } from "../../../redux/reducers/authSlice";
 import { selectIsLoggedIn } from "../../../redux/reducers/authSlice";

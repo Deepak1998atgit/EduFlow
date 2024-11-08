@@ -48,9 +48,12 @@ const LazyContactPage = lazy(
   () => import("../components/pages/contact/contact")
 )
 
+const LazyFilterCourse=lazy(
+  ()=>import("../components/pages/course-page/filter-course.tsx")
+)
 
 const LazyCommunityPage = lazy(
-  ()=> import("../components/pages/community/community-home")
+  () => import("../components/pages/community/community-home")
 )
 
 
@@ -59,8 +62,8 @@ const LazyViewCorse = lazy(
 );
 
 
-const LazyViewCheckout=lazy(
-  ()=> import("../components/pages/checkout/view-checkout")
+const LazyViewCheckout = lazy(
+  () => import("../components/pages/checkout/view-checkout")
 )
 
 
@@ -76,7 +79,7 @@ const LazyInstructorLogin = lazy(
 
 
 const LazyViewLessons = lazy(
-  ()=>import("../components/pages/add-lesson/view-lesson")
+  () => import("../components/pages/add-lesson/view-lesson")
 )
 
 // const LazyInstructorHome = lazy(
@@ -115,8 +118,15 @@ const LazyAdminTutorView = lazy(
   () => import("../components/pages/admin/admin-tutor")
 );
 
+const LazyVideo=lazy(
+  () => import("../components/pages/course-page/video-conf")
+);
 
 
+
+const LazyTutorDashBoard=lazy(
+  ()=>import("../components/pages/instructors/instructorDashboard")
+);
 
 
 
@@ -180,23 +190,46 @@ export const router = createBrowserRouter([
         path: "/courses/:courseId",
         element: (
           <Suspense fallback={<Loader />}>
-            <LazyViewCorse/>
+            <LazyViewCorse />
           </Suspense>
         )
       },
       {
-        path:"/checkout",
-        element:(
+        path: "/checkout",
+        element: (
           <Suspense fallback={<Loader />}>
-              <LazyViewCheckout/>
+            <LazyViewCheckout />
           </Suspense>
         )
       },
       {
-        path:"/profile",
-        element:(
+        path: "/profile",
+        element: (
           <Suspense fallback={<Loader />}>
-              <LazyStudentProfile/>
+            <LazyStudentProfile />
+          </Suspense>
+        )
+      },
+      {
+        path: "/courses",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <LazyFilterCourse />
+          </Suspense>
+        ),
+      },
+      {
+        path: "video",
+        element: (
+          <Suspense fallback={<Loader />}>
+            < LazyVideo />
+          </Suspense>
+        )
+      }, {
+        path: "dashboard",
+        element: (  
+          <Suspense fallback={<Loader />}>
+            <LazyTutorDashBoard/>
           </Suspense>
         )
       }
@@ -232,12 +265,21 @@ export const router = createBrowserRouter([
       },
       {
         path: "view-lessons/:courseId",
-        element: (
+        element: ( 
           <Suspense fallback={<Loader />}>
-            < LazyViewLessons/>
+            < LazyViewLessons />
+          </Suspense>
+        )
+      },
+      {
+        path: "dashboard",
+        element: (  
+          <Suspense fallback={<Loader />}>
+            <LazyTutorDashBoard/>
           </Suspense>
         )
       }
+      
     ],
   },
   {
@@ -293,7 +335,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element:(
+    element: (
       <Suspense fallback={<Loader />}>
         <LazyStudentLogin />
       </Suspense>
@@ -303,7 +345,7 @@ export const router = createBrowserRouter([
     path: "signup",
     element: (
       <Suspense fallback={<Loader />}>
-        <LazyStudentRegister/>
+        <LazyStudentRegister />
       </Suspense>
     )
   }
@@ -323,5 +365,5 @@ export const router = createBrowserRouter([
         <LazyInstructorRegister />
       </Suspense>
     ),
-  }, 
+  },
 ]);
