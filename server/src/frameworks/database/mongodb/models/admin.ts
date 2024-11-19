@@ -12,14 +12,11 @@ const adminSchema = new Schema({
       'Please enter a valid email',
     ],
   },
-
   password: {
     type: String,
     required: true,
     minlength: 4,
   },
 });
-
 const Admin = model('Admin', adminSchema, 'admin');
-
 export default Admin;

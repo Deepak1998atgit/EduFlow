@@ -126,7 +126,6 @@ export default Course;
 
 
 
-
 // title: Title of the course.
 // instructorId: The ID of the instructor who created the course.
 // duration: Duration of the course in hours.

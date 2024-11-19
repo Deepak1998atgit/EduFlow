@@ -13,7 +13,7 @@ import QuizSwitch from "./quiz-switch";
 import { Tooltip } from "@material-tailwind/react";
 // import { addLesson } from "../../../api/endpoints/course/lesson";
 import { FormValuesLesson } from "../../../types/lesson";
-import SpinnerDialog from "../../common/spinner-page";
+
 import { lessonSchema } from "../../../validations/lesson/lesson";
 import { useParams } from "react-router-dom";
 
@@ -88,7 +88,7 @@ const AddLessonForm: React.FC = () => {
   return (
     <div className='flex justify-center items-center mt-10 pt-5 pb-10 text-customFontColorBlack'>
       <div className='bg-white rounded-lg mx-10 border w-full p-6'>
-        <SpinnerDialog isUploading={isUploading} />
+        {/* <SpinnerDialog isUploading={isUploading} /> */}
         <Formik
           initialValues={initialValues}
           validationSchema={lessonSchema}

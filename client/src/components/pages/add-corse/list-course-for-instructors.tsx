@@ -1,44 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { CourseInterface } from "@/types/course";
+import ShimmerCard from "../shimmer/shimmer-card";
+import useTimeAgo from "@/hooks/useTimeAgo";
 import {
-    MagnifyingGlassIcon,
-    ChevronUpDownIcon,
     ExclamationCircleIcon
 } from "@heroicons/react/24/outline";
 import {
     PencilIcon,
-    UserPlusIcon,
     TrashIcon,
     SquaresPlusIcon,
+    ClockIcon
 } from "@heroicons/react/24/solid";
 import {
     Card,
-    CardHeader,
-    Input,
     Typography,
-    Button,
     CardBody,
-    Chip,
-    CardFooter,
-    Tabs,
-    TabsHeader,
-    Tab,
     Avatar,
     Tooltip,
 } from "@material-tailwind/react";
-import { getCourseByInstructor } from "@/api/endpoints/course/course"; 
-import { formatDate } from "../../../utils/helpers";
+import { getCourseByInstructor } from "@/api/endpoints/course/course";
 import { Link } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";
 import useSearch from "../../../hooks/useSearch";
-const TABS = [
-    { label: "All", value: "all" },
-    { label: "Monitored", value: "monitored" },
-    { label: "Pending", value: "pending" },
-];
-const TABLE_HEAD = ["Course", "Category", "Status", "Added", ""];
-const ListCourseForInstructors: React.FC = () => {
-    const [courses, setCourses] = useState([]);
+interface PropsInterface {
+    subSideBar: string; // The 'data' prop should be a string
+}
+const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
+    const [courses, setCourses] = useState<CourseInterface[] | any>([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
+    const [filteredData, setFilteredData] = useState<CourseInterface[] | any>([]);
+    const [loading, setLoading] = useState<boolean>(true); // Add loading state
     const {
         currentPage,
         totalPages,
@@ -46,12 +37,29 @@ const ListCourseForInstructors: React.FC = () => {
         goToPage,
         goToPreviousPage,
         goToNextPage,
-    } = usePagination(courses, 3);
+    } = usePagination(filteredData, 3);
+
+    const pages = [];
+    const visiblePages = 5;
+    // Calculate range of pages to show (for example: 1-5, 2-6)
+    const startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
+    const endPage = Math.min(totalPages, startPage + visiblePages - 1);
+    for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+    }
+    const handlePageChange = (page: number) => {
+        if (page >= 1 && page <= totalPages) {
+            goToPage(page);
+        }
+    }
+    const calculateTimeAgo = useTimeAgo();
+    console.log("courses", courses)
     const searchResult = useSearch(courses, searchQuery);
 
     const fetData = async () => {
         const response = await getCourseByInstructor();
         setCourses(response.data);
+        setLoading(false);
     };
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,202 +70,147 @@ const ListCourseForInstructors: React.FC = () => {
         fetData();
     }, []);
 
-    const displayData = searchQuery !== ""
+    let displayData: CourseInterface[] | any = searchQuery !== ""
         ? searchResult
         : currentData;
+    useEffect(() => {
+        const filterCourses = () => {
+            setLoading(true);
+            if (searchQuery !== "") {
+                return searchResult;
+            }
+            switch (subSideBar) {
+                case "Active Courses":
+                    return courses.filter((course: any) => course?.isVerified === true);
+                case "Passive Courses":
+                    return courses.filter((course: any) => course?.isVerified === false);
+                case "All Courses":
+                default:
+                    return courses;
+            }
+        };
+        setFilteredData(filterCourses());
+        setTimeout(() => { setLoading(false); }, 1000)
+    }, [searchQuery, subSideBar, courses]);
     return (
-        <Card className='h-auto w-full mb-24 '>
-            <CardHeader floated={false} shadow={false} className='rounded-none'>
-                <div className='mb-8 flex items-center justify-between gap-8'>
-                    <div>
-                        <Typography variant='h5' color='blue-gray'>
-                            Course list
-                        </Typography>
-                        <Typography color='gray' className='mt-1 font-normal'>
-                            See information about all courses
-                        </Typography>
+        <div className="col-span-9 ">
+            <div className={`flex  ${totalPages === 2 || 1 ? " justify-start" : " justify-center items-center"}w-full`}>
+                {loading ? (
+                    // Shimmer loading effect when data is being fetched
+                    <div className="flex p-4 h-[75vh] gap-2 flex-wrap">
+                        <ShimmerCard />
+                        <ShimmerCard />
+                        <ShimmerCard />
                     </div>
-                    <div className='flex shrink-0 flex-col gap-2 sm:flex-row'>
-                        <Button variant='outlined' color='blue-gray' size='sm'>
-                            view all
-                        </Button>
-                        <Link to="/instructors/add-course">
-                            <Button className='flex items-center gap-3' color='blue' size='sm'>
-                                <UserPlusIcon strokeWidth={2} className='h-4 w-4' /> Add course
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
-                <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
-                    <Tabs value='all' className='w-full md:w-max'>
-                        <TabsHeader>
-                            {TABS.map(({ label, value }) => (
-                                <Tab key={value} value={value}>
-                                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                                </Tab>
-                            ))}
-                        </TabsHeader>
-                    </Tabs>
-                    <div className='w-full md:w-72'>
-                        <Input
-                            label='Search'
-                            value={searchQuery}
-                            crossOrigin="anonymous"
-                            onChange={handleSearch}
-                            icon={<MagnifyingGlassIcon className='h-5 w-5' />}
-                        />
-                    </div>
-                </div>
-            </CardHeader>
-            <CardBody className='overflow-scroll px-0'>
-                <table className='mt-4 w-full min-w-max table-auto text-left'>
-                    <thead>
-                        <tr>
-                            {TABLE_HEAD.map((head, index) => (
-                                <th
-                                    key={head}
-                                    className='cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50'
-                                >
-                                    <Typography
-                                        variant='small'
-                                        color='blue-gray'
-                                        className='flex items-center justify-between gap-2 font-normal leading-none opacity-70'
-                                    >
-                                        {head}
-                                        {index !== TABLE_HEAD.length - 1 && (
-                                            <ChevronUpDownIcon strokeWidth={2} className='h-4 w-4' />
-                                        )}
-                                    </Typography>
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {displayData.length > 0 ? (
-                            displayData.map(
-                                (
-                                    {
-                                        _id,
-                                        title,
-                                        thumbnailUrl,
-                                        category,
-                                        createdAt,
-                                        isVerified,
-                                    },
-                                    index: number
-                                ) => {
-                                    const isLast = index === currentData.length - 1;
-                                    const classes = isLast
-                                        ? "p-4"
-                                        : "p-4 border-b border-blue-gray-50";
-                                    return (
-                                        <tr key={_id}>
-                                            <td className={classes}>
-                                                <div className='flex items-center gap-2'>
-                                                    <Avatar src={thumbnailUrl} alt={"image"} size='md' />
-                                                    <div className='flex flex-col'>
-                                                        <Typography
-                                                            variant='small'
-                                                            color='blue-gray'
-                                                            className='font-normal'
-                                                        >
-                                                            {title}
-                                                        </Typography>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className={classes}>
-                                                <div className='flex flex-col'>
-                                                    <Typography
-                                                        variant='small'
-                                                        color='blue-gray'
-                                                        className='font-normal'
-                                                    >
-                                                        {category}
-                                                    </Typography>
-                                                </div>
-                                            </td>
-                                            <td className={classes}>
-                                                <div className='w-max'>
-                                                    <Chip
-                                                        variant='ghost'
-                                                        size='sm'
-                                                        value={isVerified ? "active" : "pending"}
-                                                        color={isVerified ? "green" : "blue-gray"}
-                                                    />
-                                                </div>
-                                            </td>
-                                            <td className={classes}>
-                                                <Typography
-                                                    variant='small'
-                                                    color='blue-gray'
-                                                    className='font-normal'
-                                                >
-                                                    {formatDate(createdAt)}
-                                                </Typography>
-                                            </td>
-                                            <td className={`${classes} `}>
-                                                <div className="flex  gap-4">
-                                                    <Tooltip content='Add lessons'>
+                ) : displayData.length > 0 ? (
+                    displayData?.map(
+                        ({ _id, title, thumbnailUrl, category, createdAt, isVerified }: CourseInterface, index: number) => {
+                            return (
+                                <Card key={_id} className="w-1/4 p-4 h-[70vh] shadow-lg rounded-lg m-4">
+                                    {/* Image Section */}
+                                    <img
+                                        src={thumbnailUrl}
+                                        alt="Course Thumbnail"
+                                        className="w-full h-40 rounded-2xl border-black object-cover"
+                                    />
+                                    <CardBody className="p-4">
+                                        {/* Tag and Duration */}
+                                        <div className="flex items-center justify-between text-gray-500 space-x-2 text-sm">
+                                            <div className="flex items-center gap-1 justify-between">
+                                                <div className="flex gap-1">
+                                                    <Tooltip content="Add lessons">
                                                         <Link to={`/instructor/view-lessons/${_id}`}>
-                                                            <SquaresPlusIcon className='h-4 w-4 text-blue-500' />
+                                                            <SquaresPlusIcon className="h-4 w-4" />
                                                         </Link>
                                                     </Tooltip>
-                                                    <Tooltip content='Edit course'>
+                                                    <Tooltip content="Edit course">
                                                         <Link to={`/instructors/edit-course/${_id}`}>
-                                                            <PencilIcon className='h-4 w-4' />
+                                                            <PencilIcon className="h-4 w-4" />
                                                         </Link>
                                                     </Tooltip>
-                                                    <Tooltip content='Delete course'>
-                                                        <TrashIcon className='h-4 w-4 text-red-500' />
+                                                    <Tooltip content="Delete course">
+                                                        <TrashIcon className="h-4 w-4 text-red-500" />
                                                     </Tooltip>
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                }
-                            )
-                        ) : (
-                            <tr>
-                                <td className='p-4 text-center' colSpan={TABLE_HEAD.length}>
-                                    <div className='flex items-center justify-center gap-2'>
-                                        <ExclamationCircleIcon className='h-6 w-6 text-blue-gray-400' />
-                                        <Typography variant='h6' color='blue-gray'>
-                                            No results found for your search query.
+                                            </div>
+                                            <div className="flex items-center gap-1 justify-between">
+                                                <Tooltip content="course added">
+                                                    <ClockIcon className="h-4 w-4" />
+                                                </Tooltip>
+                                                <span>{calculateTimeAgo(createdAt)}</span>
+                                            </div>
+                                        </div>
+                                        {/* Course Title */}
+                                        <Typography variant="h6" color="blue-gray" className="font-semibold mt-2">
+                                            {title}
                                         </Typography>
-                                    </div>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </CardBody>
-            <CardFooter className='flex items-center justify-between border-t border-blue-gray-50 p-4'>
-                <Typography variant='small' color='blue-gray' className='font-normal'>
-                    Page {currentPage} of {totalPages}
-                </Typography>
-                <div className='flex gap-2'>
-                    <Button
-                        onClick={goToPreviousPage}
-                        disabled={currentPage === 1}
-                        variant='outlined'
-                        color='blue-gray'
-                        size='sm'
+                                        {/* Description */}
+                                        <Typography color="gray" className="text-sm mt-1">
+                                            {category}
+                                        </Typography>
+                                        {/* Author and Price */}
+                                        <div className="flex items-center justify-between mt-4">
+                                            <div className="flex items-center space-x-2">
+                                                <Avatar
+                                                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHN0dWRlbnRzfGVufDB8fDB8fHww"
+                                                    alt="Author"
+                                                    size="sm"
+                                                />
+                                                <span className="text-sm font-medium">sam</span>
+                                            </div>
+                                            <div className="flex items-center text-[12px] space-x-2">
+                                                {isVerified ? (
+                                                    <>
+                                                        <span className="text-gray-400 line-through">Pending</span>
+                                                        <span className="text-green-500 font-semibold">Active</span>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <span className="text-gray-400 line-through">Active</span>
+                                                        <span className="text-yellow-500 font-semibold">Pending</span>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </CardBody>
+                                </Card>
+                            );
+                        }
+                    )
+                ):(
+                    <div className="flex items-center justify-center gap-2">
+                        <ExclamationCircleIcon className="h-6 w-6 text-blue-gray-400" />
+                        <Typography variant="h6" color="blue-gray">
+                            No results found for your search query.
+                        </Typography>
+                    </div>
+                )}
+            </div>
+            <div className="flex w-full items-center justify-center space-x-1">
+                <button
+                    onClick={goToPreviousPage}
+                    disabled={currentPage === 1}
+                    className=" border border-slate-300 py-6 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
+                    Prev
+                </button>
+                {/* Page Buttons */}
+                {pages.map((page) => (
+                    <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className="min-w-9  border border-slate-300 py-6 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
                     >
-                        Previous
-                    </Button>
-                    <Button
-                        onClick={goToNextPage}
-                        disabled={currentPage === totalPages}
-                        variant='outlined'
-                        color='blue-gray'
-                        size='sm'
-                    >
-                        Next
-                    </Button>
-                </div>
-            </CardFooter>
-        </Card>
+                        {page}
+                    </button>
+                ))}
+                <button
+                    onClick={goToNextPage}
+                    disabled={currentPage === totalPages}
+                    className="min-w-9  border border-slate-300 py-6 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
+                    Next
+                </button>
+            </div>
+        </div>
     );
 };
 export default ListCourseForInstructors;

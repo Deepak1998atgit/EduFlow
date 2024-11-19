@@ -11,7 +11,6 @@ const InstructorSidebar: React.FC<AdminSidebarProps> = ({ onSidebarClick }) => {
     const handleButtonClick = (buttonValue: string) => {
         setActiveButton(buttonValue);
         onSidebarClick(buttonValue);
-
     };
     return (
         <>

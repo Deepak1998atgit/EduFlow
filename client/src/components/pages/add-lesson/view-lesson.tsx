@@ -28,14 +28,15 @@ const ViewLessons: React.FC = () => {
   const [lessons, setLessons] = useState<ApiResponseLessons[] | null>(null);
   const [formVisible, setFormVisible] = useState<boolean>(false);
   const { courseId } = useParams<{ courseId: string | undefined }>();
-  // const fetchData = async (courseId: string) => {
-  //   const response = await getLessonsByCourse(courseId);
-  //   setLessons(response.data);
-  // };
-
-  // useEffect(() => {
-  //   if (courseId) fetchData(courseId);
-  // }, [courseId]);
+  const fetchData = async (courseId: string) => {
+    const response = await getLessonsByCourse(courseId);
+    setLessons(response.data);
+    console.log(response,"less")
+  };
+  useEffect(() => {
+    if (courseId) fetchData(courseId);
+  }, [courseId]);
+  
   return (
     <Card className='h-auto w-full mb-24'>
       <CardHeader floated={false} shadow={false} className='rounded-none'>
