@@ -8,8 +8,8 @@ import {
   FieldArray,
 } from "formik";
 import { toast } from "react-toastify";
-import { Button} from "@material-tailwind/react";
-import { TiTrash } from "react-icons/ti";  
+import { Button } from "@material-tailwind/react";
+import { TiTrash } from "react-icons/ti";
 import QuizSwitch from "./quiz-switch";
 import { Tooltip } from "@material-tailwind/react";
 import { addLesson } from "../../../api/endpoints/course/lesson";
@@ -24,7 +24,7 @@ const initialValues = {
   studyMaterials: "",
   contents: "",
   duration: "",
-  questions: [   
+  questions: [
     {
       question: "",
       options: [{ option: "", isCorrect: false }],
@@ -36,9 +36,9 @@ const AddLessonForm: React.FC = () => {
   const [lessonVideo, setLessonVideo] = useState<File | null>(null);
   const [materialFile, setMaterialFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  const {courseId} = useParams();
+  const { courseId } = useParams();
 
-  
+
   const handleVideoFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     setLessonVideo(file);
@@ -52,7 +52,7 @@ const AddLessonForm: React.FC = () => {
   const handleSubmit = async (
     lesson: FormValuesLesson,
     { resetForm }: FormikHelpers<FormValuesLesson>
-  ) => {   
+  ) => {
     try {
       setIsUploading(true);
       const formData = new FormData();
@@ -67,7 +67,7 @@ const AddLessonForm: React.FC = () => {
         }
       });
 
-      const response = await addLesson(courseId??"", formData);
+      const response = await addLesson(courseId ?? "", formData);
       setIsUploading(false);
       setLessonVideo(null);
       setMaterialFile(null);
@@ -82,10 +82,10 @@ const AddLessonForm: React.FC = () => {
       });
     }
   };
-  console.log("courseId",courseId,"courseId")
+  console.log("courseId", courseId, "courseId")
   return (
-    <div className='flex justify-center items-center mt-10 pt-5 pb-10 text-customFontColorBlack'>
-      <div className='bg-white rounded-lg mx-10 border w-full p-6'>
+    <div className='flex justify-center w-11/12 items-center mt-10 pt-5 pb-10 text-customFontColorBlack'>
+      <div className='bg-white rounded-lg mx-10 w-full p-6'>
         <SpinnerDialog isUploading={isUploading} />
         <Formik
           initialValues={initialValues}
@@ -107,9 +107,10 @@ const AddLessonForm: React.FC = () => {
                       id='title'
                       name='title'
                       type='text'
+                      placeHolder="Write Here"
                       autoComplete='off'
                       required
-                      className='pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                      className='pl-2 block w-80 rounded-full border-1  py-1.5 text-gray-900 shadow-sm shadow-[#01F9C6] focus-visible:outline-none  sm:text-sm sm:leading-6'
                     />
                     <ErrorMessage
                       name='title'
@@ -129,10 +130,11 @@ const AddLessonForm: React.FC = () => {
                     <Field
                       id='description'
                       name='description'
+                      placeHolder="Write Here"
                       type='text'
                       autoComplete='off'
                       required
-                      className='pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                      className='pl-2 block w-80 rounded-full border-1  py-1.5 text-gray-900 shadow-sm shadow-[#01F9C6] focus-visible:outline-none  sm:text-sm sm:leading-6'
                     />
                     <ErrorMessage
                       name='description'
@@ -154,10 +156,11 @@ const AddLessonForm: React.FC = () => {
                     <Field
                       as='textarea'
                       id='contents'
+                      placeHolder="Write Here"
                       name='contents'
                       rows={4}
                       cols={40}
-                      className='pl-2 block w-full max-w-xl rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                      className='pl-2 block w-80 rounded-2xl border-1  py-1.5 text-gray-900 shadow-sm shadow-[#01F9C6] focus-visible:outline-none  sm:text-sm sm:leading-6'
                     />
                     <ErrorMessage
                       name='contents'
@@ -178,9 +181,10 @@ const AddLessonForm: React.FC = () => {
                       as='textarea'
                       id='about'
                       name='about'
+                      placeHolder="Write Here"
                       rows={4}
                       cols={40}
-                      className='pl-2 block w-full max-w-xl rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                      className='pl-2 block w-80 rounded-2xl border-1  py-1.5 text-gray-900 shadow-sm shadow-[#01F9C6] focus-visible:outline-none  sm:text-sm sm:leading-6'
                     />
                     <ErrorMessage
                       name='about'
@@ -207,7 +211,7 @@ const AddLessonForm: React.FC = () => {
                       required
                       onChange={handleVideoFileChange}
                       autoComplete='off'
-                      className='pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                      className='pl-2 block w-80 rounded-full border-1  py-2 text-gray-900 shadow-sm shadow-[#01F9C6] focus-visible:outline-none  sm:text-sm sm:leading-6'
                     />
                     {lessonVideo && (
                       <video
@@ -239,7 +243,7 @@ const AddLessonForm: React.FC = () => {
                       required
                       onChange={handleMaterialFileChange}
                       autoComplete='off'
-                      className='pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                      className='pl-2 block w-80 rounded-full border-1  py-2 text-gray-900 shadow-sm shadow-[#01F9C6] focus-visible:outline-none  sm:text-sm sm:leading-6'
                     />
                     {materialFile && (
                       <img
@@ -302,7 +306,8 @@ const AddLessonForm: React.FC = () => {
                                   type='text'
                                   id={`questions.${index}.question`}
                                   name={`questions.${index}.question`}
-                                  className='border border-gray-300 px-3 py-2 rounded-lg w-full  focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                                  placeHolder="Write a question here"
+                                  className='pl-2 block w-80 rounded-full border-1  py-2 text-gray-900 shadow-sm shadow-[#01F9C6] focus-visible:outline-none  sm:text-sm sm:leading-6'
                                 />
                                 <ErrorMessage
                                   name={`questions.${index}.question`}
@@ -323,9 +328,10 @@ const AddLessonForm: React.FC = () => {
                                           <div className='flex items-center'>
                                             <Field
                                               type='text'
+                                              placeHolder={`Wrire the option ${optionIndex + 1}`}
                                               id={`questions.${index}.options.${optionIndex}.option`}
                                               name={`questions.${index}.options.${optionIndex}.option`}
-                                              className='border border-gray-300 px-3 py-2 rounded-lg w-full  focus:ring-2 focus:ring-inset focus:ring-indigo-700 focus-visible:outline-none focus-visible:ring-blue-600 sm:text-sm sm:leading-6'
+                                              className='pl-2 block w-80 rounded-full border-1  py-2 text-gray-900 shadow-sm shadow-[#01F9C6] focus-visible:outline-none  sm:text-sm sm:leading-6'
                                             />
                                             <Field
                                               type='checkbox'
@@ -374,7 +380,7 @@ const AddLessonForm: React.FC = () => {
                                           isCorrect: false,
                                         })
                                       }
-                                      className='bg-blue-500 text-white px-4 text-xs py-2 rounded-lg'
+                                      className='bg-[#E6F2FF] text-black justify-center px-4 text-xs py-2 rounded-lg'
                                     >
                                       Add Option
                                     </button>
@@ -401,7 +407,7 @@ const AddLessonForm: React.FC = () => {
                                 options: [{ option: "", isCorrect: false }],
                               })
                             }
-                            className='bg-blue-500 text-white px-3 py-2 rounded-md text-xs'
+                            className='bg-[#E6F2FF] text-black justify-center px-3 py-2 rounded-md text-xs'
                           >
                             Add Question
                           </button>
@@ -412,7 +418,7 @@ const AddLessonForm: React.FC = () => {
                 )}
               </div>
               <div className='flex justify-center'>
-                <Button type='submit' color='blue'>
+                <Button type='submit' className="bg-[#E6F2FF] shadow-2xl text-black justify-center">
                   Add Lesson
                 </Button>
               </div>

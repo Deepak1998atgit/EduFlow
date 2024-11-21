@@ -2,7 +2,7 @@ import {  Bell } from 'lucide-react';
 
 const InstructorHeader: React.FC = () => {
     return (
-        <header className="h-16 w-full  border-b flex  items-center justify-between px-6 bg-white">
+        <header className="h-16  border-b flex  items-center justify-between px-6 bg-white">
           <div className="text-xl font-bold">Welcome, Instructor! Manage your courses and grow 🌟</div>
           <div className="flex items-center space-x-4">
             <span className="text-gray-700">Samantha</span>

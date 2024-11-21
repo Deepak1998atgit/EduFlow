@@ -1,61 +1,35 @@
 import React, { useState, useEffect } from "react";
-import InstructorNav from '../../layouts/instructorNav';
-import InstructorSideBar from '../../pages/instructors/instructor-sidebar';
 import ListCourseForInstructors from "../add-corse/list-course-for-instructors";
 import InstructorHeader from "../../layouts/instructor-header";
-import { useSelector } from "react-redux";
-import InstructorSideNav from "./instructorDashboard";
+import ViewLessons from "../add-lesson/view-lesson";
+// import InstructorSideNav from "./instructorDashboard";
 import CombinedCourseAddForm from "../add-corse/add-course-form";
-import { selectIsLoggedIn } from "../../../redux/reducers/authSlice";
-import { useNavigate } from 'react-router-dom';
-import { selectUserType } from "../../../redux/reducers/authSlice";
-interface CompCProps {
-  subSideBar: string; // The 'data' prop should be a string
-}
-type SelectedButtonValue = 'add-course' | 'view-course';
-const AdminDashboard: React.FC<CompCProps> = ({subSideBar}) => {
-  const navigate = useNavigate();
+import {useLocation} from 'react-router-dom';
+type SelectedButtonValue = 'add-course' | 'view-courses' | "view-lessons";
+const AdminDashboard: React.FC=() => {
+  const location = useLocation();
   const [selectedButtonValue, setSelectedButtonValue] = useState('dashboard');
   const [subSidebarTitle,setSubSidebarTitle]=useState("")
-  const [isLesson, setIsLesson] = useState<boolean>(false)
-  const isLoggedIn = useSelector(selectIsLoggedIn)
-  const user = useSelector(selectUserType)
-  const handleSidebarClick = (buttonValue: string) => {
-    setSelectedButtonValue(buttonValue);
-  };
   useEffect(() => {
-    if (!isLoggedIn || user !== "instructor") {
-      navigate("/instructor-login");
+    const queryParams = new URLSearchParams(location.search);
+    const sidebar = queryParams.get('sidebar');
+    const subSidebar = queryParams.get('subSidebar'); 
+    if (sidebar) {
+      setSelectedButtonValue(sidebar as SelectedButtonValue); // Set the selected button value
     }
-  }, [isLoggedIn, user, navigate]);
-
-  if (!isLoggedIn && user !== "instructor") {
-    return null;
-  }
+    if (subSidebar) {
+      setSubSidebarTitle(subSidebar); // Set the sub-sidebar title
+    }
+  }, [location.search]);
   const componentsMap = {
     'add-course': <CombinedCourseAddForm />,
-    'view-course': <ListCourseForInstructors subSideBar={subSidebarTitle} />,
+    'view-courses': <ListCourseForInstructors subSideBar={subSidebarTitle} />,
+    'view-lessons':<ViewLessons/>
   };
   return (
-    <div className="grid grid-cols-12">
-      <InstructorSideNav onSidebarClick={handleSidebarClick} onSubSideBarClick={setSubSidebarTitle} />
-      <div className="col-span-9">
-        <InstructorHeader />
-        {componentsMap[selectedButtonValue as SelectedButtonValue ] || <p>{selectedButtonValue}</p>}
-      </div>
-    </div>
+      <>
+        {componentsMap[selectedButtonValue as SelectedButtonValue ] || <p>{selectedButtonValue}NO COMP</p>}
+      </>
   );
 };
 export default AdminDashboard;
-
-
-
-{/* <>
-      <div className="flex">
-        <InstructorSideBar onSidebarClick={handleSidebarClick} />
-        {selectedButtonValue === 'dashboard' && <div>dash</div>}
-        {selectedButtonValue === 'users' && <CombinedCourseAddForm />}
-        {selectedButtonValue === 'tutors' && <div>Tutors</div>}
-        {selectedButtonValue === 'view-courses' && <ListCourseForInstructors/>}
-      </div>
-    </> */}

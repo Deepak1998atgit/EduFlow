@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter,} from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Student, Instructor, Admin } from '../App';
 import ErrorElement from "../components/common-components/error-element";
@@ -102,7 +102,6 @@ const LazyInstructorDashBoard = lazy(
 );
 
 
-
 //ADMIN
 const LazyAdminLogin = lazy(
   () => import("../components/pages/admin/admin-login")
@@ -124,9 +123,7 @@ const LazyVideo=lazy(
 
 
 
-const LazyTutorDashBoard=lazy(
-  ()=>import("../components/pages/instructors/instructorDashboard")
-);
+
 
 
 
@@ -243,15 +240,7 @@ export const router = createBrowserRouter([
         path: "",
         element: (
           <Suspense fallback={<Loader />}>
-            <LazyInstructorDashBoard />
-          </Suspense>
-        ),
-      },
-      {
-        path: "welcome",
-        element: (
-          <Suspense fallback={<Loader />}>
-            <LazyInstructorWelcome />
+            <LazyInstructorDashBoard/>
           </Suspense>
         ),
       },
@@ -330,6 +319,7 @@ export const router = createBrowserRouter([
       {
         path: "categories/add-category",
         element: <AddCategory />,
+
       },
     ],
   },

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { FaChevronRight } from "react-icons/fa6";
 import {
   MagnifyingGlassIcon,
   PencilIcon,
@@ -38,26 +39,23 @@ const ViewLessons: React.FC = () => {
   }, [courseId]);
   
   return (
-    <Card className='h-auto w-full mb-24'>
+    <Card className='h-full w-full  '>
       <CardHeader floated={false} shadow={false} className='rounded-none'>
         <div className='mb-8 flex items-center justify-between gap-8'>
           <div>
-            <Typography variant='h5' color='blue-gray'>
-              Course name
+            <Typography variant='h5' className="flex items-center  justify-center">
+            React - The Complete Guide 2024 (incl. Next.js, Redux)<FaChevronRight/>
             </Typography>
             <Typography color='gray' className='mt-1 font-normal'>
               about the course
             </Typography>
           </div>
           <div className='flex shrink-0 flex-col gap-2 sm:flex-row'>
-            <Button variant='outlined' color='blue-gray' size='sm'>
-              view all
-            </Button>
             <Button
               onClick={() => {
                 setFormVisible(!formVisible);
               }}
-              className='flex items-center gap-3'
+              className='flex items-center bg-[#E6F2FF] text-black justify-center w-44 h-12  gap-3'
               color='blue'
               size='sm'
             >
@@ -72,11 +70,7 @@ const ViewLessons: React.FC = () => {
         </div>
         <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
           <div className='w-full md:w-72'>
-            <Input
-              label='Search'
-              crossOrigin="anonymous"
-              icon={<MagnifyingGlassIcon className='h-5 w-5' />}
-            />
+           yy
           </div>
         </div>  
       </CardHeader>

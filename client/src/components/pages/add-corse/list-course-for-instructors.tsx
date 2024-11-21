@@ -93,7 +93,7 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
         setTimeout(() => { setLoading(false); }, 1000)
     }, [searchQuery, subSideBar, courses]);
     return (
-        <div className="col-span-9 ">
+        <div className="col-span-9">
             <div className={`flex  ${totalPages === 2 || 1 ? " justify-start" : " justify-center items-center"}w-full`}>
                 {loading ? (
                     // Shimmer loading effect when data is being fetched
@@ -106,12 +106,12 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
                     displayData?.map(
                         ({ _id, title, thumbnailUrl, category, createdAt, isVerified }: CourseInterface, index: number) => {
                             return (
-                                <Card key={_id} className="w-1/4 p-4 h-[70vh] shadow-lg rounded-lg m-4">
+                                <Card key={_id} className="w-1/4 h-[70vh] shadow-lg rounded-lg m-4">
                                     {/* Image Section */}
                                     <img
                                         src={thumbnailUrl}
                                         alt="Course Thumbnail"
-                                        className="w-full h-40 rounded-2xl border-black object-cover"
+                                        className="w-full h-40 rounded-t-lg border-black object-cover"
                                     />
                                     <CardBody className="p-4">
                                         {/* Tag and Duration */}
@@ -186,11 +186,11 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
                     </div>
                 )}
             </div>
-            <div className="flex w-full items-center justify-center space-x-1">
+            <div className="flex w-full px-44 items-center justify-end space-x-1">
                 <button
                     onClick={goToPreviousPage}
                     disabled={currentPage === 1}
-                    className=" border border-slate-300 py-6 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
+                    className=" border border-slate-300 py-6 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-black hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
                     Prev
                 </button>
                 {/* Page Buttons */}
@@ -198,7 +198,7 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
                     <button
                         key={page}
                         onClick={() => handlePageChange(page)}
-                        className="min-w-9  border border-slate-300 py-6 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
+                        className="min-w-9  border border-slate-300 py-6 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-black hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2"
                     >
                         {page}
                     </button>
@@ -206,7 +206,7 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
                 <button
                     onClick={goToNextPage}
                     disabled={currentPage === totalPages}
-                    className="min-w-9  border border-slate-300 py-6 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
+                    className="min-w-9  border border-slate-300 py-6 px-6 text-center text-sm transition-all shadow-sm hover:shadow-lg text-black hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2">
                     Next
                 </button>
             </div>
