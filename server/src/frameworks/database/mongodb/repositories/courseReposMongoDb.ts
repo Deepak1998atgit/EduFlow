@@ -37,11 +37,18 @@ export const courseRepositoryMongodb = () => {
   };
 
 
+  const deleteCourseById = async(courseId:string)=>{
+   const course:CourseInterface | null =await Course.findByIdAndDelete({
+    _id: new mongoose.Types.ObjectId(courseId) })
+
+  }
+
   return {
     addCourse,
     getAllCourse,
     getCourseByInstructorId,
-    getCourseById
+    getCourseById,
+    deleteCourseById
   };
 };
 

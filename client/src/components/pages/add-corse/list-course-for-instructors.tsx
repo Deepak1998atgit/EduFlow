@@ -19,6 +19,7 @@ import {
     Tooltip,
 } from "@material-tailwind/react";
 import { getCourseByInstructor } from "@/api/endpoints/course/course";
+import { deleteCourse } from "@/api/endpoints/course/course";
 import { Link } from "react-router-dom";
 import usePagination from "../../../hooks/usePagination";
 import useSearch from "../../../hooks/useSearch";
@@ -92,6 +93,11 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
         setFilteredData(filterCourses());
         setTimeout(() => { setLoading(false); }, 1000)
     }, [searchQuery, subSideBar, courses]);
+
+    const handleDeleteCourse =async(courseId:string)=>{
+        const response =await deleteCourse(courseId);
+        console.log("courseId",courseId ,response)
+    }
     return (
         <div className="col-span-9">
             <div className={`flex  ${totalPages === 2 || 1 ? " justify-start" : " justify-center items-center"}w-full`}>
@@ -129,7 +135,9 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
                                                         </Link>
                                                     </Tooltip>
                                                     <Tooltip content="Delete course">
-                                                        <TrashIcon className="h-4 w-4 text-red-500" />
+                                                        <TrashIcon 
+                                                        onClick={()=>{handleDeleteCourse(_id)}}
+                                                        className="h-4 w-4 text-red-500" />
                                                     </Tooltip>
                                                 </div>
                                             </div>
@@ -145,7 +153,7 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
                                             {title}
                                         </Typography>
                                         {/* Description */}
-                                        <Typography color="gray" className="text-sm mt-1">
+                                        <Typography color="gray" className="text-sm mt-1"> 
                                             {category}
                                         </Typography>
                                         {/* Author and Price */}

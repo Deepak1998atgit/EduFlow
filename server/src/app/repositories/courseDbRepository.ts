@@ -16,6 +16,7 @@ export const courseDbRepository = (
 
   const getCourseById = async (courseId: string) =>
     await repository.getCourseById(courseId);
+  
 
 
   return {

@@ -3,7 +3,8 @@ import {
   addCourseService,
   getAllCoursesService,
   getCoursesByInstructorService,
-  getIndividualCourseService
+  getIndividualCourseService,
+  deleteCourseByIdService
 } from "../../services/course/course-service";
 
 
@@ -26,3 +27,8 @@ export const getCourseByInstructor = () => {
 export const getIndividualCourse = (courseId: string) => {
   return getIndividualCourseService(END_POINTS.GET_COURSE, courseId);
 };
+
+
+export const deleteCourse= (courseId:string)=>{
+  return deleteCourseByIdService(END_POINTS.DELETE_COURSE, courseId)
+}

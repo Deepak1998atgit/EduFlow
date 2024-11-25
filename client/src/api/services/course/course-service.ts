@@ -6,7 +6,7 @@ export const addCourseService = async (
   endpoint: string,
   courseInfo: FormData
 ) => {
-  console.log(courseInfo,"course")
+  console.log(courseInfo, "course")
   const response = await api.post(
     `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`,
     courseInfo
@@ -39,3 +39,15 @@ export const getIndividualCourseService = async (
   );
   return response;
 };
+
+
+export const deleteCourseByIdService = async (
+  endpoint: string,
+  courseId: string
+) => {
+  const response = await axiosInstance.get(
+    `${CONFIG_KEYS.API_BASE_URL}/${endpoint}/${courseId}`
+  );
+  return response;
+};
+
