@@ -9,8 +9,7 @@ export const getAllCourseU = async (
   courseDbRepository: ReturnType<CourseDbRepositoryInterface>
 ) => {
   const courses: CourseInterface[] | null =
-    await courseDbRepository.getAllCourse();
-
+  await courseDbRepository.getAllCourse();
 //   await Promise.all(
 //     courses.map(async (course) => {
 //       if (course.thumbnail) {

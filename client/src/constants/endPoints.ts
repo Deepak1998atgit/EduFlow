@@ -18,7 +18,7 @@ const END_POINTS = {
     UNBLOCK_INSTRUCTORS:'api/instructors/get-all-instructors/unblock-instructors',
     GET_BLOCKED_INSTRUCTORS:'api/instructors/get-blocked-instructors',
     ADD_COURSE:'api/courses/instructors/add-course',
-    DELETE_COURSE:'api/courses/instructors/add-course',
+    DELETE_COURSE:'api/courses/instructors/delete-course',
     GET_ALL_COURSES:'api/courses/get-all-courses',
     GET_COURSE:'api/courses/get-course',
     REFRESH_TOKEN:'api/all/refresh-token/refresh',

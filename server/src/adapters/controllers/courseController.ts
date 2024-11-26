@@ -14,6 +14,7 @@ import { getLessonsByCourseIdU } from '../../app/usecases/lessons/view-lessons';
 import {
   AddCourseInfoInterface,
 } from '../../types/courseInterface';
+import { deleteCourse } from '@src/app/usecases/course/delete-course';
 import { CustomRequest } from '../../types/customRequest';
 import { CloudServiceInterface } from '../../app/services/cloudServiceInterface';
 import { CloudServiceImpl } from '../../frameworks/services/cloudinaryService';
@@ -152,7 +153,7 @@ const courseController = (
   const getLessonsByCourse = asyncHandler(
     async (req: Request, res: Response) => {
       const courseId = req.params.courseId;
-      console.log("obtaind",courseId)
+      console.log("obtaind", courseId)
       const lessons = await getLessonsByCourseIdU(courseId, dbRepositoryLesson);
       res.status(200).json({
         status: 'success',
@@ -163,13 +164,26 @@ const courseController = (
   );
 
 
+  const deleteCourseByInstructor = asyncHandler(
+    async (req: CustomRequest, res: Response) => {
+      const courseId = req?.params?.courseId;
+      const instructorId = req?.user?.Id;
+      await deleteCourse(instructorId, courseId, dbRepositoryCourse);
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully deleted the course'
+      });
+    }
+  );
+
   return {
     addCourse,
     getAllCourses,
     getCoursesByInstructor,
     addLesson,
     getIndividualCourse,
-    getLessonsByCourse
+    getLessonsByCourse,
+    deleteCourseByInstructor
   };
 
 };

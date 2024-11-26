@@ -76,7 +76,13 @@ const courseRouter = (redisClient: RedisClient) => {
     '/instructors/get-lessons-by-course/:courseId', ///instructors/get-lessons-by-course
     controller.getLessonsByCourse
   );
-
+  
+  router.delete(
+    '/instructors/delete-course/:courseId',
+    jwtAuthMiddleware,
+    roleCheckMiddleware('instructor'),
+    controller.deleteCourseByInstructor
+  )
   return router;
 };
 export default courseRouter;

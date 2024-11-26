@@ -97,7 +97,7 @@ const CombinedCourseAddForm: React.FC = () => {
   };
 
 
-  const onChange = (e: any) => {
+  const onChange = async(e: any) => {
     e.preventDefault();
     let files: any;
     if (e.dataTransfer) {
@@ -110,7 +110,8 @@ const CombinedCourseAddForm: React.FC = () => {
       setImageToCrop(reader.result as any);
       setOriginalFileName(files[0]?.name);
     };
-    reader.readAsDataURL(files[0]);
+    await reader.readAsDataURL(files[0]);
+    await setThumbnail(files?.[0]);
   };
   const handleCroppedImage = (croppedImage: string) => {
     const base64 = croppedImage?.split(',')[1]; // Extract base64 part
@@ -465,13 +466,13 @@ const CombinedCourseAddForm: React.FC = () => {
                 </div>
               </div>
               <div className="w-full mt-4">
-                <CropperComponent image={imageToCrop} onCrop={handleCroppedImage} />
+                {thumbnail && <CropperComponent image={imageToCrop} onCrop={handleCroppedImage} />}
               </div>
               <div className='flex justify-center  mt-8'>
                 <button
                   type="submit"
                   disabled={isSubmitting} // Disable button when submitting
-                  className="w-full py-2 mt-4 bg-blue-500 text-white rounded-md disabled:bg-gray-300"
+                  className="w-1/3 py-2 mt-4 bg-[#01F9C6]   text-white  shadow-lg disabled:bg-gray-300"
                 >
                   {isSubmitting ? "Submitting..." : "Submit"}
                 </button>

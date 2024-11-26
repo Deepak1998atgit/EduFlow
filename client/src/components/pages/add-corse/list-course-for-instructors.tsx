@@ -66,7 +66,21 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     };
-
+    const handleDeleteCourse = async (courseId: string) => {
+        console.log("Deleting course with ID:", courseId);
+        try {
+            const response = await deleteCourse(courseId);  
+            if (response) { 
+                setCourses((prevCourses: CourseInterface[]) =>
+                    prevCourses.filter((course) => course._id !== courseId)
+                );
+            } else {
+                console.error("Failed to delete the course");
+            }
+        } catch (error) {
+            console.error("Error deleting course:", error);
+        }
+    }
     useEffect(() => {
         fetData();
     }, []);
@@ -94,10 +108,7 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
         setTimeout(() => { setLoading(false); }, 1000)
     }, [searchQuery, subSideBar, courses]);
 
-    const handleDeleteCourse =async(courseId:string)=>{
-        const response =await deleteCourse(courseId);
-        console.log("courseId",courseId ,response)
-    }
+
     return (
         <div className="col-span-9">
             <div className={`flex  ${totalPages === 2 || 1 ? " justify-start" : " justify-center items-center"}w-full`}>
@@ -135,9 +146,9 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
                                                         </Link>
                                                     </Tooltip>
                                                     <Tooltip content="Delete course">
-                                                        <TrashIcon 
-                                                        onClick={()=>{handleDeleteCourse(_id)}}
-                                                        className="h-4 w-4 text-red-500" />
+                                                        <TrashIcon
+                                                            onClick={() => { handleDeleteCourse(_id) }}
+                                                            className="h-4 w-4 text-red-500" />
                                                     </Tooltip>
                                                 </div>
                                             </div>
@@ -153,7 +164,7 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
                                             {title}
                                         </Typography>
                                         {/* Description */}
-                                        <Typography color="gray" className="text-sm mt-1"> 
+                                        <Typography color="gray" className="text-sm mt-1">
                                             {category}
                                         </Typography>
                                         {/* Author and Price */}
@@ -185,7 +196,7 @@ const ListCourseForInstructors: React.FC<PropsInterface> = ({ subSideBar }) => {
                             );
                         }
                     )
-                ):(
+                ) : (
                     <div className="flex items-center justify-center gap-2">
                         <ExclamationCircleIcon className="h-6 w-6 text-blue-gray-400" />
                         <Typography variant="h6" color="blue-gray">

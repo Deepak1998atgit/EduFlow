@@ -7,7 +7,7 @@ interface CropperComponentProps {
 }
 
 const CropperComponent: React.FC<CropperComponentProps> = ({ image, onCrop }) => {
-  const [cropData, setCropData] = useState("#");
+  const [cropData, setCropData] = useState("");
   const cropperRef = createRef<ReactCropperElement>();
   const getCropData = async () => {
     try {
@@ -56,29 +56,30 @@ const CropperComponent: React.FC<CropperComponentProps> = ({ image, onCrop }) =>
           checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
           guides={true}
         />
-        <button className="w-full bg-black py-2 px-4 rounded text-white"
+        <button className="w-1/2 ml-24  border border-black mt-4  rounded-full py-2 px-4 text-black"
           type="button"
           onClick={getCropData}>
           Crop Image
         </button>
       </div>
-
       {/* Right Section: Cropped Image Display */}
-      <div className="w-[400px] h-full flex-col justify-end items-end">
-        <img
-          src={cropData}
-          className="w-[90%] h-[90%] object-contain"
-          alt="Cropped"
+      {cropData &&
+        <div className="w-[400px] h-full flex-col justify-end items-end">
+          <img
+            src={cropData}
+            className="w-[90%] h-[90%] object-contain"
+            alt="Cropped"
 
-        />
-        <button
-          className="bg-green-500 mt-3 w-1/2 text-white block py-2 px-4 rounded"
-          type="button"
-          onClick={handleCroppedImageSetAsFinalImage}
-        >
-          Set as Final
-        </button>
-      </div>
+          />
+          <button
+            className="  w-1/2 ml-24 text-black border border-black  block py-2 px-4 rounded-full"
+            type="button"
+            onClick={handleCroppedImageSetAsFinalImage}
+          >
+            Set as Final
+          </button>
+        </div>
+      }
     </div>
   );
 };

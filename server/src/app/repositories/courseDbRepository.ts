@@ -7,23 +7,27 @@ export const courseDbRepository = (
   repository: ReturnType<CourseRepositoryMongoDbInterface>
 ) => {
 
-  const addCourse = async (courseInfo: AddCourseInfoInterface) => await repository.addCourse(courseInfo);
+  const addCourse = async (courseInfo: AddCourseInfoInterface) => 
+  await repository.addCourse(courseInfo);
 
-  const getAllCourse = async () => await repository.getAllCourse();
+  const getAllCourse = async () => 
+  await repository.getAllCourse();
 
   const getCourseByInstructorId = async (instructorId: string) =>
-    await repository.getCourseByInstructorId(instructorId);
+  await repository.getCourseByInstructorId(instructorId);
 
   const getCourseById = async (courseId: string) =>
-    await repository.getCourseById(courseId);
-  
+  await repository.getCourseById(courseId);
 
+  const deleteCourseById=async(courseId: string)=>
+  await repository.deleteCourseById(courseId);
 
   return {
     addCourse,
     getAllCourse,
     getCourseByInstructorId,
-    getCourseById 
+    getCourseById,
+    deleteCourseById
   };
 
 };

@@ -45,7 +45,7 @@ export const deleteCourseByIdService = async (
   endpoint: string,
   courseId: string
 ) => {
-  const response = await axiosInstance.get(
+  const response = await api.delete(
     `${CONFIG_KEYS.API_BASE_URL}/${endpoint}/${courseId}`
   );
   return response;
