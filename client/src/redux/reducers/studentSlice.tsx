@@ -61,9 +61,9 @@ const studentSlice = createSlice({
             state.isFetching = false;
             state.error = action.error.message || "Failed to fetch student data";
         });
-        builder.addCase(PURGE, (state) => {
-            state.studentDetails  = initialState.studentDetails;  // Reset stuent data on purge
-        });
+        // builder.addCase(PURGE, (state) => {
+        //     state.studentDetails  = initialState.studentDetails;  // Reset stuent data on purge
+        // });
     }
 });
 
