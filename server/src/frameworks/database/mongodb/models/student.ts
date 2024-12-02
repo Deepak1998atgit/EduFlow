@@ -1,13 +1,33 @@
 import mongoose, { Schema, model, Document } from 'mongoose';
 
+interface ProfilePic {
+  name: string;
+  key?: string;
+  url?: string;
+}
+
 interface IStudent extends Document {
   name: string;
   email: string;
   mobile?: number;
+  profilePic: ProfilePic;
   password?: string;
   isBlocked?: boolean;
   
 }
+
+const ProfileSchema = new Schema<ProfilePic>({
+  name: {
+    type: String,
+    required: true
+  },
+  key: {
+    type: String
+  },
+  url: {
+    type: String
+  }
+});
 
 
 const studentSchema = new Schema<IStudent>({
@@ -33,6 +53,10 @@ const studentSchema = new Schema<IStudent>({
     // unique:true,
     sparse: true, // Allow multiple null values
     match: [/^[0-9]{10}$/, 'Please enter a valid 10-digit mobile number']
+  },
+  profilePic: {
+    type: ProfileSchema,
+    required: false
   },
   password: {
     type: String,

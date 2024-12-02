@@ -27,6 +27,9 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
 
   const decodedTokenAndReturnExpireDate = (token: string) => service.decodedTokenAndReturnExpireDate(token);
 
+
+  const decodeToken = (token:string)=> service.decodeToken(token)
+
   return {
     hashPassword,
     comparePassword,
@@ -35,7 +38,8 @@ export const authServiceInterface = (service: AuthServiceReturn) => {
     generateOTP,
     verifyOTP,
     generateRefreshToken,
-    decodedTokenAndReturnExpireDate
+    decodedTokenAndReturnExpireDate,
+    decodeToken
   };
 };
 

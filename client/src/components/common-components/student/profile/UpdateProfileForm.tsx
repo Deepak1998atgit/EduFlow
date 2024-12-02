@@ -1,159 +1,205 @@
-import { Card, Typography, Input, CardHeader, CardBody, Button } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+    Card,
+    Typography,
+    Input,
+    CardHeader,
+    CardBody,
+    Button,
+} from "@material-tailwind/react";
+import * as Yup from "yup";
 import { FaCameraRetro } from "react-icons/fa";
-interface FormInputs {
+import { useFormik } from "formik";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { toast } from "react-toastify";
+import {
+    selectStudent,
+    fetchStudentData,
+} from "../../../../redux/reducers/studentSlice";
+import { updateProfile } from "@/api/endpoints/student";
+
+interface UpdateProfileInfo {
+    email: string;
     name: string;
-    phone: string | undefined;
+    mobile: string;
+    profilePic?: File | null;
 }
-interface User {
-    email?: string;
-    imageUrl?: string;
-    name?: string;
-    phone?: string;
-}
-// interface UpdateProfileCardProps {
-//     isTrue: boolean;
-//     onToggle: () => void;
-//     user: User; // Expect user object as a prop
-// }
+
 interface UpdateProfileCardProps {
     onToggle: () => void;
 }
-const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({ onToggle }) => {
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-    const user = {
-        name: "John",
-        phone: "9067554747",
-        imageUrl: "https:hdgggdgdg.jpg",
-        email: "johndoe@gamil.com"
-    }
-    const [inputs, setInputs] = useState<FormInputs>({
-        name: user?.name || "John",
-        phone: user?.phone || "9074005626",
-    });
-    const [nameError, setNameError] = useState("");
-    const [phoneError, setPhoneError] = useState("");
-    const [file, setFile] = useState<File | undefined>(undefined);
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        // Validation
-        if (inputs.name.length === 0) {
-            setNameError("Name is required");
-            return;
-        }
-        if (!/^[A-Za-z\s]+$/i.test(inputs.name)) {
-            setNameError("Enter a valid name");
-            return;
-        }
-        if (inputs.phone?.length === 0) {
-            setPhoneError("Phone is required");
-            return;
-        }
-        if (!/^[0-9]+$/u.test(inputs.phone!)) {
-            setPhoneError("Enter a valid Phone");
-            return;
-        }
-        // Submit form data
-        const formData = new FormData();
-        formData.append("name", inputs.name);
-        if (inputs.phone) {
-            formData.append("phone", inputs.phone.toString());
-        }
-        if (file) {
-            formData.append("image", file, file.name);
-        }
-        console.log("Submitting form data:", formData);
 
-        // Reset form or any other action after submission
+const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({ onToggle }) => {
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const dispatch = useDispatch<AppDispatch>();
+    const studentInfo = useSelector(selectStudent)?.studentDetails;
+
+    const formik = useFormik<UpdateProfileInfo>({
+        initialValues: {
+            email: studentInfo?.email || "",
+            name: studentInfo?.name || "",
+            mobile: studentInfo?.mobile || "",
+            profilePic: null,
+        },
+        validationSchema: Yup.object().shape({
+            email: Yup.string()
+                .email("Invalid email address")
+                .required("Email is required"),
+            name: Yup.string()
+                .min(2, "Name must be at least 2 characters")
+                .max(50, "Name must not exceed 50 characters")
+                .required("Name is required"),
+            mobile: Yup.string()
+                .matches(/^[0-9]{10}$/, "Mobile number must be 10 digits")
+                .required("Mobile number is required"),
+            profilePic: Yup.mixed().notRequired(),
+        }),
+        onSubmit: async (values) => {
+            try {
+                console.log("Submitted values:", values);
+                const formData = new FormData();
+                formData.append("email", values.email || "");
+                formData.append("firstName", values.name || "");
+                formData.append("mobile", values.mobile || "");
+                if (values.profilePic) {
+                    formData.append("image", values.profilePic || "");
+                }
+                const response = await updateProfile(formData);
+                // formik.resetForm();
+                setPreviewImage(null);
+                toast.success(response?.data?.message, {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+            } catch (error: any) {
+                console.error("Update error:", error);
+                toast.error("Failed to update profile.", {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+            }
+        },
+    });
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => setPreviewImage(reader.result as string);
+            reader.readAsDataURL(file);
+            formik.setFieldValue("profilePic", file);
+        } else {
+            setPreviewImage(null);
+            formik.setFieldValue("profilePic", null);
+        }
     };
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setInputs({ ...inputs, [name]: value });
-    };
+
+    useEffect(() => {
+        dispatch(fetchStudentData());
+    }, [dispatch]);
+
     return (
-        <Card className="lg:w-1/2 md:w-1/2 w-full h-fit" >
-            <form onSubmit={handleSubmit}>
+        <Card className="lg:w-1/2 md:w-1/2 w-full h-fit">
+            <form onSubmit={formik.handleSubmit}>
                 <CardHeader className="bg-transparent shadow-none flex items-center justify-center relative">
-                    {previewUrl ? (
-                        <div onClick={() => document.getElementById('file-upload')?.click()} className="relative">
+                    <div className="relative cursor-pointer">
+                        {previewImage ? (
                             <img
-                                src={previewUrl}
+                                src={previewImage}
                                 alt="Selected Profile"
-                                className="h-40 w-40 rounded-full cursor-pointer"
+                                className="h-40 w-40 rounded-full object-cover"
                             />
-                        </div>
-                    ) : user?.imageUrl ? (
-                        <div onClick={() => document.getElementById('file-upload')?.click()} className="relative">
+                        ) : studentInfo?.profilePic ? (
                             <img
-                                src="https://interactive-examples.mdn.mozilla.net/media/examples/plumeria-146x200.jpg"
+                                src={studentInfo?.profilePic?.url}
                                 alt="User Profile"
-                                className="h-40 w-40 rounded-full cursor-pointer"
+                                className="h-40 w-40 rounded-full object-cover"
                             />
-                        </div>
-                    ) : (
-                        <label htmlFor="file-upload" className="cursor-pointer h-40 w-40 flex items-center justify-center inline-block text-white font-bold py-2 px-4 rounded transition-colors duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-12 w-12 text-gray-500">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                            </svg>
-                        </label>
-                    )}
-                    <FaCameraRetro className="absolute bottom-9 right-32 text-gray-600 text-2xl cursor-pointer" />
-                    <input
-                        id="file-upload"
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={(e) => {
-                            if (e.target.files && e.target.files.length > 0) {
-                                const file = e.target.files[0];
-                                setFile(file);
-                                setPreviewUrl(URL.createObjectURL(file));
-                            }
-                        }}
-                    />
-                </CardHeader>
-                <CardBody className="text-center flex flex-col gap-4">
-                    {user?.email && (
-                        <Input
-                            label="Email"
-                            disabled
-                            size="md"
-                            value={user.email}
-                            onChange={() => { }} // No-op for disabled input
-                            crossOrigin="undefined"
+                        ) : (
+                            <label
+                                htmlFor="file-upload"
+                                className="h-40 w-40 flex items-center justify-center text-gray-500"
+                            >
+                                <FaCameraRetro className="h-12 w-12" />
+                            </label>
+                        )}
+                    </div>
+                    <label
+                        htmlFor="file-upload"
+                        className="absolute bottom-9 right-32 text-gray-600 text-2xl cursor-pointer"
+                    >
+                        <FaCameraRetro />
+                        <input
+                            id="file-upload"
+                            type="file"
+                            className="hidden"
+                            accept="image/*"
+                            onChange={handleFileChange}
                         />
+
+                    </label>
+                </CardHeader>
+                <CardBody className="text-center flex flex-col gap-5">
+                    <Input
+                        label="Email"
+                        name="email"
+                        size="md"
+                        onChange={formik?.handleChange}
+                        onBlur={formik?.handleBlur}
+                        value={formik?.values?.email}
+                        className=" focus:outline-none focus:border-black"
+                        crossOrigin="undefined"
+                    />
+                    {formik?.touched?.email && formik?.errors?.email && (
+                        <Typography variant="small" color="red">
+                            {formik.errors.email}
+                        </Typography>
                     )}
                     <Input
                         label="Name"
                         size="md"
                         name="name"
-                        value={inputs.name}
-                        onChange={handleInputChange}
+                        value={formik?.values?.name}
+                        onChange={formik?.handleChange}
+                        onBlur={formik?.handleBlur}
                         crossOrigin="undefined"
+                        className=" focus:outline-none focus:border-black"
+                        required
                     />
-                    {nameError && (
-                        <p className="text-red-500 text-sm">{nameError}</p>
+                    {formik?.touched?.name && formik?.errors?.name && (
+                        <Typography variant="small" color="red">
+                            {formik.errors.name}
+                        </Typography>
                     )}
                     <Input
                         label="Phone"
                         size="md"
-                        name="phone"
-                        value={inputs.phone}
-                        onChange={handleInputChange}
+                        name="mobile"
+                        value={formik?.values?.mobile}
+                        onChange={formik?.handleChange}
+                        onBlur={formik?.handleBlur}
                         crossOrigin="undefined"
+                        className=" focus:outline-none focus:border-black"
+                        required
                     />
-                    {phoneError && (
-                        <p className="text-red-500 text-sm">{phoneError}</p>
+                    {formik?.touched?.mobile && formik?.errors?.mobile && (
+                        <Typography variant="small" color="red">
+                            {formik.errors.mobile}
+                        </Typography>
                     )}
                     <Button
                         variant="gradient"
-                        className="text-black bg-[#F48C06] bg-opacity-30"
-                        fullWidth
+                        className="text-black bg-[#F48C06] mt-5 cursor-pointer bg-opacity-30"
                         type="submit"
                     >
                         Update
                     </Button>
-                    <button onClick={onToggle}>Back To Profile</button>
+                    <Button
+                        type="button"
+                        onClick={onToggle}
+                        className="bg-white text-black"
+                    >
+                        Back to Profile
+                    </Button>
                 </CardBody>
             </form>
         </Card>
@@ -161,4 +207,5 @@ const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({ onToggle }) => {
 };
 
 export default UpdateProfileCard;
+
 

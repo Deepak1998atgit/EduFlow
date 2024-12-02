@@ -9,7 +9,7 @@ const api: AxiosInstance = axios.create({
 api.interceptors.request.use(
   (config) => {
     const tokenString = localStorage.getItem("accessToken");
-    console.log("token",tokenString);
+    console.log("token",tokenString,"api protect ");
     if (tokenString) {
       const token = JSON.parse(tokenString);
       config.headers.Authorization = `Bearer ${token.accessToken}`;
@@ -29,7 +29,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
+  
     // Check if the response status is 401 (unauthorized) and it's not a retry request
     if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -40,14 +40,15 @@ api.interceptors.response.use(
         token = JSON.parse(tokenString);
       }
       try {
-        const newAccessToken = await refreshTokenApi(token?.refreshToken);
-        localStorage.setItem(
-          "accessToken",
-          JSON.stringify({
-            accessToken: newAccessToken,
-          })
-        );
-        return api(originalRequest);
+        // const newAccessToken = await refreshTokenApi(token?.refreshToken);
+        // localStorage.setItem(
+        //   "accessToken",
+        //   JSON.stringify({
+        //     accessToken: newAccessToken,
+        //   })
+        // );
+        // return api(originalRequest);
+        console.log("refresh",tokenString)
       } catch (err) {
         return Promise.reject(err);
       }

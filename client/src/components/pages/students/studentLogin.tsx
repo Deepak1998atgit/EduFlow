@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { GoogleSignIn } from '../../common/googleAuth'
+import { GoogleSignIn } from '@/components/common-components/googleAuth';
 import { studentLoginValidationSchema } from "../../../validations/auth/studentLoginValidation";
 import { loginStudent } from "../../../api/endpoints/auth/student-auth";
 import { toast } from "react-toastify";

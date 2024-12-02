@@ -1,26 +1,74 @@
-import { useState } from 'react';
+import { useState } from "react";
+import { useFormik } from "formik";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { Card, CardBody, CardFooter, Typography, Input, Button } from "@material-tailwind/react";
 import { IoEyeOffSharp } from "react-icons/io5"; // Adjust icon imports as needed
+import { toast } from "react-toastify";
+import { PasswordInfo } from '@/api/types/student/student';
+import { PasswordValidationSchema } from '@/validations/student';
+import { changePassword } from "@/api/endpoints/student";
 
-export default function ChangePassword() {
-    const [passwordType, setPasswordType] = useState("password");
-    const [confirmPasswordType, setConfirmPasswordType] = useState("password");
-    const [newPassword, setNewPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleNewPasswordChange = (evnt: any) => {
-        setNewPassword(evnt.target.value);
+const ChangePasswordForm: React.FC = () => {
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+    const handleSubmit = async (passwordInfo: PasswordInfo) => {
+        try {
+              const response = await changePassword(passwordInfo);
+              response?.data?.status === "success" && formik.resetForm();
+              toast.success(response?.data?.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+              });
+        } catch (error: any) {
+            toast.error(error?.data?.message, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
+        }
     };
-    const handleConfirmPasswordChange = (evnt: any) => {
-        setConfirmPassword(evnt.target.value);
+
+    const formik = useFormik({
+        initialValues: {
+            currentPassword: "",
+            newPassword: "",
+            repeatPassword: "",
+        },
+        validationSchema: PasswordValidationSchema,
+        onSubmit: (values) => {
+            handleSubmit(values);
+        },
+    });
+
+    const togglePasswordVisibility = (field: string) => {
+        switch (field) {
+            case "currentPassword":
+                setShowCurrentPassword(!showCurrentPassword);
+                break;
+            case "newPassword":
+                setShowNewPassword(!showNewPassword);
+                break;
+            case "repeatPassword":
+                setShowRepeatPassword(!showRepeatPassword);
+                break;
+            default:
+                break;
+        }
     };
-    const toggleNewPassword = () => {
-        setPasswordType(prev => (prev === "password" ? "text" : "password"));
+
+    const getPasswordInputType = (field: string) => {
+        switch (field) {
+            case "currentPassword":
+                return showCurrentPassword ? "text" : "password";
+            case "newPassword":
+                return showNewPassword ? "text" : "password";
+            case "repeatPassword":
+                return showRepeatPassword ? "text" : "password";
+            default:
+                return "password";
+        }
     };
-    const toggleConfirmPassword = () => {
-        setConfirmPasswordType(prev => (prev === "password" ? "text" : "password"));
-    };
+
     return (
         <div className="flex col-span-4 md:col-span-4 lg:col-span-3  justify-center py-8">
             <Card className="w-full md:w-1/2 rounded-3xl h-fit">
@@ -28,48 +76,81 @@ export default function ChangePassword() {
                     <Typography variant="h5" color="blue-gray" className="text-center">
                         Change Password
                     </Typography>
-                    <form className="mt-6">
-                        <div className="mb-4">
-                            <label htmlFor="newPassword" className="block text-sm">Current Password</label>
+                    <form className="mt-6" onSubmit={formik.handleSubmit}>
+                        <div className=" relative">
+                            <label htmlFor="currentPassword" className="block text-sm">Current Password</label>
                             <Input
-                                id="newPassword"
-                                type={passwordType}
+                                type={getPasswordInputType("currentPassword")}
+                                name='currentPassword'
+                                id='floating_current_password'
                                 placeholder="Current password"
-                                crossOrigin="anonymous"
-                                value={newPassword}
-                                onChange={handleNewPasswordChange}
-                                className="focus:border-[#F48C06]  !border-[#F48C06] rounded-full focus:outline-none"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="newPassword" className="block text-sm">New Password</label>
-                            <Input
-                                id="newPassword"
-                                type={passwordType}
-                                placeholder="New password"
-                                crossOrigin="anonymous"
-                                value={newPassword}
-                                onChange={handleNewPasswordChange}
-                                className="focus:border-[#F48C06] !border-[#F48C06] rounded-full focus:outline-none"
-                            />
-                        </div>
-                        <div className="mb-4 relative">
-                            <label htmlFor="confirmPassword" className="block text-sm">Confirm Password</label>
-                            <Input
-                                id="confirmPassword"
-                                type={confirmPasswordType}
-                                placeholder="Confirm your password"
-                                crossOrigin="anonymous"
-                                value={confirmPassword}
-                                onChange={handleConfirmPasswordChange}
-                                className="focus:border-[#F48C06] !border-[#F48C06] rounded-full focus:outline-none"
+                                value={formik?.values?.currentPassword}
+                                onChange={formik?.handleChange}
+                                onBlur={formik?.handleBlur}
+                                crossOrigin={undefined}
+                                className={`focus:border-[#F48C06] ${formik.touched.currentPassword && formik.errors.currentPassword ? "!border-red-500" : "!border-[#F48C06]"}  rounded-full focus:outline-none`}
                             />
                             <button
                                 type="button"
                                 className="absolute right-4 top-8"
-                                onClick={toggleConfirmPassword}
+                                onClick={() => togglePasswordVisibility("currentPassword")}
                             >
-                                {confirmPasswordType === "password" ? <IoEyeOffSharp /> : <MdOutlineRemoveRedEye />}
+                                {showCurrentPassword ? <IoEyeOffSharp /> : <MdOutlineRemoveRedEye />}
+                            </button>
+                        </div>
+                        {formik.touched.currentPassword && formik.errors.currentPassword && (
+                            <div className='text-red-500 text-xs'>
+                                {formik.errors.currentPassword}
+                            </div>
+                        )}
+                        <div className=" relative">
+                            <label htmlFor="confirmPassword" className="block text-sm">New Password</label>
+                            <Input
+                                name='newPassword'
+                                type={getPasswordInputType("newPassword")}
+                                id='floating_password'
+                                value={formik.values.newPassword}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                crossOrigin={undefined}
+                                className={`focus:border-[#F48C06] ${formik.touched.newPassword && formik.errors.newPassword ? "!border-red-500" : "!border-[#F48C06]"}  rounded-full focus:outline-none`}
+                            />
+                            <button
+                                type="button"
+                                className="absolute right-4 top-8"
+                                onClick={() => togglePasswordVisibility("newPassword")}
+                            >
+                                {showNewPassword ? <IoEyeOffSharp /> : <MdOutlineRemoveRedEye />}
+                            </button>
+                        </div>
+                        {formik.touched.newPassword && formik.errors.newPassword && (
+                            <div className='text-red-500 text-xs mt-1'>
+                                {formik.errors.newPassword}
+                            </div>
+                        )}
+                        <div className=" relative">
+                            <label htmlFor="confirmPassword" className="block text-sm">Confirm New Password</label>
+                            <Input
+                                type={getPasswordInputType("repeatPassword")}
+                                name='repeatPassword'
+                                id='floating_repeat_password'
+                                value={formik.values.repeatPassword}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                crossOrigin={undefined}
+                                className={`focus:border-[#F48C06] ${formik.touched.repeatPassword && formik.errors.repeatPassword ? "!border-red-500" : "!border-[#F48C06]"}  rounded-full focus:outline-none`}
+                            />
+                            {formik.touched.repeatPassword && formik.errors.repeatPassword && (
+                                <div className='text-red-500 text-xs mt-1'>
+                                    {formik.errors.repeatPassword}
+                                </div>
+                            )}
+                            <button
+                                type="button"
+                                className="absolute right-4 top-8"
+                                onClick={() => togglePasswordVisibility("repeatPassword")}
+                            >
+                                {showRepeatPassword ? <IoEyeOffSharp /> : <MdOutlineRemoveRedEye />}
                             </button>
                         </div>
                         <CardFooter className="pt-0">
@@ -86,3 +167,6 @@ export default function ChangePassword() {
         </div>
     );
 }
+
+
+export default ChangePasswordForm;

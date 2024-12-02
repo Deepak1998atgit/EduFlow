@@ -7,8 +7,8 @@ const decodedToken = decodeJwtToken(accessToken??"");
 
 const initialState = {
   data: {
-    accessToken:accessToken,
-    refreshToken,
+    accessToken:accessToken || "",
+    refreshToken:refreshToken || ""
   },
   isLoggedIn: accessToken ? true : false,
   userType:decodedToken?.payload?.role
@@ -28,6 +28,7 @@ const authSlice = createSlice({
           accessToken: action.payload.accessToken,
         })
       );
+      console.log("refresh",action.payload.refreshToken,"refresh")
       localStorage.setItem(
         "refreshToken",
         JSON.stringify({
@@ -50,6 +51,7 @@ const authSlice = createSlice({
       localStorage.removeItem("refreshToken");
       state.isLoggedIn = false;
       state.userType=""
+      
     },
   },
 });

@@ -74,16 +74,18 @@ const authController = (
     //STUDENT LOGIN
     const loginStudent = asyncHandler(async (req: Request, res: Response) => {
         const { email, password }: { email: string; password: string } = req.body;
-        const { accessToken } = await studentLogin(
+        const { accessToken , refreshToken } = await studentLogin(
             email,
             password,
             dbRepositoryUser,
+            dbRepositoryRefreshToken,
             authService,
         ) ?? {};
         res.status(200).json({
             status: 'success',
             message: 'User logged in successfully',
-            accessToken
+            accessToken,
+            refreshToken
         });
     });
 

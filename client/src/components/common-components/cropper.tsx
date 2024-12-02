@@ -28,8 +28,7 @@ const CropperComponent: React.FC<CropperComponentProps> = ({ image, onCrop }) =>
       if (cropperRef.current?.cropper && typeof cropperRef.current?.cropper !== "undefined") {
         const canvas = await cropperRef?.current?.cropper?.getCroppedCanvas();
         if (canvas) {
-          const croppedImage = canvas.toDataURL(); // Get the cropped image as a Data URL
-          console.log("Cropped Image:", croppedImage);
+          const croppedImage = canvas.toDataURL(); 
           await onCrop(croppedImage); // Send cropped image and original file name
         }
       }

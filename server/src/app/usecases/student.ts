@@ -2,8 +2,10 @@ import { StudentsDbInterface } from '../repositories/studentDbRepository';
 import AppError from '../../utils/appError';
 import HttpStatusCodes from '../../constants/HttpStatusCodes';
 import { AuthServiceInterface } from '../services/authServicesInterface';
+import { CloudServiceInterface } from '../services/cloudServiceInterface';
 import {
   StudentInterface,
+  StudentUpdateInfo
 } from '../../types/studentInterface';
 
 export const changePasswordU = async (
@@ -48,3 +50,53 @@ export const changePasswordU = async (
 };
 
 
+export const getStudentDetailsU = async (
+  id: string | undefined,
+  cloudService: ReturnType<CloudServiceInterface>,
+  studentDbRepository: ReturnType<StudentsDbInterface>
+) => {
+  if (!id) {
+    throw new AppError(
+      'Please provide a valid student id',
+      HttpStatusCodes.BAD_REQUEST
+    );
+  }
+  const studentDetails: StudentInterface | null =
+    await studentDbRepository.getStudent(id);
+  if (studentDetails?.profilePic?.key) {
+    studentDetails.profilePic.url = await cloudService.getFile(
+      studentDetails.profilePic.key
+    );
+  }
+  if (studentDetails) {
+    studentDetails.password = 'no password';
+  }
+  
+  return studentDetails;
+};
+
+
+export const updateProfileU = async (
+  id: string | undefined,
+  studentInfo: StudentUpdateInfo,
+  profilePic: Express.Multer.File,
+  cloudService: ReturnType<CloudServiceInterface>,
+  studentDbRepository: ReturnType<StudentsDbInterface>
+) => {
+  if (!id) {
+    throw new AppError('Invalid student', HttpStatusCodes.BAD_REQUEST);
+  }
+  if (Object.keys(studentInfo).length === 0) {
+    throw new AppError(
+      'At least update a single field',
+      HttpStatusCodes.BAD_REQUEST
+    );
+  }
+  if (profilePic) {
+    const response = await cloudService.upload(profilePic);
+    console.log(response)
+    studentInfo.profilePic = response;
+  }
+  console.log(studentInfo.profilePic)
+  await studentDbRepository.updateProfile(id, studentInfo);
+};

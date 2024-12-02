@@ -6,6 +6,7 @@ import AppError from '../../../utils/appError';
 import HttpStatusCodes from '../../../constants/HttpStatusCodes';
 import { GoogleAuthServiceInterface } from '../../../app/services/googleAuthServicesInterface';
 import { NodemailerServiceInterface } from '../../services/nodeMailerServiceInterface';
+import { RefreshTokenDbInterface } from '../../../app/repositories/refreshTokenDBRepository';
 
 
 //STUDENT REGISTRATION
@@ -38,6 +39,7 @@ export const studentLogin = async (
   email: string,
   password: string,
   studentRepository: ReturnType<StudentsDbInterface>,
+  refreshTokenRepository: ReturnType<RefreshTokenDbInterface>,
   authService: ReturnType<AuthServiceInterface>
 ) => {
   const student: StudentInterface | null =
@@ -61,15 +63,24 @@ export const studentLogin = async (
       HttpStatusCodes.FORBIDDEN
     );
   }
-  if(student){
-      const payload = {
-        Id: student._id,
-        email:student.email,
-        name:student?.name,
-        role: 'student',
-      };
-      let accessToken= authService.generateToken(payload);
-      return { accessToken };
+  if (student) {
+    const payload = {
+      Id: student._id,
+      email: student.email,
+      name: student?.name,
+      role: 'student',
+    };
+    await refreshTokenRepository.deleteRefreshToken(student._id);
+    let accessToken = authService.generateToken(payload);
+    const refreshToken = authService.generateRefreshToken(payload);
+    const expirationDate =
+      authService.decodedTokenAndReturnExpireDate(refreshToken);
+    await refreshTokenRepository.saveRefreshToken(
+      student._id,
+      refreshToken,
+      expirationDate
+    );
+    return { accessToken , refreshToken};
   }
 
 };
@@ -122,7 +133,7 @@ export const signInWithGoogleByStudent = async (
 
       };
       accessToken = authService.generateToken(payload);
-     
+
     }
   }
   return { accessToken };
@@ -136,7 +147,7 @@ export const sendOTP = async (
   studentRepository: ReturnType<StudentsDbInterface>,
   authService: ReturnType<AuthServiceInterface>
 ) => {
-  
+
   if (!phoneNumber) {
     throw new AppError(
       "Phone number field cannot be empty",
@@ -144,7 +155,7 @@ export const sendOTP = async (
     );
   }
 
-  const user: StudentInterface  | null =
+  const user: StudentInterface | null =
     await studentRepository.getStudentByPhoneNumber(phoneNumber);
   if (!user) {
     throw new AppError(
@@ -168,14 +179,14 @@ export const verifyOTP = async (
     throw new AppError("Please provide a valid OTP", HttpStatusCodes.UNAUTHORIZED);
   }
   const verification = await authService.verifyOTP(phoneNumber, otp);
-  if ( verification !== "approved") {
+  if (verification !== "approved") {
     throw new AppError(
       "OTP does not match, Please provide a valid OTP",
       HttpStatusCodes.UNAUTHORIZED
     );
   }
   const user: StudentInterface | null =
-  await studentRepository.getStudentByPhoneNumber(phoneNumber);
+    await studentRepository.getStudentByPhoneNumber(phoneNumber);
   const applicantId = user?._id;
   if (!user) {
     throw new AppError("this user doesn't exist", HttpStatusCodes.UNAUTHORIZED);
@@ -184,18 +195,18 @@ export const verifyOTP = async (
 
 
 
-export const changePasswordAfterForgotU= async (
+export const changePasswordAfterForgotU = async (
   phoneNumber: string,
-  password:string,
+  password: string,
   studentRepository: ReturnType<StudentsDbInterface>,
   authService: ReturnType<AuthServiceInterface>
 ) => {
   const user: StudentInterface | null =
-  await studentRepository.getStudentByPhoneNumber(phoneNumber);
+    await studentRepository.getStudentByPhoneNumber(phoneNumber);
   if (!user) {
     throw new AppError("this user doesn't exist", HttpStatusCodes.UNAUTHORIZED);
   }
-  const hashedPassword = await authService.hashPassword(password); 
+  const hashedPassword = await authService.hashPassword(password);
   await studentRepository.changePassword(user._id, hashedPassword);
 };
 

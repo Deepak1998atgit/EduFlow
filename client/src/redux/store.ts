@@ -4,6 +4,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { instructorReducer } from "./reducers/instructorSlice";
 import { courseReducer } from "./reducers/courseSlice";
+import {studentReducer} from "./reducers/studentSlice.tsx"
 
 const persistConfig = {
   key: 'root', // Key to use for storing data in storage
@@ -13,6 +14,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, combineReducers({
   auth: authReducer,
+  student: studentReducer,
   instructor: instructorReducer,
   course:courseReducer
 }));

@@ -1,5 +1,6 @@
 import { StudentRepositoryMongoDB } from '../../frameworks/database/mongodb/repositories/studentsRepoMongoDb';
-import { StudentRegisterInterface } from '../../types/studentRegisterInterface';
+import { StudentRegisterInterface} from '../../types/studentRegisterInterface';
+import { StudentUpdateInfo } from '@src/types/studentInterface';
 
 
 export const studentDbRepository = (
@@ -22,6 +23,9 @@ export const studentDbRepository = (
     
     const getStudentByPhoneNumber = async (phoneNumber: string) =>
     await repository.getStudentByPhoneNumber(phoneNumber);
+
+    const updateProfile = async (id: string, studentInfo: StudentUpdateInfo) =>
+    await repository.updateProfile(id, studentInfo);
     
       
 
@@ -32,6 +36,7 @@ export const studentDbRepository = (
         changePassword,
         getStudentByEmail,
         getStudentByPhoneNumber,
+        updateProfile 
         
     };
 

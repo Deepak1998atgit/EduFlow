@@ -1,11 +1,18 @@
-import { Card, Typography, List, Input, ListItem, ListItemPrefix, CardBody, Button } from "@material-tailwind/react";
+import { Card, Typography, CardBody, Button } from "@material-tailwind/react";
 import { motion } from "framer-motion";
+import { useSelector} from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import {
+    selectStudent
+} from "../../../../redux/reducers/studentSlice";
 const ProfileCard = ({ onToggle ,isShowComponent}: { onToggle: () => void ,isShowComponent:Boolean }) => {
+
+    const studentInfo = useSelector(selectStudent)?.studentDetails;
     const user = {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com',
-        image: 'https://via.placeholder.com/100', // Replace with your image URL
+        name:studentInfo?.name,
+        email:studentInfo?.email,
+        mobile:studentInfo?.mobile,
+        image:studentInfo?.profilePic?.url, // Replace with your image URL
     };
     const handleClick = () => {
         onToggle();
@@ -112,15 +119,18 @@ const ProfileCard = ({ onToggle ,isShowComponent}: { onToggle: () => void ,isSho
                 <Card className="md:w-1/2 w-full  lg:w-1/2 rounded-3xl h-auto">
                     <CardBody className="flex  flex-col items-center gap-y-2">
                         <img
-                            src="https://interactive-examples.mdn.mozilla.net/media/examples/plumeria-146x200.jpg"
-                            alt={`${user.firstName} ${user.lastName}`}
+                            src={user?.image}
+                            alt={user?.name}
                             className="rounded-full mb-4 w-36 h-36 object-cover"
                         />
                         <Typography variant="h5" className="text-center">
-                            Name: {user.firstName} {user.lastName}
+                            Name: {user?.name}
                         </Typography>
                         <Typography variant="small" className="text-gray-600 text-center">
-                            Email: {user.email}
+                            Email: {user?.email}
+                        </Typography>
+                        <Typography variant="small" className="text-gray-600 text-center">
+                            Phone: {user?.mobile}
                         </Typography>
                         <Button onClick={handleClick} variant="filled" className="w-1/2  bg-[#49BBBD]">
                             Update Profiles
