@@ -31,7 +31,7 @@ api.interceptors.response.use(
     const originalRequest = error.config;
   
     // Check if the response status is 401 (unauthorized) and it's not a retry request
-    if (error?.response?.status === 401 && !originalRequest._retry) {
+    if (error?.response?.status === 401 && !originalRequest._retry){
       originalRequest._retry = true;
 
       const tokenString = localStorage.getItem("refreshToken");
@@ -40,15 +40,14 @@ api.interceptors.response.use(
         token = JSON.parse(tokenString);
       }
       try {
-        // const newAccessToken = await refreshTokenApi(token?.refreshToken);
-        // localStorage.setItem(
-        //   "accessToken",
-        //   JSON.stringify({
-        //     accessToken: newAccessToken,
-        //   })
-        // );
-        // return api(originalRequest);
-        console.log("refresh",tokenString)
+        const newAccessToken = await refreshTokenApi(token?.refreshToken);
+        localStorage.setItem(
+          "accessToken",
+          JSON.stringify({
+            accessToken: newAccessToken, 
+          })
+        );
+        return api(originalRequest);
       } catch (err) {
         return Promise.reject(err);
       }
@@ -58,7 +57,7 @@ api.interceptors.response.use(
     if (error?.response?.status === 403) {
       window.dispatchEvent(new Event("sessionExpired"));
       localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      // localStorage.removeItem("refreshToken");
     }
 
     return Promise.reject(error);

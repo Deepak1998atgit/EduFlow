@@ -31,4 +31,5 @@ export const refreshTokenRepositoryMongoDB = () => {
   };
 };
 
-export type RefreshTokenRepositoryMongoDb = typeof refreshTokenRepositoryMongoDB;
+export type RefreshTokenRepositoryMongoDb =
+  typeof refreshTokenRepositoryMongoDB;

@@ -18,8 +18,8 @@ const refreshTokenController = (
 
     const refreshToken = asyncHandler(async(req:Request,res:Response)=>{
         let refreshToken = req.body.refreshToken
-        
         const response = await refreshTokenU(refreshToken,dbRepositoryRefreshToken,authService)
+        console.log(response,"refreh token created")
         res.status(200).json({
             status:'success',
             message:'Successfully refreshed token',

@@ -23,8 +23,7 @@ export interface StudentInterface {
 }
 
 export interface StudentUpdateInfo {
-    firstName?: string;
-    lastName?: string;
+    name?: string;
     email?: string;
     mobile?: string;
     profilePic?: {

@@ -13,6 +13,7 @@ import useIsOnline from "./hooks/useOnline";
 import ScrollToTopButton from "./components/common-components/ScrollToTopButton";
 import InstructorSideNav from "./components/pages/instructors/instructor-sidebar";
 import InstructorHeader from "./components/layouts/instructor-header";
+import SessionExpired from "./components/common-components/session-expired-modal";
 
 
 
@@ -21,18 +22,38 @@ import InstructorHeader from "./components/layouts/instructor-header";
 
 export const Student = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [showSessionExpired, setShowSessionExpired] = useState(false);
   const isOnline = useIsOnline();
+  const handleCloseSessionExpired = () => {
+    setShowSessionExpired(false);
+  };
+  // Listen for the "sessionExpired" event from the interceptor
+  useEffect(() => {
+    const handleSessionExpired = () => {
+      setShowSessionExpired(true);
+    };
+    window.addEventListener("sessionExpired", handleSessionExpired);
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("sessionExpired", handleSessionExpired);
+    };
+  }, []);
+
   return (
     <>
+      {showSessionExpired && (
+        <SessionExpired
+          show={showSessionExpired}
+          onClose={handleCloseSessionExpired}
+        />
+      )}
       {
         isOnline && (
           <>
-
             <StudentHeader />
             <StairTransition />
             <Outlet />
             <ScrollToTopButton />
-
           </>
         )
       }
@@ -53,13 +74,13 @@ export const Instructor = () => {
   if (!isLoggedIn || user !== "instructor") {
     return null;
   }
-  useEffect(()=>{ navigate(`/instructor/?sidebar=${sideBarOption}&subSidebar=${subSidebarTitle}`);},[sideBarOption,subSidebarTitle])
+  useEffect(() => { navigate(`/instructor/?sidebar=${sideBarOption}&subSidebar=${subSidebarTitle}`); }, [sideBarOption, subSidebarTitle])
   return (
     <div className="grid grid-cols-12">
       <InstructorSideNav onSidebarClick={handleSidebarClick} onSubSideBarClick={setSubSidebarTitle} />
       <div className="col-span-9 overflow-y-scroll no-scrollbar">
-      <InstructorHeader />
-      <Outlet />
+        <InstructorHeader />
+        <Outlet />
       </div>
     </div>
   );
@@ -69,7 +90,7 @@ export const Instructor = () => {
 export const Admin = () => {
   return (
     <>
-      <Outlet />
+      <Outlet/>
     </>
   )
 }

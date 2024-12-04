@@ -1,8 +1,10 @@
-import React from 'react';
+import React,{useEffect}from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector } from "react-redux";
-import { selectStudent } from '@/redux/reducers/studentSlice';
+import { useSelector, useDispatch  } from "react-redux";
+import {fetchStudentData,selectStudent } from '@/redux/reducers/studentSlice';
+import { AppDispatch } from "@/redux/store";
+
 
 import { faHome, faUsers, faAddressBook, faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -20,9 +22,12 @@ const Links = [
 ];
 
 const StudentNav: React.FC = () => {
-    const student = useSelector(selectStudent);
+    const dispatch = useDispatch<AppDispatch>();
+    const studentInfo = useSelector(selectStudent)?.studentDetails;
     const location = useLocation();
-    console.log(student,"student data check")
+    useEffect(() => {
+        dispatch(fetchStudentData());
+    }, []);
 
     return (
         <>
@@ -42,13 +47,13 @@ const StudentNav: React.FC = () => {
                         variant="circular"
                         alt="image"
                         className="cursor-pointer rounded-full bg-white"
-                        src={student.studentDetails?.profilePic?.url || "/user-default.svg"}
+                        src={studentInfo?.profilePic?.url || "/user-default.svg"}
                         placeholder={undefined}
                         onPointerEnterCapture={undefined}
                         onPointerLeaveCapture={undefined}
                     />
                 </Tooltip>
-                <Typography className="text-white text-[12px]">{student?.studentDetails?.name}</Typography>
+                <Typography className="text-white text-[12px]">{studentInfo?.name}</Typography>
             </Link>
 
         </>

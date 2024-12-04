@@ -17,7 +17,7 @@ const CourseCalendar = () => {
         profile: <UserProfileContainer isShowComponent={isShowComponent} />,
         changepassword: <ChangePassword />,
         wallet: <Wallet isShowComponent={isShowComponent} />,
-        quiz: <Quizzes isShowComponent={isShowComponent} />,
+        quiz: <Quizzes />,
         chat: <ChatPage isShowComponent={isShowComponent} />,
     };
     return (

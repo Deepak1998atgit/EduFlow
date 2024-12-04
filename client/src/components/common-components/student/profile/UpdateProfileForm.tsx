@@ -33,8 +33,11 @@ interface UpdateProfileCardProps {
 const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({ onToggle }) => {
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const dispatch = useDispatch<AppDispatch>();
+    const [updated, setUpdated] = useState(false);
     const studentInfo = useSelector(selectStudent)?.studentDetails;
-
+    useEffect(() =>{
+        dispatch(fetchStudentData());
+      }, [updated]);
     const formik = useFormik<UpdateProfileInfo>({
         initialValues: {
             email: studentInfo?.email || "",
@@ -60,7 +63,7 @@ const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({ onToggle }) => {
                 console.log("Submitted values:", values);
                 const formData = new FormData();
                 formData.append("email", values.email || "");
-                formData.append("firstName", values.name || "");
+                formData.append("name", values.name || "");
                 formData.append("mobile", values.mobile || "");
                 if (values.profilePic) {
                     formData.append("image", values.profilePic || "");
@@ -68,6 +71,7 @@ const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({ onToggle }) => {
                 const response = await updateProfile(formData);
                 // formik.resetForm();
                 setPreviewImage(null);
+                setUpdated(!updated);
                 toast.success(response?.data?.message, {
                     position: toast.POSITION.BOTTOM_RIGHT,
                 });
@@ -92,11 +96,6 @@ const UpdateProfileCard: React.FC<UpdateProfileCardProps> = ({ onToggle }) => {
             formik.setFieldValue("profilePic", null);
         }
     };
-
-    useEffect(() => {
-        dispatch(fetchStudentData());
-    }, [dispatch]);
-
     return (
         <Card className="lg:w-1/2 md:w-1/2 w-full h-fit">
             <form onSubmit={formik.handleSubmit}>

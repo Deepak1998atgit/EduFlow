@@ -4,15 +4,16 @@ import StudentNav from "./student-nav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { clearToken } from "../../redux/reducers/authSlice";
 import { useNavigate } from "react-router-dom";
 import { persistor } from "@/redux/store";
 
 
+
 const StudentHeader: React.FC = () => {
     const dispatch = useDispatch();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,15 +21,13 @@ const StudentHeader: React.FC = () => {
         setIsOpen(!isOpen);
     };
     const handleLogout = () => {
-        setTimeout(() => {
-            dispatch(clearToken());
-            persistor.purge();
-            navigate("/");
-        }, 2000)
+        dispatch(clearToken());
+        persistor.purge();
+        navigate("/");
     };
     return (
         <>
-            <header className="fixed py-5 bg-[#49BBBD]  w-screen z-50    xl:h-30">
+            <header className="fixed py-5 bg-[#49BBBD]  w-screen z-50 xl:h-30">
                 <div className="container mx-4 flex justify-between">
                     <img className="h-14  ml-10" src="./icon.png" />
                     <div className="hidden xl:flex gap-8 items-center">
@@ -46,7 +45,7 @@ const StudentHeader: React.FC = () => {
                             <Description className="font-bold">Are you sure you want to log out?</Description>
                             <p className="text-slate-600">You will need to sign back in to access your account!!</p>
                             <div className="flex gap-4 text-white">
-                                <button className="bg-[#49BBBD] rounded-2xl h-12 w-1/2" onClick={() =>{handleLogout(),setIsModalOpen(false)}}>Logout</button>
+                                <button className="bg-[#49BBBD] rounded-2xl h-12 w-1/2" onClick={() => { handleLogout(), setIsModalOpen(false) }}>Logout</button>
                                 <button className="bg-[#49BBBD] rounded-2xl w-1/3 text-red" onClick={() => setIsModalOpen(false)}>Cancel</button>
                             </div>
                         </DialogPanel>

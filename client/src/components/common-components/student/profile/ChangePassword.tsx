@@ -109,6 +109,7 @@ const ChangePasswordForm: React.FC = () => {
                                 name='newPassword'
                                 type={getPasswordInputType("newPassword")}
                                 id='floating_password'
+                                placeholder="New password"
                                 value={formik.values.newPassword}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -138,6 +139,7 @@ const ChangePasswordForm: React.FC = () => {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 crossOrigin={undefined}
+                                placeholder="Repeat Password"
                                 className={`focus:border-[#F48C06] ${formik.touched.repeatPassword && formik.errors.repeatPassword ? "!border-red-500" : "!border-[#F48C06]"}  rounded-full focus:outline-none`}
                             />
                             {formik.touched.repeatPassword && formik.errors.repeatPassword && (

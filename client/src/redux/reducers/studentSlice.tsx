@@ -55,15 +55,16 @@ const studentSlice = createSlice({
         });
         builder.addCase(fetchStudentData.fulfilled, (state, action) => {
             state.isFetching = false;
+            console.log("fetched the addcase")
             state.studentDetails = action.payload;
         });
         builder.addCase(fetchStudentData.rejected, (state, action) => {
             state.isFetching = false;
             state.error = action.error.message || "Failed to fetch student data";
         });
-        // builder.addCase(PURGE, (state) => {
-        //     state.studentDetails  = initialState.studentDetails;  // Reset stuent data on purge
-        // });
+        builder.addCase(PURGE, (state) => {
+            state.studentDetails  = initialState.studentDetails;  // Reset stuent data on purge
+        });
     }
 });
 

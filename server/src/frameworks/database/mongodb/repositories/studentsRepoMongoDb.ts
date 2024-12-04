@@ -40,13 +40,13 @@ export const studentRepositoryMongoDB = () => {
     };
 
     const updateProfile = async (id: string, studentInfo: StudentUpdateInfo) => {
-        console.log("ok",studentInfo,"ok")
+        console.log("ok",studentInfo,"ok","id",id)
       const query=  await Student.updateOne(
-            { _id: new mongoose.Types.ObjectId(id) },
+            { _id:new mongoose.Types.ObjectId(id)},
             { ...studentInfo }
         );
         const student = await Student.find({_id: new mongoose.Types.ObjectId(id) })
-       console.log(query,student);
+       console.log(query,"uu", student,"ii");
     };
 
 
