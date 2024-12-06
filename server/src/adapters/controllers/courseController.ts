@@ -74,7 +74,7 @@ const courseController = (
 
 
   const getAllCourses = asyncHandler(async (req: Request, res: Response) => {
-    console.log("not cached")
+    console.log("not cached in to course db")
     const courses = await getAllCourseU(cloudService, dbRepositoryCourse);
     const cacheOptions = {
       key: `all-courses`,

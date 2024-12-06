@@ -45,12 +45,22 @@ export const courseRepositoryMongodb = () => {
 
   }
 
+
+  const getAmountByCourseId = async (courseId: string) => {
+    const amount = await Course.findOne(
+      { _id: new mongoose.Types.ObjectId(courseId)},
+      { price: 1 }
+    );
+    return amount;
+  };
+
   return {
     addCourse,
     getAllCourse,
     getCourseByInstructorId,
     getCourseById,
-    deleteCourseById
+    deleteCourseById,
+    getAmountByCourseId 
   };
 };
 

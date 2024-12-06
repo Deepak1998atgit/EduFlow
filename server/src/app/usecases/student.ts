@@ -55,6 +55,7 @@ export const getStudentDetailsU = async (
   cloudService: ReturnType<CloudServiceInterface>,
   studentDbRepository: ReturnType<StudentsDbInterface>
 ) => {
+  console.log("not cached in to student db")
   if (!id) {
     throw new AppError(
       'Please provide a valid student id',

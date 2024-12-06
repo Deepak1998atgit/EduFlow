@@ -28,6 +28,7 @@
     "node": "^22.6.0",
     "redis": "^4.6.15",
     "streamifier": "^0.1.1",
+    "stripe": "^17.4.0",
     "twilio": "^4.19.0"
   },
   "devDependencies": {
@@ -42,6 +43,7 @@
     "@types/node": "^20.14.15",
     "@types/nodemailer": "^6.4.14",
     "@types/streamifier": "^0.1.2",
+    "@types/stripe": "^8.0.417",
     "@types/twilio": "^3.19.3",
     "nodemailer": "^6.9.7",
     "nodemon": "^3.1.4",

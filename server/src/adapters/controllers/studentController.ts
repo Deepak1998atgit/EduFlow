@@ -67,7 +67,7 @@ const studentController = (
         expireTimeSec: 600,
         data: JSON.stringify(studentDetails)
       };
-      // await dbRepositoryCache.setCache(cacheOptions);
+      await dbRepositoryCache.setCache(cacheOptions);
       res.status(200).json({
         status: 'success',
         message: 'Successfully retrieved student details',

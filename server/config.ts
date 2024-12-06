@@ -30,7 +30,12 @@ const configKeys = {
     
     FROM_EMAIL_NODE_MAILER:process.env.FROM_EMAIL as string,
 
-    REDIS_URL:process.env.REDIS_URL as string
+    REDIS_URL:process.env.REDIS_URL as string,
+    
+    STRIPE_SECRET_KEY:process.env.STRIPE_SECRET_KEY  as string,
+
+    STRIPE_PUBLISHABLE_KEY:process.env.STRIPE_PUBLISHABLE_KEY as string
+
 }
 
 export default configKeys;

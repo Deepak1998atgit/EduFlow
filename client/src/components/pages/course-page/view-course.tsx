@@ -1,5 +1,5 @@
 import { FaPlay, FaAngleRight, FaAngleUp } from "react-icons/fa";
-import { FcComboChart,FcCustomerSupport,FcSpeaker} from "react-icons/fc";
+import { FcComboChart, FcCustomerSupport, FcSpeaker } from "react-icons/fc";
 import { useRef, useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import { toast } from "react-toastify";
@@ -8,16 +8,24 @@ import { useParams } from "react-router-dom";
 import { CourseInterface } from "@/types/course";
 import { getIndividualCourse } from "@/api/endpoints/course/course";
 import { getLessonsByCourse } from "../../../api/endpoints/course/lesson";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setCourse } from "@/redux/reducers/courseSlice";
 import { getIndividualInstructors } from "@/api/endpoints/instructor-management";
 import useTimeAgo from "@/hooks/useTimeAgo";
+import { selectIsLoggedIn } from "../../../redux/reducers/authSlice";
+import { selectStudentId } from "../../../redux/reducers/studentSlice";
+import {useNavigate} from "react-router-dom"
 const ViewCourseStudent: React.FC = () => {
+    const navigate=useNavigate();
     const videoRef = useRef<HTMLVideoElement>(null);
     const dispatch = useDispatch();
-    const calculateTimeAgo=useTimeAgo();
+    const studentId = useSelector(selectStudentId);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const calculateTimeAgo = useTimeAgo();
     const [isPlaying, setIsPlaying] = useState(false);
     const [isOpenIndex, setIsOpenIndex] = useState<number | null>(null);
+    const [loginConfirmation, setLoginConfirmation] = useState(false);
+    const [openPaymentConfirmation, setOpenPaymentConfirmation]=useState<boolean>(false);
     const [isOpen, setIsOpen] = useState(false)
     const params = useParams();
     const courseId: string | undefined = params.courseId;
@@ -43,6 +51,14 @@ const ViewCourseStudent: React.FC = () => {
             throw error;
         }
     };
+    const handleEnroll = () => {
+        if (!isLoggedIn) {
+          setLoginConfirmation(true);
+          alert("not logged in please log in");
+        } else {
+          setOpenPaymentConfirmation(true);
+        }
+      };
     console.log("courseId", courseId, "courseId")
     const { data, isLoading, refreshData } = useApiData(fetchCourse, courseId);
     const { data: lessons, isLoading: isLessonsLoading } = useApiData(
@@ -51,6 +67,7 @@ const ViewCourseStudent: React.FC = () => {
     );
     console.log("data of lesson", "coursejj", lessons, "course")
     const course: CourseInterface | null = data;
+    const enrolled = course?.coursesEnrolled.includes(studentId ?? "");
     course && dispatch(setCourse({ course }));
     const instructorId: string | undefined = course?.instructorId;
     const fetchInstructorDetails = async (instructorId: string) => {
@@ -70,7 +87,7 @@ const ViewCourseStudent: React.FC = () => {
         fetchInstructorDetails,
         instructorId
     );
-    console.log("instructor", instructor, "instructor")
+    console.log("instructor", instructor, "instructor",studentId,isLoggedIn)
     // const randomArrayGeneratorForLesson = Array.from({ length:lessons.length }, (_, index) => index);
     const itemVariants: Variants = {
         open: {
@@ -155,6 +172,7 @@ const ViewCourseStudent: React.FC = () => {
     if (!lessons || lessons.length === 0 || !instructor || instructor?.length === 0) {
         return <div>No datas available</div>;
     }
+    openPaymentConfirmation && course?.isPaid && navigate(`/courses/${courseId}/payment`);
     return (
         <main className="w-full pt-20">
             <section className="w-full lg:flex p-10  md:flex-row lg:h-72 gap-2">
@@ -194,8 +212,8 @@ const ViewCourseStudent: React.FC = () => {
                                 <div className="ml-2 text-sm  font-thin flex  w-full  leading-9">
                                     <div className="w-full flex mt-3 gap-6
                                 ">
-                                        <p><span className="customfontforsmallheadding flex"><FcCustomerSupport/>{instructor ? `${instructor?.data?.firstName} ${instructor?.data?.lastName}`:null}</span></p>
-                                        <p> <span className="customfontforsmallheadding fle"><FcSpeaker/> {calculateTimeAgo(course?.createdAt as string)}</span></p> 
+                                        <p><span className="customfontforsmallheadding flex"><FcCustomerSupport />{instructor ? `${instructor?.data?.firstName} ${instructor?.data?.lastName}` : null}</span></p>
+                                        <p> <span className="customfontforsmallheadding fle"><FcSpeaker /> {calculateTimeAgo(course?.createdAt as string)}</span></p>
                                         <p> <span className="customfontforsmallheadding "><span className="flex gap-1"><FcComboChart />{course?.level}</span></span></p>
 
                                     </div>
@@ -206,7 +224,9 @@ const ViewCourseStudent: React.FC = () => {
                                 <p> <span className="ml-2 h3">{course?.price}/-</span></p>
                                 <div className="flex items-center justify-center w-full">
                                     <button
-                                        className="bg-[#B1E1B5] h-10  absolute bottom-0  w-2/3"><span className="text-sm font-light">ENROLL NOW</span></button>
+                                        disabled={enrolled}
+                                        onClick={handleEnroll}
+                                        className="bg-[#B1E1B5] h-10  absolute bottom-0  w-2/3"><span className="text-sm font-light">{enrolled ? 'ENROLLED' : 'ENROLL NOW'}</span></button>
                                 </div>
                                 <div className="absolute -bottom-2 -left-2 w-4/5  -z-10 rounded-xl bg-[#D6EFD8] h-52">
                                 </div>
