@@ -6,6 +6,7 @@ import AddCategory from "../components/pages/categories/add-category";
 import StripeContainer from "@/components/pages/payment/payment-container.tsx";
 
 
+
 //STUDENTS
 const LazyStudentLogin = lazy(
   () => import("../components/pages/students/studentLogin")
@@ -65,6 +66,11 @@ const LazyViewCorse = lazy(
 
 const LazyViewCheckout = lazy(
   () => import("../components/pages/checkout/view-checkout")
+)
+
+
+const LazyPaymentSuccessPage=lazy(
+  ()=>import("../components/pages/payment/payment-success-page")
 )
 
 
@@ -193,14 +199,14 @@ export const router = createBrowserRouter([
         )
       },
       {
-        path: "courses/:courseId/payment",
+        path: "course/:courseId/payment",
         element: <StripeContainer />,
       },
       {
-        path: "/checkout",
+        path: "/course/:courseId/payment-success",
         element: (
           <Suspense fallback={<Loader />}>
-            <LazyViewCheckout />
+            <LazyPaymentSuccessPage />
           </Suspense>
         )
       },

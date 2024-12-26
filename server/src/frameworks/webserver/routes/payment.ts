@@ -15,7 +15,7 @@ const paymentRouter = () => {
     );
 
     router.get('/stripe/get-config', controller.getConfig);
-
+    
     router.post('/stripe/create-payment-intent', controller.createPaymentIntent);
 
     return router;

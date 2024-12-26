@@ -80,9 +80,7 @@ const StripeContainer: React.FC = () => {
                 className="object-cover"
               />
             </CardHeader>
-
           </div>
-
         </CardBody>
         <div className='flex'>
           <div className="w-full">
@@ -101,7 +99,6 @@ const StripeContainer: React.FC = () => {
             alt="card-image"
             className="w-28 rounded-2xl"
           />
-
           <div>
             <Typography variant="small" className="text-[#000000]">adipising elit, sed do eiusmod tempor</Typography>
             <Typography variant="small" className="text-[#5B5B5B]">Lorem ipsum dollar...</Typography>
@@ -115,7 +112,6 @@ const StripeContainer: React.FC = () => {
             alt="card-image"
             className="w-28 rounded-2xl"
           />
-
           <div>
             <Typography variant="small">adipising elit, sed do eiusmod tempor</Typography>
             <Typography variant="small">Lorem ipsum dollar...</Typography>

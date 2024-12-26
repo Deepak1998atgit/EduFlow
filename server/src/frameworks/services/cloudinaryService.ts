@@ -32,7 +32,7 @@ export const cloudinaryService = () => {
           }
         }
       );
-      console.log("upstraem",uploadStream,"upload")
+      console.log("upstraem", uploadStream, "upload")
       streamifier.createReadStream(file.buffer).pipe(uploadStream); // The Streamifier converts the file buffer to readablestraem  and pipe to  readable to writable to cloudinary
     });
   };
@@ -42,9 +42,27 @@ export const cloudinaryService = () => {
     return await cloudinary.url(fileKey)
   };
 
+
+  const deleteFile = async (key: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader.destroy(key, (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        if (result.result === 'ok') {
+          resolve();
+        } else {
+          reject(new Error('File deletion failed.'));
+        }
+      });
+    });
+  };
+
+
   return {
     uploadFile,
-    getFile
+    getFile,
+    deleteFile
   };
 };
 

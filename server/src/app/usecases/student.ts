@@ -72,7 +72,7 @@ export const getStudentDetailsU = async (
   if (studentDetails) {
     studentDetails.password = 'no password';
   }
-  
+
   return studentDetails;
 };
 
@@ -94,6 +94,13 @@ export const updateProfileU = async (
     );
   }
   if (profilePic) {
+    const studentDetails: StudentInterface | null =
+      await studentDbRepository.getStudent(id);
+    if (studentDetails?.profilePic?.key) {
+      await cloudService.deleteFile(
+        studentDetails?.profilePic?.key
+      );
+    }
     const response = await cloudService.upload(profilePic);
     console.log(response)
     studentInfo.profilePic = response;

@@ -40,9 +40,10 @@ const courseController = (
   quizDbRepositoryImp: QuizRepositoryMongoDbInterface,
   cloudServiceInterface: CloudServiceInterface,
   cloudServiceImpl: CloudServiceImpl,
+  paymentDbRepository:PaymentInterface,
+  paymentDbRepositoryImpl: PaymentImplInterface,
   cacheDbRepository: CacheRepositoryInterface,
   cacheDbRepositoryImpl: RedisRepositoryImpl,
-  paymentDbRepository:,
   cacheClient: RedisClient
 
 ) => {
@@ -51,6 +52,7 @@ const courseController = (
   const dbRepositoryQuiz = quizDbRepository(quizDbRepositoryImp());
   const cloudService = cloudServiceInterface(cloudServiceImpl());
   const dbRepositoryCache = cacheDbRepository(cacheDbRepositoryImpl(cacheClient));
+  const dbRepositoryPayment = paymentDbRepository(paymentDbRepositoryImpl());
 
 
   const addCourse = asyncHandler(
@@ -188,7 +190,7 @@ const courseController = (
       const { Id }: { Id?: string } = req.user || {};
       const courseIdValue: string = courseId ?? '';
       const studentId: string = Id ?? '';
-
+     console.log(paymentInfo,"payment info")
       await enrollStudentU(
         courseIdValue,
         studentId,
@@ -211,7 +213,8 @@ const courseController = (
     addLesson,
     getIndividualCourse,
     getLessonsByCourse,
-    deleteCourseByInstructor
+    deleteCourseByInstructor,
+    enrollStudent
   };
 
 };

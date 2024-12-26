@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import useApiData from "@/hooks/useApiCall";
 import { useParams } from "react-router-dom";
 import { CourseInterface } from "@/types/course";
-import { getIndividualCourse } from "@/api/endpoints/course/course";
+import { getIndividualCourse } from "@/api/endpoints/course/Course";
 import { getLessonsByCourse } from "../../../api/endpoints/course/lesson";
 import { useSelector, useDispatch } from "react-redux";
 import { setCourse } from "@/redux/reducers/courseSlice";
@@ -172,7 +172,7 @@ const ViewCourseStudent: React.FC = () => {
     if (!lessons || lessons.length === 0 || !instructor || instructor?.length === 0) {
         return <div>No datas available</div>;
     }
-    openPaymentConfirmation && course?.isPaid && navigate(`/courses/${courseId}/payment`);
+    openPaymentConfirmation && course?.isPaid && navigate(`/course/${courseId}/payment`);
     return (
         <main className="w-full pt-20">
             <section className="w-full lg:flex p-10  md:flex-row lg:h-72 gap-2">

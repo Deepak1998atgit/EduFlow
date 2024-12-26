@@ -15,8 +15,8 @@ import { lessonDbRepository } from '../../../app/repositories/lessonDbRepository
 import { quizDbRepository } from '../../../app/repositories/quizDbRepository';
 import { quizRepositoryMongodb } from '@src/frameworks/database/mongodb/repositories/quizRepoMongoDb';
 import { lessonRepositoryMongodb } from '@src/frameworks/database/mongodb/repositories/lessonRepoMongoDb';
-
-
+import { paymentRepositoryMongodb } from '@src/frameworks/database/mongodb/repositories/paymentRepoMongodb';
+import { paymentInterface } from '@src/app/repositories/paymentDbRepository';
 const courseRouter = (redisClient: RedisClient) => {
   const router = express.Router();
   const controller = courseController(
@@ -28,11 +28,12 @@ const courseRouter = (redisClient: RedisClient) => {
     quizRepositoryMongodb,
     cloudServiceInterface,
     cloudinaryService,
+    paymentInterface,
+    paymentRepositoryMongodb,
     cacheRepositoryInterface,
     redisCacheRepository,
     redisClient
   );
-
 
 
   //* Add course
@@ -83,6 +84,13 @@ const courseRouter = (redisClient: RedisClient) => {
     roleCheckMiddleware('instructor'),
     controller.deleteCourseByInstructor
   )
+
+  router.post(
+    '/enroll-student/:courseId',
+    jwtAuthMiddleware,
+    controller.enrollStudent
+  );
+
   return router;
 };
 export default courseRouter;

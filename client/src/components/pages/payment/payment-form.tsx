@@ -4,8 +4,9 @@ import {
   Button,
   Input
 } from "@material-tailwind/react";
-import { PaymentElement,useStripe, useElements } from "@stripe/react-stripe-js";
+import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useParams } from "react-router-dom";
+import { enrollStudent } from "@/api/endpoints/course/Course";
 const PaymentForm = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [cardholderName, setCardholderName] = useState<string>("");
@@ -39,14 +40,14 @@ const PaymentForm = () => {
       setMessage(error.message ?? "Something went wrong");
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       setMessage("Payment status:" + paymentIntent.status);
-      // await enrollStudent(courseId ?? "", paymentIntent);
-      window.location.href = `/course/${courseId}/success`;
+      await enrollStudent(courseId ?? "", paymentIntent);
+      window.location.href = `/course/${courseId}/payment-success`;
     } else {
       setMessage("An unexpected error occurred.");
     }
     setIsProcessing(false);
   };
-  console.log("success message",message,"success message")
+  console.log("success message", message, "success message")
   return (
     <form
       id='payment-form'
@@ -73,33 +74,19 @@ const PaymentForm = () => {
       <Button
         type="submit"
         disabled={isProcessing || !stripe || !elements}
-        className="w-full h-11 py-2 px-4 mt-5  mb-4 text-white font-semibold rounded-md "
+        className="w-full h-11 py-2 px-4 mt-12  mb-4 text-white bg-[#49BBBD] font-semibold rounded-2xl"
       >
         {isProcessing ? "Processing ..." : "Pay now"}
       </Button>
-       {/* Show any error or success messages */}
-       {message && (
-          <div
-            id='payment-message'
-            className='hidden bg-blue-900 text-green-500 p-4 m-4 rounded-lg text-sm'
-          >
-            {message}
-          </div>
-        )}
-         <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="h-4 w-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-              />
-            </svg>
+      {/* Show any error or success messages */}
+      {message && (
+        <div
+          id='payment-message'
+          className='hidden bg-blue-900 text-green-500 p-4 m-4 rounded-lg text-sm'
+        >
+          {message}
+        </div>
+      )}
     </form>
   )
 }
