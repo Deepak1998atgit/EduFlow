@@ -25,13 +25,17 @@ export const courseDbRepository = (
   const getAmountByCourseId = async (courseId: string) =>
     await repository.getAmountByCourseId(courseId);
 
+  const enrollStudent = async (courseId: string, studentId: string) =>
+    await repository.enrollStudent(courseId, studentId);
+
   return {
     addCourse,
     getAllCourse,
     getCourseByInstructorId,
     getCourseById,
     deleteCourseById,
-    getAmountByCourseId
+    getAmountByCourseId,
+    enrollStudent
   };
 
 };

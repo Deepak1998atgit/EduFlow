@@ -68,7 +68,7 @@ const StuentHero: React.FC = () => {
                 </div>
             </div>
         </section>
-    )
+    );
 }
 
 

@@ -5,15 +5,14 @@ import StudentLandingPageFeatures from "./studentFeatures"
 
 
 const StudentDashboard: React.FC = () => {
- 
+
 
   return (
     <>
       <StudentHero />
       <StudentCoursecard />
-      <StudentLandingPageFeatures/>
+      <StudentLandingPageFeatures />
       {/* <StudentFooter /> */}
-      
     </>
   )
 }

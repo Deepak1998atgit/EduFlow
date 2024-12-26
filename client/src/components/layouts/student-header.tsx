@@ -2,11 +2,12 @@ import { useState } from "react";
 import MobileNav from "../common-components/mobile-nav";
 import StudentNav from "./student-nav";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes, faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faSignOut, faSignIn } from '@fortawesome/free-solid-svg-icons';
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { selectIsLoggedIn,selectUserType } from "../../redux/reducers/authSlice";
 import { clearToken } from "../../redux/reducers/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { persistor } from "@/redux/store";
 
 
@@ -16,7 +17,8 @@ const StudentHeader: React.FC = () => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const user = useSelector(selectUserType);
     const toggleNav = () => {
         setIsOpen(!isOpen);
     };
@@ -32,7 +34,8 @@ const StudentHeader: React.FC = () => {
                     <img className="h-14  ml-10" src="./icon.png" />
                     <div className="hidden xl:flex gap-8 items-center">
                         <StudentNav />
-                        <button onClick={() => setIsModalOpen(true)} className="bg-white text-[14px] font-thin rounded-xl w-28  h-10">Logout<FontAwesomeIcon icon={faSignOut} size="sm" className="ml-2" /></button>
+                        { isLoggedIn && user === "student" ? (<button onClick={() => setIsModalOpen(true)} className="bg-white text-[14px] font-thin rounded-xl w-28  h-10">Logout<FontAwesomeIcon icon={faSignOut} size="sm" className="ml-2" /></button>):(<Link to={"/Login"}><button className="bg-white text-[14px] font-thin rounded-xl w-28  h-10">Login<FontAwesomeIcon icon={faSignIn} size="sm" className="ml-2" /></button></Link>) }
+                        
                     </div>
                     <div className="xl:hidden mr-14">
                         {isOpen ? (<FontAwesomeIcon icon={faTimes} onClick={toggleNav} className="text-3xl cursor-pointer" />) : (<FontAwesomeIcon icon={faBars} onClick={toggleNav} className="text-3xl cursor-pointer" />)}

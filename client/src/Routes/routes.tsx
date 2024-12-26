@@ -3,7 +3,7 @@ import { lazy, Suspense } from "react";
 import { Student, Instructor, Admin } from '../App';
 import ErrorElement from "../components/common-components/error-element";
 import AddCategory from "../components/pages/categories/add-category";
-import StripeContainer from "@/components/pages/payment-stripe/stripe-container.tsx";
+import StripeContainer from "@/components/pages/payment/payment-container.tsx";
 
 
 //STUDENTS

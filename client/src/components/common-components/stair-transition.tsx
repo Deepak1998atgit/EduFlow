@@ -20,7 +20,7 @@ const StairTransition: React.FC = () => {
             <AnimatePresence mode="wait">
                 {showStairs && (
                     <div key={location.pathname}>
-                        <div className="h-screen w-screen  top-34 left-0 right-0  pointer-events-zone z-50 flex">
+                        <div className="h-screen w-screen  top-34 left-0 right-0 overflow-y-hidden pointer-events-zone z-50 flex">
                             <Stairs />
                         </div>
                     </div>

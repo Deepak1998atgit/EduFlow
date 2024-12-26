@@ -1,6 +1,7 @@
 import api from "../../middlewares/protected-interceptor";
 import axiosInstance from "../../middlewares/interceptor";
 import CONFIG_KEYS from "../../../config";
+import { PaymentIntent } from "@stripe/stripe-js";
 
 export const addCourseService = async (
   endpoint: string,
@@ -51,3 +52,16 @@ export const deleteCourseByIdService = async (
   return response;
 };
 
+
+
+export const enrollStudentService = async (
+  endpoint: string,
+  courseId: string,
+  paymentInfo?: PaymentIntent
+) => {
+  const response = await api.post(
+    `${CONFIG_KEYS.API_BASE_URL}/${endpoint}/${courseId}`,
+    paymentInfo
+  );
+  return response.data;
+};

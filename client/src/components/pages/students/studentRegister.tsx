@@ -8,7 +8,6 @@ const studentRegister = () => {
     const handleSubmit = async (studentInfo: any) => {
         try {
             console.log("my response");
-            
             const response = await registerStudent(studentInfo);
             console.log(response,"my response");
             toast.success(response?.data?.message, {
@@ -25,7 +24,6 @@ const studentRegister = () => {
     };
 
     return (
-
         <div className="w-full h-screen flex item-start">
             <div className="relative w-1/2 h-full flex flex-col">
                 <img src="https://img.freepik.com/free-vector/learning-concept-illustration_114360-3454.jpg?w=740&t=st=1699603068~exp=1699603668~hmac=705a6c88bcc020ab331b529b1cd303c6c8e2a6d95d877cbc20cc33ff2eaec322" className="w-full h-full object-cover" />
@@ -43,7 +41,6 @@ const studentRegister = () => {
                                 <h3 className="text-3xl text-black font-semibold ">Sign UP</h3>
                                 {/* <p className="text-base  text-[#1B2E35]">welcome Back! Please enter your deatils</p> */}
                             </div>
-
                             <div className="w-full flex flex-col ">
                                 <Field
                                     name="name"

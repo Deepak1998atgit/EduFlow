@@ -18,10 +18,12 @@ export const register = async (
   endpoint: string,
   studentData: StudentRegisterData
 ) => {
+  console.log("ok get ")
   const response = await authInstanceAxios.post(
     `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`,
     studentData
   );
+  console.log("ok get ")
   return response;
 };
 

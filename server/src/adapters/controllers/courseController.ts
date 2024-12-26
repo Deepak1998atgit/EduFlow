@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler';
 import { CourseRepositoryMongoDbInterface } from '../../frameworks/database/mongodb/repositories/courseReposMongoDb';
 import { CourseDbRepositoryInterface } from '../../app/repositories/courseDbRepository';
 import { addCourses } from '../../app/usecases/course/addCourse';
+import { enrollStudentU } from '@src/app/usecases/course/enrollCourse';
 import {
   getAllCourseU,
   getCourseByIdU,
@@ -26,7 +27,9 @@ import { LessonDbRepositoryInterface } from '@src/app/repositories/lessonDbRepos
 import { LessonRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/lessonRepoMongoDb';
 import { QuizDbInterface } from '@src/app/repositories/quizDbRepository';
 import { QuizRepositoryMongoDbInterface } from '@src/frameworks/database/mongodb/repositories/quizRepoMongoDb';
-
+import { PaymentInfo } from '@src/types/payment';
+import { PaymentInterface } from '@src/app/repositories/paymentDbRepository';
+import { PaymentImplInterface } from '@src/frameworks/database/mongodb/repositories/paymentRepoMongodb';
 
 const courseController = (
   courseDbRepository: CourseDbRepositoryInterface,
@@ -39,6 +42,7 @@ const courseController = (
   cloudServiceImpl: CloudServiceImpl,
   cacheDbRepository: CacheRepositoryInterface,
   cacheDbRepositoryImpl: RedisRepositoryImpl,
+  paymentDbRepository:,
   cacheClient: RedisClient
 
 ) => {
@@ -172,6 +176,30 @@ const courseController = (
       res.status(200).json({
         status: 'success',
         message: 'Successfully deleted the course'
+      });
+    }
+  );
+
+
+  const enrollStudent = asyncHandler(
+    async (req: CustomRequest, res: Response) => {
+      const paymentInfo: PaymentInfo = req.body;
+      const { courseId }: { courseId?: string } = req.params;
+      const { Id }: { Id?: string } = req.user || {};
+      const courseIdValue: string = courseId ?? '';
+      const studentId: string = Id ?? '';
+
+      await enrollStudentU(
+        courseIdValue,
+        studentId,
+        paymentInfo,
+        dbRepositoryCourse,
+        dbRepositoryPayment
+      );
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully enrolled into the course',
+        data: null
       });
     }
   );

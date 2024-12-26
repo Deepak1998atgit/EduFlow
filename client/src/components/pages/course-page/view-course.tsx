@@ -208,12 +208,12 @@ const ViewCourseStudent: React.FC = () => {
                                     <p className="text-white font-bold">Preview This Course</p>
                                 </div>
                             </div>
-                            <div className="h-32 relative rounded-bl-xl  border border-[#D6EFD8] pt-3 bg-[#f9f9f9] w-full md:w-1/2 lg:w-4/6">
-                                <div className="ml-2 text-sm  font-thin flex  w-full  leading-9">
-                                    <div className="w-full flex mt-3 gap-6
+                            <div className="h-40 relative rounded-bl-xl  border border-[#D6EFD8] pt-3 bg-[#f9f9f9] w-full md:w-1/2 lg:w-4/6">
+                                <div className="ml-2 text-base  font-light flex  w-full  leading-9">
+                                    <div className="w-full flex mt-3 gap-1
                                 ">
-                                        <p><span className="customfontforsmallheadding flex"><FcCustomerSupport />{instructor ? `${instructor?.data?.firstName} ${instructor?.data?.lastName}` : null}</span></p>
-                                        <p> <span className="customfontforsmallheadding fle"><FcSpeaker /> {calculateTimeAgo(course?.createdAt as string)}</span></p>
+                                        <p><span className="customfontforsmallheadding flex gap-1"><FcCustomerSupport />{instructor ? `${instructor?.data?.firstName} ${instructor?.data?.lastName}`: null}</span></p>
+                                        <p> <span className="customfontforsmallheadding gap-1 flex"><FcSpeaker />{calculateTimeAgo(course?.createdAt as string)}</span></p>
                                         <p> <span className="customfontforsmallheadding "><span className="flex gap-1"><FcComboChart />{course?.level}</span></span></p>
 
                                     </div>
@@ -221,7 +221,7 @@ const ViewCourseStudent: React.FC = () => {
                                         <p>{course?.isPaid ? "PAID" : "FREE"}</p>
                                     </div>
                                 </div>
-                                <p> <span className="ml-2 h3">{course?.price}/-</span></p>
+                                <p className="w-full flex items-end justify-end pr-3"><span className="ml-2 mt-4 h3">{course?.price}/-</span></p>
                                 <div className="flex items-center justify-center w-full">
                                     <button
                                         disabled={enrolled}

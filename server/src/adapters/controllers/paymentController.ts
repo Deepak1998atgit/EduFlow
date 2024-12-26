@@ -23,7 +23,7 @@ const paymentController = (
         const config = getConfigU(paymentService);
         res.status(200).json({
             status: 'success',
-            message: 'Successfully completed payment',
+            message: 'Successfully obtained the config key.',
             data: config
         });
     });

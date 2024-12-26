@@ -49,15 +49,14 @@ export const addLessonsU = async (
               console.error('Error while probing the video:', err);
               reject(err);
             }
-            console.log("passing ...3",data.format,"end")
+            console.log("passing ...3", data.format, "end")
             const duration: string = data.format.duration;
             resolve(duration);
           });
       });
-
     try {
       const videoDuration = await getVideoDuration();
-      console.log("duration ",videoDuration," dur")
+      console.log("duration ", videoDuration, " dur")
       lesson.duration = parseFloat(videoDuration);
     } catch (error) {
       console.error('Error while getting video duration:', error);
@@ -75,7 +74,7 @@ export const addLessonsU = async (
     instructorId,
     lesson
   );
-  console.log("end repo repo",lessonId)
+  console.log("end repo repo", lessonId)
   if (!lessonId) {
     throw new AppError('Data is not provided', HttpStatusCodes.BAD_REQUEST);
   }

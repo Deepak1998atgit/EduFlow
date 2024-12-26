@@ -54,13 +54,24 @@ export const courseRepositoryMongodb = () => {
     return amount;
   };
 
+
+  const enrollStudent = async (courseId: string, studentId: string) => {
+    const response = await Course.updateOne(
+      { _id: new mongoose.Types.ObjectId(courseId) },
+      { $push: { coursesEnrolled: studentId } }
+    );
+    return response;
+  };
+
+
   return {
     addCourse,
     getAllCourse,
     getCourseByInstructorId,
     getCourseById,
     deleteCourseById,
-    getAmountByCourseId 
+    getAmountByCourseId,
+    enrollStudent 
   };
 };
 

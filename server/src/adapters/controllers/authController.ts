@@ -55,6 +55,7 @@ const authController = (
 
     //STUDENT REGISTRATION 
     const registerStudent = asyncHandler(async (req: Request, res: Response) => {
+        console.log("ok")
         console.log(req.body)
         const student: StudentRegisterInterface = req.body;
         await studentRegister(

@@ -4,8 +4,10 @@ import {
   getAllCoursesService,
   getCoursesByInstructorService,
   getIndividualCourseService,
-  deleteCourseByIdService
+  deleteCourseByIdService,
+  enrollStudentService
 } from "../../services/course/course-service";
+import { PaymentIntent } from "@stripe/stripe-js";
 
 
 export const addCourse = (courseInfo: FormData) => {
@@ -32,3 +34,10 @@ export const getIndividualCourse = (courseId: string) => {
 export const deleteCourse= (courseId:string)=>{
   return deleteCourseByIdService(END_POINTS.DELETE_COURSE, courseId)
 }
+
+export const enrollStudent = (
+  courseId: string,
+  paymentInfo?: PaymentIntent
+) => {
+  return enrollStudentService(END_POINTS.ENROLL_STUDENT, courseId, paymentInfo);
+};
