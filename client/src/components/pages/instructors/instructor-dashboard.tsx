@@ -5,7 +5,9 @@ import ViewLessons from "../add-lesson/view-lesson";
 // import InstructorSideNav from "./instructorDashboard";
 import CombinedCourseAddForm from "../add-corse/add-course-form";
 import {useLocation} from 'react-router-dom';
-type SelectedButtonValue = 'add-course' | 'view-courses' | "view-lessons";
+import MyStudents from "./my-students";
+import ChatPage from "@/components/common-components/chat/ChatPage";
+type SelectedButtonValue = 'add-course' | 'view-courses' | "view-lessons" |'view-chat';
 const AdminDashboard: React.FC=() => {
   const location = useLocation();
   const [selectedButtonValue, setSelectedButtonValue] = useState('dashboard');
@@ -24,7 +26,10 @@ const AdminDashboard: React.FC=() => {
   const componentsMap = {
     'add-course': <CombinedCourseAddForm />,
     'view-courses': <ListCourseForInstructors subSideBar={subSidebarTitle} />,
-    'view-lessons':<ViewLessons/>
+    'view-lessons':<ViewLessons/>,
+    'view-students':<MyStudents/>,
+    'view-chat':<ChatPage isShowComponent={true}/>
+
   };
   return (
       <>

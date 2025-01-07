@@ -93,6 +93,9 @@ const LazyViewLessons = lazy(
 //   () => import("../components/pages/instructors/instructor-dashboard")
 // );
 
+const LazyMyStudents = lazy(
+  () => import("../components/pages/instructors/my-students")
+);
 
 const LazyInstructorWelcome = lazy(
   () => import("../components/pages/instructors/instructor-welcome")
@@ -286,8 +289,15 @@ export const router = createBrowserRouter([
             <>d</>{/* <LazyTutorDashBoard/> */}
           </Suspense>
         )
-      }
-      
+      },
+      {
+        path: "view-students",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <LazyMyStudents />
+          </Suspense>
+        ),
+      },
     ],
   },
   {

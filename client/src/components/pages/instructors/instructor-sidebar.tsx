@@ -42,7 +42,7 @@ const InstructorSideNav: React.FC<InstructorSideNavProps> = ({ onSidebarClick, o
       },
       { title: 'My Students', icon: <Users />, value: 'view-students', path: '/instructors/view-students' },
       { title: 'My Profile', icon: <Settings />, value: 'view-profile', path: '/instructors/view-profile' },
-      { title: 'Channels', icon: <Waypoints />, value: 'view-channels', path: '/instructors/view-channels' },
+      { title: 'Chat', icon: <Waypoints />, value: 'view-chat', path: '/instructors/view-channels' },
       { title: 'Resources', icon: <HelpCircle />, value: 'resources', path: '/instructors/resources' },
     ],
     []

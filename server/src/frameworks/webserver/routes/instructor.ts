@@ -11,6 +11,7 @@ import { cloudinaryService } from '../../../frameworks/services/cloudinaryServic
 import upload from '../middlewares/multer';
 import { courseDbRepository } from '../../../app/repositories/courseDbRepository';
 import { courseRepositoryMongodb } from '../../../frameworks/database/mongodb/repositories/courseReposMongoDb';
+import jwtAuthMiddleware from '../middlewares/userAuth';
 
 const instructorRouter = () => {
     const router = express.Router();
@@ -19,6 +20,8 @@ const instructorRouter = () => {
         authService,
         instructorDbRepository,
         instructorRepoMongoDb,
+        courseDbRepository,
+        courseRepositoryMongodb ,
         nodemailerServiceInterface,
         nodeMailService,
         cloudServiceInterface,
@@ -47,6 +50,10 @@ const instructorRouter = () => {
 
 
     router.get('/view-instructor/:instructorId', controller.getInstructorById);
+
+
+    router.get('/get-students-by-instructor',jwtAuthMiddleware, controller.getStudentsForInstructors);
+    
 
 
     return router;

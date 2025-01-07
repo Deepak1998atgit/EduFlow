@@ -45,7 +45,6 @@ const courseController = (
   cacheDbRepository: CacheRepositoryInterface,
   cacheDbRepositoryImpl: RedisRepositoryImpl,
   cacheClient: RedisClient
-
 ) => {
   const dbRepositoryCourse = courseDbRepository(courseDbRepositoryImpl());
   const dbRepositoryLesson = lessonDbRepository(lessonDbRepositoryImp());
@@ -54,7 +53,7 @@ const courseController = (
   const dbRepositoryCache = cacheDbRepository(cacheDbRepositoryImpl(cacheClient));
   const dbRepositoryPayment = paymentDbRepository(paymentDbRepositoryImpl());
 
-
+  
   const addCourse = asyncHandler(
     async (req: CustomRequest, res: Response, next: NextFunction) => {
       console.log("ok get")

@@ -28,6 +28,9 @@ export const courseDbRepository = (
   const enrollStudent = async (courseId: string, studentId: string) =>
     await repository.enrollStudent(courseId, studentId);
 
+  const getStudentsByCourseForInstructor = async (instructorId: string) =>
+    await repository.getStudentsByCourseForInstructor(instructorId);
+
   return {
     addCourse,
     getAllCourse,
@@ -35,7 +38,8 @@ export const courseDbRepository = (
     getCourseById,
     deleteCourseById,
     getAmountByCourseId,
-    enrollStudent
+    enrollStudent,
+    getStudentsByCourseForInstructor
   };
 
 };

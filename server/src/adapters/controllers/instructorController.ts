@@ -8,7 +8,8 @@ import {
   blockInstructors,
   unblockInstructors,
   getBlockedInstructors,
-  getInstructorByIdUseCase
+  getInstructorByIdUseCase,
+  getStudentsForInstructorsU
 } from '../../app/usecases/management/instructorManagement';
 import { NodeMailService } from '../../frameworks/services/nodeMailservice';
 import { NodemailerServiceInterface } from '../../app/services/nodeMailerServiceInterface';
@@ -26,6 +27,8 @@ const instructorController = (
   authServiceImpl: AuthService,
   instructorDbRepository: InstructorDbInterface,
   instructorDbRepositoryImpl: InstructorRepositoryMongoDb,
+  courseDbRepository: CourseDbRepositoryInterface,
+  courseDbRepositoryImpl: CourseRepositoryMongoDbInterface,
   emailServiceInterface: NodemailerServiceInterface,
   emailServiceImpl: NodeMailService,
   cloudServiceInterface: CloudServiceInterface,
@@ -35,6 +38,7 @@ const instructorController = (
   const dbRepositoryInstructor = instructorDbRepository(instructorDbRepositoryImpl());
   const emailService = emailServiceInterface(emailServiceImpl());
   const cloudService = cloudServiceInterface(cloudServiceImpl());
+  const dbRepositoryCourse = courseDbRepository(courseDbRepositoryImpl());
 
   //? INSTRUCTOR MANAGEMENT
   const getInstructorRequests = asyncHandler(
@@ -134,6 +138,8 @@ const instructorController = (
     }
   );
 
+
+
   const getInstructorById = asyncHandler(
     async (req: CustomRequest, res: Response) => {
       let instructorId = req.params.instructorId;
@@ -152,6 +158,24 @@ const instructorController = (
 
 
 
+  const getStudentsForInstructors = asyncHandler(
+    async (req: CustomRequest, res: Response) => {
+      const instructorId: string | undefined = req.user?.Id;
+      const students = await getStudentsForInstructorsU(
+        instructorId,
+        cloudService,
+        dbRepositoryCourse
+      );
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully retrieved all students',
+        data: students
+      });
+    }
+  );
+
+
+
   return {
     getInstructorRequests,
     verifyInstructor,
@@ -161,6 +185,7 @@ const instructorController = (
     unblockInstructor,
     getBlockedInstructor,
     getInstructorById,
+    getStudentsForInstructors
   };
 };
 

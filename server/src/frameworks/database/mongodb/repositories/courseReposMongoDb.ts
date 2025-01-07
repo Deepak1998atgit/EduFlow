@@ -30,25 +30,26 @@ export const courseRepositoryMongodb = () => {
 
 
   const getCourseById = async (courseId: string) => {
-    console.log("hh")   
+    console.log("hh")
     const course: CourseInterface | null = await Course.findOne({
       _id: new mongoose.Types.ObjectId(courseId)
     }).lean()
-    console.log("hh",course)                                              //lean() Mongoose skips the process of creating full Mongoose documents, making queries faster. making js plain objects to remove overhead
+    console.log("hh", course)                                              //lean() Mongoose skips the process of creating full Mongoose documents, making queries faster. making js plain objects to remove overhead
     return course;
   };
 
 
-  const deleteCourseById = async(courseId:string)=>{
-   const course:CourseInterface | null =await Course.findByIdAndDelete({
-    _id: new mongoose.Types.ObjectId(courseId) })
+  const deleteCourseById = async (courseId: string) => {
+    const course: CourseInterface | null = await Course.findByIdAndDelete({
+      _id: new mongoose.Types.ObjectId(courseId)
+    })
 
   }
 
 
   const getAmountByCourseId = async (courseId: string) => {
     const amount = await Course.findOne(
-      { _id: new mongoose.Types.ObjectId(courseId)},
+      { _id: new mongoose.Types.ObjectId(courseId) },
       { price: 1 }
     );
     return amount;
@@ -64,6 +65,46 @@ export const courseRepositoryMongodb = () => {
   };
 
 
+  const getStudentsByCourseForInstructor = async (instructorId: string) => {
+    const students = await Course.aggregate([
+      {
+        $match: { instructorId: new mongoose.Types.ObjectId(instructorId) }
+      },
+      {
+        $unwind: '$coursesEnrolled'
+      },
+      {
+        $lookup: {
+          from: 'students',
+          localField: 'coursesEnrolled',
+          foreignField: '_id',
+          as: 'studentDetails'
+        }
+      },
+      {
+        $project: {
+          student: { $arrayElemAt: ['$studentDetails', 0] },
+          courseName: '$title'
+        }
+      },
+      {
+        $group: {
+          _id: '$student._id',
+          course: { $first: '$courseName' },
+          name: { $first: '$student.name' },
+          email: { $first: '$student.email' },
+          mobile: { $first: '$student.mobile' },
+          dateJoined: { $first: '$student.dateJoined' },
+          isBlocked: { $first: '$student.isBlocked' },
+          profilePic: { $first: '$student.profilePic' },
+          // isGoogleUser: { $first: '$student.isGoogleUser' }
+        }
+      }
+    ]);
+    return students;
+  };
+
+
   return {
     addCourse,
     getAllCourse,
@@ -71,7 +112,8 @@ export const courseRepositoryMongodb = () => {
     getCourseById,
     deleteCourseById,
     getAmountByCourseId,
-    enrollStudent 
+    enrollStudent,
+    getStudentsByCourseForInstructor
   };
 };
 

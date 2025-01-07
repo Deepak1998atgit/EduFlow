@@ -13,6 +13,7 @@ interface IStudent extends Document {
   profilePic: ProfilePic;
   password?: string;
   isBlocked?: boolean;
+  dateJoined: Date;
   
 }
 
@@ -61,6 +62,10 @@ const studentSchema = new Schema<IStudent>({
   password: {
     type: String,
     minlength: 8
+  },
+  dateJoined: {
+    type: Date,
+    default: Date.now
   },
   isBlocked: {
     type: Boolean,

@@ -3,6 +3,7 @@ import AppError from '../../../utils/appError';
 import { NodeMailService } from '@src/frameworks/services/nodeMailservice';
 import { InstructorDbInterface } from '@src/app/repositories/instructorDbRepository';
 import { CloudServiceInterface } from '@src/app/services/cloudServiceInterface';
+import { CourseDbRepositoryInterface } from '@src/app/repositories/courseDbRepository';
 export const getAllInstructorRequests = async (
   instructorRepository: ReturnType<InstructorDbInterface>
 ) => {
@@ -72,15 +73,15 @@ export const getAllInstructors = async (
   instructorRepository: ReturnType<InstructorDbInterface>
 ) => {
   const instructors = await instructorRepository.getAllInstructors();
-//   await Promise.all(
-//     instructors.map(async (instructor) => {
-//       if (instructor.profilePic) {
-//         instructor.profileUrl = await cloudService.getFile(
-//           instructor.profilePic.key ?? ''
-//         );
-//       }
-//     })
-//   );
+  //   await Promise.all(
+  //     instructors.map(async (instructor) => {
+  //       if (instructor.profilePic) {
+  //         instructor.profileUrl = await cloudService.getFile(
+  //           instructor.profilePic.key ?? ''
+  //         );
+  //       }
+  //     })
+  //   );
   return instructors;
 };
 
@@ -118,15 +119,15 @@ export const getBlockedInstructors = async (
   instructorRepository: ReturnType<InstructorDbInterface>
 ) => {
   const blockedInstructors = await instructorRepository.getBlockedInstructors();
-//   await Promise.all(
-//     blockedInstructors.map(async (instructor) => {
-//       if (instructor.profilePic) {
-//         instructor.profileUrl = await cloudService.getFile(
-//           instructor.profilePic.key ?? ''
-//         );
-//       }
-//     })
-//   );
+  //   await Promise.all(
+  //     blockedInstructors.map(async (instructor) => {
+  //       if (instructor.profilePic) {
+  //         instructor.profileUrl = await cloudService.getFile(
+  //           instructor.profilePic.key ?? ''
+  //         );
+  //       }
+  //     })
+  //   );
   return blockedInstructors;
 };
 
@@ -139,12 +140,38 @@ export const getInstructorByIdUseCase = async (
     throw new AppError('Invalid instructor id', HttpStatusCodes.BAD_REQUEST);
   }
   const instructor = await instructorRepository.getInstructorById(instructorId);
-//   if (instructor?.profilePic.key) {
-//     const profilePic = await cloudService.getFile(instructor?.profilePic.key);
-//     instructor.profileUrl = profilePic;
-//   }
+  //   if (instructor?.profilePic.key) {
+  //     const profilePic = await cloudService.getFile(instructor?.profilePic.key);
+  //     instructor.profileUrl = profilePic;
+  //   }
   if (instructor) {
     instructor.password = 'no password';
   }
   return instructor;
+};
+
+
+export const getStudentsForInstructorsU = async (
+  instructorId: string | undefined,
+  cloudService: ReturnType<CloudServiceInterface>,
+  courseDbRepository: ReturnType<CourseDbRepositoryInterface>
+) => {
+  if (!instructorId) {
+    throw new AppError(
+      'Please give a instructor id',
+      HttpStatusCodes.BAD_REQUEST
+    );
+  }
+  const students = await courseDbRepository.getStudentsByCourseForInstructor(
+    instructorId
+  );
+  await Promise.all(
+    students.map(async (student) => {
+      if (student.profilePic && student.profilePic.key) {
+        student.profileUrl = ""
+        student.profileUrl = await cloudService.getFile(student.profilePic.key);
+      }
+    })
+  );
+  return students;
 };

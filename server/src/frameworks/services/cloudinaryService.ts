@@ -14,7 +14,7 @@ export const cloudinaryService = () => {
   const uploadFile = async (file: Express.Multer.File): Promise<{ name: string; key: string; url: string }> => {
     const key = randomImageName();
     return new Promise((resolve, reject) => {
-      const uploadStream = cloudinary.uploader.upload_stream(  // it creates the mechanisms to upload files to cloudinary
+      const uploadStream = cloudinary.uploader.upload_stream(
         { public_id: key, resource_type: 'auto' },
         (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
           if (error) {
@@ -33,7 +33,7 @@ export const cloudinaryService = () => {
         }
       );
       console.log("upstraem", uploadStream, "upload")
-      streamifier.createReadStream(file.buffer).pipe(uploadStream); // The Streamifier converts the file buffer to readablestraem  and pipe to  readable to writable to cloudinary
+      streamifier.createReadStream(file.buffer).pipe(uploadStream);
     });
   };
 
@@ -59,11 +59,34 @@ export const cloudinaryService = () => {
   };
 
 
+  const getSignedUrl = async (fileKey: string, expiresIn?: number): Promise<string> => {
+    expiresIn ? expiresIn : expiresIn = 3600 // Default expiration time is 1 hour
+    const timestamp = Math.floor(Date.now() / 1000) + expiresIn; // Expiration timestamp
+    const signature = cloudinary.utils.api_sign_request(
+      {
+        public_id: fileKey,
+        timestamp,
+      },
+      configKeys.CLOUDINARY_API_SECRET
+    );
+    const url = cloudinary.url(fileKey, {
+      sign_url: true,
+      api_key: configKeys.CLOUDINARY_API_KEY,
+      timestamp,
+      signature,
+      resource_type: 'auto', // Can be adjusted based on resource type
+    });
+    return url;
+  };
+
+
   return {
     uploadFile,
     getFile,
-    deleteFile
+    deleteFile,
+    getSignedUrl
   };
+
 };
 
 export type CloudServiceImpl = typeof cloudinaryService;

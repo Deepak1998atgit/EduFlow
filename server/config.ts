@@ -34,7 +34,9 @@ const configKeys = {
     
     STRIPE_SECRET_KEY:process.env.STRIPE_SECRET_KEY  as string,
 
-    STRIPE_PUBLISHABLE_KEY:process.env.STRIPE_PUBLISHABLE_KEY as string
+    STRIPE_PUBLISHABLE_KEY:process.env.STRIPE_PUBLISHABLE_KEY as string,
+
+    ORIGIN_PORT: process.env.ORIGIN_PORT as string,
 
 }
 

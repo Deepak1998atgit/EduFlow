@@ -490,8 +490,6 @@ export default CombinedCourseAddForm;
 
 
 
-
-// import React, { useState, useEffect } from "react";
 // import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 // import { AddCourseValidationSchema } from "@/validations/course/AddCourse";
 // import { Switch } from "@material-tailwind/react";

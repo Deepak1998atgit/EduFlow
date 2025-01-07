@@ -91,6 +91,8 @@ const courseRouter = (redisClient: RedisClient) => {
     controller.enrollStudent
   );
 
+
+
   return router;
 };
 export default courseRouter;

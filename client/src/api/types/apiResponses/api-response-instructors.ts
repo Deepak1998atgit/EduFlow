@@ -39,6 +39,7 @@ interface Certificate {
 export interface GetCourseByInstructorInterface {
     _id: string
     title: string
+    about:string
     thumbnail?: string
     introductionVideo?: string
     thumbnailUrl: string;

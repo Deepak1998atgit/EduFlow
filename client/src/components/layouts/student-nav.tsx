@@ -59,9 +59,8 @@ const StudentNav: React.FC = () => {
                     </Tooltip>
                     <Typography className="text-white text-[12px]">{studentInfo?.name}</Typography>
                 </Link>
-            ):"h"}
-
-
+            ):""}
+           <Link to="/instructor-login">Teach on Eduflow</Link>
         </>
     );
 }

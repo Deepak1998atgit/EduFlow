@@ -14,8 +14,7 @@ export interface UpdateProfileInfo {
 export interface Students {
     _id: string;
     course: string;
-    firstName: string;
-    lastName: string;
+    name:string;
     email: string;
     mobile: string;
     dateJoined: string;
