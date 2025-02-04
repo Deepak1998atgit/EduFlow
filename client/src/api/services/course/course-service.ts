@@ -65,3 +65,11 @@ export const enrollStudentService = async (
   );
   return response.data;
 };
+
+
+export const getCourseByStudentService = async (endpoint: string) => {
+  const response = await api.get(
+    `${CONFIG_KEYS.API_BASE_URL}/${endpoint}`
+  );
+  return response.data;
+};

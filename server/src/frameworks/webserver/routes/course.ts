@@ -73,11 +73,11 @@ const courseRouter = (redisClient: RedisClient) => {
     controller.addLesson
   );
 
-  router.get( 
+  router.get(
     '/instructors/get-lessons-by-course/:courseId', ///instructors/get-lessons-by-course
     controller.getLessonsByCourse
   );
-  
+
   router.delete(
     '/instructors/delete-course/:courseId',
     jwtAuthMiddleware,
@@ -91,7 +91,11 @@ const courseRouter = (redisClient: RedisClient) => {
     controller.enrollStudent
   );
 
-
+  router.get(
+    '/get-course-by-student',
+    jwtAuthMiddleware,
+    controller.getCourseByStudent
+  );
 
   return router;
 };

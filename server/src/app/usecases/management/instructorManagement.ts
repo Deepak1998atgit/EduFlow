@@ -147,6 +147,7 @@ export const getInstructorByIdUseCase = async (
   if (instructor) {
     instructor.password = 'no password';
   }
+  console.log(instructor,"get instr")
   return instructor;
 };
 

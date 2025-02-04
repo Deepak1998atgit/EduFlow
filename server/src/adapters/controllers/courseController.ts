@@ -7,6 +7,7 @@ import { enrollStudentU } from '@src/app/usecases/course/enrollCourse';
 import {
   getAllCourseU,
   getCourseByIdU,
+  getCourseByStudentU
 } from '../../app/usecases/course/listCourse';
 import {
   getCourseByInstructorU
@@ -205,6 +206,24 @@ const courseController = (
     }
   );
 
+
+  const getCourseByStudent = asyncHandler(
+    async (req: CustomRequest, res: Response) => {
+      const studentId: string | undefined = req.user?.Id;
+      const courses = await getCourseByStudentU(
+        studentId,
+        cloudService,
+        dbRepositoryCourse
+      );
+      res.status(200).json({
+        status: 'success',
+        message: 'Successfully retrieved courses based on students',
+        data: courses
+      });
+    }
+  );
+
+
   return {
     addCourse,
     getAllCourses,
@@ -213,7 +232,8 @@ const courseController = (
     getIndividualCourse,
     getLessonsByCourse,
     deleteCourseByInstructor,
-    enrollStudent
+    enrollStudent,
+    getCourseByStudent
   };
 
 };

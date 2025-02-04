@@ -56,3 +56,25 @@ export const getCourseByIdU = async (
   }
   return course;
 };
+
+
+
+export const getCourseByStudentU = async (
+  studentId: string | undefined,
+  cloudService: ReturnType<CloudServiceInterface>,
+  courseDbRepository: ReturnType<CourseDbRepositoryInterface>
+) => {
+  if (!studentId) {
+    throw new AppError('Invalid student id ', HttpStatusCodes.BAD_REQUEST);
+  }
+  const courses = await courseDbRepository.getCourseByStudent(studentId);
+
+  await Promise.all(
+    courses.map(async (course) => {
+      if (course.thumbnail) {
+        course.thumbnailUrl = await cloudService.getFile(course.thumbnail.key);
+      }
+    })
+  );
+  return courses;
+};

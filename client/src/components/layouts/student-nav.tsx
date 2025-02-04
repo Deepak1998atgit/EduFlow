@@ -5,21 +5,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchStudentData, selectStudent } from '@/redux/reducers/studentSlice';
 import { AppDispatch } from "@/redux/store";
 import { selectIsLoggedIn, selectUserType } from '@/redux/reducers/authSlice';
-
-
 import { faHome, faUsers, faAddressBook, faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
 import {
-    Avatar,
+    Avatar, // student id -> course 
     Tooltip,
     Typography
 } from "@material-tailwind/react";
 
 const Links = [
     { name: "home", path: "/", icon: faHome },
-    { name: "wishlist", path: "/wishlist", icon: faHeart },
-    { name: "cart", path: "/cart", icon: faShoppingCart },
-    { name: "community", path: "/community", icon: faUsers },
-    { name: "contact", path: "/contact", icon: faAddressBook },
+    { name: "wishlist", path: "/wishlist", icon:faHeart },
+    { name: "cart", path: "/cart", icon:faShoppingCart },
+    { name: "community", path: "/community", icon:faUsers },
+    { name: "contact", path: "/contact", icon:faAddressBook},
 ];
 
 const StudentNav: React.FC = () => {

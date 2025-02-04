@@ -14,6 +14,9 @@ import ScrollToTopButton from "./components/common-components/ScrollToTopButton"
 import InstructorSideNav from "./components/pages/instructors/instructor-sidebar";
 import InstructorHeader from "./components/layouts/instructor-header";
 import SessionExpired from "./components/common-components/session-expired-modal";
+import { getInstructorDetails } from "./api/endpoints/instructor";
+import { setDetails } from "./redux/reducers/instructorSlice";
+import { toast } from "react-toastify";
 
 
 
@@ -65,6 +68,7 @@ export const Student = () => {
 export const Instructor = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const navigate = useNavigate();
+  const dispatch=useDispatch();
   const user = useSelector(selectUserType);
   const [sideBarOption, setSideBarOption] = useState('dashboard');
   const [subSidebarTitle, setSubSidebarTitle] = useState("");
@@ -74,6 +78,20 @@ export const Instructor = () => {
   if (!isLoggedIn || user !== "instructor") {
     return null;
   }
+  const fetchInstructor = async () => {
+    try {
+      const response = await getInstructorDetails();
+      console.log(response,"res instr");
+      dispatch(setDetails({details:response.data}))
+      console.log(" ok login with dispatch");
+    } catch (error) {
+      toast.error("Something went wrong")
+    }
+  };
+
+  useEffect(() => {
+    fetchInstructor();
+  }, []);
   useEffect(() => { navigate(`/instructor/?sidebar=${sideBarOption}&subSidebar=${subSidebarTitle}`); }, [sideBarOption, subSidebarTitle])
   return (
     <div className="grid grid-cols-12">

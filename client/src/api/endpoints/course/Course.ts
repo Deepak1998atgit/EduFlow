@@ -5,7 +5,8 @@ import {
   getCoursesByInstructorService,
   getIndividualCourseService,
   deleteCourseByIdService,
-  enrollStudentService
+  enrollStudentService,
+  getCourseByStudentService
 } from "../../services/course/course-service";
 import { PaymentIntent } from "@stripe/stripe-js";
 
@@ -40,4 +41,9 @@ export const enrollStudent = (
   paymentInfo?: PaymentIntent
 ) => {
   return enrollStudentService(END_POINTS.ENROLL_STUDENT, courseId, paymentInfo);
+};
+
+
+export const getCourseByStudent = () => {
+  return getCourseByStudentService(END_POINTS.GET_COURSE_BY_STUDENT);
 };

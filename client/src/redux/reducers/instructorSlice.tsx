@@ -37,7 +37,6 @@ export const { setDetails, clearDetails } = instructorSlice.actions;
 
 export const selectInstructor = (state: RootState) => state.instructor;
 
-export const selectInstructorId = (state: RootState) =>
-  state.instructor.instructorId;
+export const selectInstructorId = (state: RootState) => state?.instructor?.instructorDetails?._id;
 
 export const instructorReducer = instructorSlice.reducer;

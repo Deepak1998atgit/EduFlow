@@ -104,6 +104,15 @@ export const courseRepositoryMongodb = () => {
     return students;
   };
 
+  const getCourseByStudent = async (id: string) => {
+    const courses: CourseInterface[] | null = await Course.find({
+      coursesEnrolled: {
+        $in: [new mongoose.Types.ObjectId(id)]
+      }
+    });
+    return courses;
+  };
+
 
   return {
     addCourse,
@@ -113,7 +122,8 @@ export const courseRepositoryMongodb = () => {
     deleteCourseById,
     getAmountByCourseId,
     enrollStudent,
-    getStudentsByCourseForInstructor
+    getStudentsByCourseForInstructor,
+    getCourseByStudent
   };
 };
 

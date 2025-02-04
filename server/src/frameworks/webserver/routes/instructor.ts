@@ -12,6 +12,7 @@ import upload from '../middlewares/multer';
 import { courseDbRepository } from '../../../app/repositories/courseDbRepository';
 import { courseRepositoryMongodb } from '../../../frameworks/database/mongodb/repositories/courseReposMongoDb';
 import jwtAuthMiddleware from '../middlewares/userAuth';
+import roleCheckMiddleware from '../middlewares/roleCheckMiddleware';
 
 const instructorRouter = () => {
     const router = express.Router();
@@ -54,7 +55,13 @@ const instructorRouter = () => {
 
     router.get('/get-students-by-instructor',jwtAuthMiddleware, controller.getStudentsForInstructors);
     
-
+    
+    router.get(
+        '/get-instructor-details',
+        jwtAuthMiddleware,
+        roleCheckMiddleware('instructor'),
+        controller.getInstructorDetails
+      );
 
     return router;
 
